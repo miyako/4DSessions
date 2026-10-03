@@ -1,0 +1,15 @@
+Session
+Session.info : live snapshot
+Type
+standalone
+4D
+OTP created. URL for incognito test:
+0599
+http://192.168.1.6/init?
+Ihost
+$4DSID=B4C8C4EFDEOC4B7C8C4FCA39359BD091
+Cancel
+15:21
+State
+data is ive
+Share this Session

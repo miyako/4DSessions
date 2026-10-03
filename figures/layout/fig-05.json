@@ -1,0 +1,62 @@
+{
+  "source": "fig-05.png",
+  "page": 10,
+  "width_pt": 311.2,
+  "localize": false,
+  "items": [
+    {
+      "box": [
+        51,
+        48,
+        208,
+        22
+      ],
+      "align": "center"
+    },
+    {
+      "box": [
+        49,
+        152,
+        373,
+        17
+      ],
+      "align": "center"
+    },
+    {
+      "box": [
+        285,
+        215,
+        42,
+        27
+      ],
+      "align": "center"
+    },
+    {
+      "box": [
+        285,
+        320,
+        42,
+        27
+      ],
+      "align": "center"
+    },
+    {
+      "box": [
+        285,
+        425,
+        42,
+        27
+      ],
+      "align": "center"
+    },
+    {
+      "box": [
+        50,
+        499,
+        298,
+        32
+      ],
+      "align": "center"
+    }
+  ]
+}
