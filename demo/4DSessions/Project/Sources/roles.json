@@ -1,0 +1,26 @@
+{
+    "permissions": {
+        "allowed": []
+    },
+    "privileges": [
+        {
+            "privilege": "verified_user",
+            "description": "Granted after successfully matching the QR challenge number"
+        }
+    ],
+    "roles": [
+        {
+            "id": "hpBfyAW1F2F5fiC4c1Sta4",
+            "role": "Admin",
+            "privileges": []
+        },
+        {
+            "id": "uploadRoleUniqueID123",
+            "role": "photo_uploader",
+            "privileges": [
+                "verified_user"
+            ]
+        }
+    ],
+    "forceLogin": false
+}

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?><preferences stamp="11">
+	<com.4d>
+		<web>
+			<standalone_server>
+				<rest launch_at_startup="true"/>
+				<qodlystudio enabled="true"/>
+				<configuration listening_address="::" publish_at_startup="true"/>
+			</standalone_server>
+		</web>
+		<general startup_environnement="1"/>
+		<interface>
+			<user splash_screen="false"/>
+		</interface>
+	</com.4d>
+</preferences>

@@ -8,3 +8,5 @@ demo/*/Data/
 demo/*/Logs/
 demo/*/userPreferences.*/
 demo/*/Project/DerivedData/
+demo/*/Project/data.journal
+demo/*/backupHistory.json

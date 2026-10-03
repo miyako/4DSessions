@@ -1,0 +1,30 @@
+{
+	"Classes": {
+		"classes": [
+			"FileData",
+			"FilesHandling",
+			"GeneralHandling",
+			"HandleWebBodyParts"
+		]
+	},
+	"Demo": {
+		"groups": [
+			"Classes",
+			"Forms",
+			"Project Methods"
+		]
+	},
+	"Forms": {
+		"forms": [
+			"Session_Form",
+			"StartScreen"
+		]
+	},
+	"Project Methods": {
+		"methods": [
+			"getOTP",
+			"onStartup"
+		]
+	},
+	"trash": {}
+}

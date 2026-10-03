@@ -1,0 +1,68 @@
+[
+    {
+        "class": "GeneralHandling",
+        "method": "initialize",
+        "regexPattern": "/init",
+        "verbs": "GET"
+    },
+    {
+        "class": "GeneralHandling",
+        "method": "pair",
+        "regexPattern": "/pair",
+        "verbs": "GET"
+    },
+    {
+        "class": "GeneralHandling",
+        "method": "scan",
+        "regexPattern": "/scan",
+        "verbs": "GET"
+    },
+    {
+        "class": "GeneralHandling",
+        "method": "reply",
+        "regexPattern": "/reply",
+        "verbs": "GET, POST"
+    },
+    {
+        "class": "GeneralHandling",
+        "method": "status",
+        "regexPattern": "/status",
+        "verbs": "GET"
+    },
+    {
+        "class": "GeneralHandling",
+        "method": "decision",
+        "regexPattern": "/decision",
+        "verbs": "POST"
+    },
+    {
+        "class": "GeneralHandling",
+        "method": "evidence",
+        "regexPattern": "/evidence",
+        "verbs": "GET"
+    },
+    {
+        "class": "GeneralHandling",
+        "method": "reportsList",
+        "regexPattern": "/reports",
+        "verbs": "GET"
+    },
+    {
+        "class": "GeneralHandling",
+        "method": "report",
+        "regexPattern": "/report",
+        "verbs": "GET"
+    },
+    {
+        "class": "GeneralHandling",
+        "method": "reset",
+        "regexPattern": "/reset",
+        "verbs": "GET, POST"
+    },
+    {
+        "class": "GeneralHandling",
+        "method": "upload",
+        "regexPattern": "/fileUpload",
+        "verbs": "POST"
+    }
+]
