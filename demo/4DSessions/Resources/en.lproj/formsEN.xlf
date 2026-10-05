@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+	<file datatype="plaintext" original="forms.xlf" source-language="en" target-language="en">
+		<body>
+			<trans-unit id="Start_WindowTitle" resname="Start_WindowTitle">
+				<source>Secure Sessions  ·  4D Tech Note</source>
+				<target>Secure Sessions  ·  4D Tech Note</target>
+			</trans-unit>
+			<trans-unit id="Start_BrandName" resname="Start_BrandName">
+				<source>Secure Sessions</source>
+				<target>Secure Sessions</target>
+			</trans-unit>
+			<trans-unit id="Start_BrandTagline" resname="Start_BrandTagline">
+				<source>Cross-device verification</source>
+				<target>Cross-device verification</target>
+			</trans-unit>
+			<trans-unit id="Start_Feature1" resname="Start_Feature1">
+				<source>QR session pairing</source>
+				<target>QR session pairing</target>
+			</trans-unit>
+			<trans-unit id="Start_Feature2" resname="Start_Feature2">
+				<source>OTP &amp; privileges</source>
+				<target>OTP &amp; privileges</target>
+			</trans-unit>
+			<trans-unit id="Start_Feature3" resname="Start_Feature3">
+				<source>Gated file upload</source>
+				<target>Gated file upload</target>
+			</trans-unit>
+			<trans-unit id="Start_BrandVersion" resname="Start_BrandVersion">
+				<source>Demo project</source>
+				<target>Demo project</target>
+			</trans-unit>
+			<trans-unit id="Start_Eyebrow" resname="Start_Eyebrow">
+				<source>HOW IT WORKS</source>
+				<target>HOW IT WORKS</target>
+			</trans-unit>
+			<trans-unit id="Start_Heading" resname="Start_Heading">
+				<source>Cross-Device Identity Verification</source>
+				<target>Cross-Device Identity Verification</target>
+			</trans-unit>
+			<trans-unit id="Start_Description" resname="Start_Description">
+				<source>This 4D application demonstrates a  cross-device session sharing. After sharing the session, a web page displays a challenge number and a QR code; scanning it on a phone restores the SAME 4D session through a one-time token ($4DSID). Tapping the matching number grants the "verified_user" privilege, which then unlocks a privilege-gated photo upload.</source>
+				<target>This 4D application demonstrates a  cross-device session sharing. After sharing the session, a web page displays a challenge number and a QR code; scanning it on a phone restores the SAME 4D session through a one-time token ($4DSID). Tapping the matching number grants the "verified_user" privilege, which then unlocks a privilege-gated photo upload.</target>
+			</trans-unit>
+			<trans-unit id="Start_Card1Label" resname="Start_Card1Label">
+				<source>VERSION</source>
+				<target>VERSION</target>
+			</trans-unit>
+			<trans-unit id="Start_Card2Label" resname="Start_Card2Label">
+				<source>STACK</source>
+				<target>STACK</target>
+			</trans-unit>
+			<trans-unit id="Start_Card2Value1" resname="Start_Card2Value1">
+				<source>4D · Web Server</source>
+				<target>4D · Web Server</target>
+			</trans-unit>
+			<trans-unit id="Start_Card2Value2" resname="Start_Card2Value2">
+				<source>Sessions · OTP</source>
+				<target>Sessions · OTP</target>
+			</trans-unit>
+			<trans-unit id="Start_Card3Label" resname="Start_Card3Label">
+				<source>DOCS &amp; BLOG</source>
+				<target>DOCS &amp; BLOG</target>
+			</trans-unit>
+			<trans-unit id="Start_LinkBlog" resname="Start_LinkBlog">
+				<source>Blog</source>
+				<target>Blog</target>
+			</trans-unit>
+			<trans-unit id="Start_LinkDocs" resname="Start_LinkDocs">
+				<source>Session class</source>
+				<target>Session class</target>
+			</trans-unit>
+			<trans-unit id="Start_Tagline" resname="Start_Tagline">
+				<source>Same session across devices  ·  verified and privilege-gated.</source>
+				<target>Same session across devices  ·  verified and privilege-gated.</target>
+			</trans-unit>
+			<trans-unit id="Start_LaunchButton" resname="Start_LaunchButton">
+				<source>Launch Demo  →</source>
+				<target>Launch Demo  →</target>
+			</trans-unit>
+			<trans-unit id="Start_Copyright" resname="Start_Copyright">
+				<source>© 2026  ·  4D Tech Note</source>
+				<target>© 2026  ·  4D Tech Note</target>
+			</trans-unit>
+			<trans-unit id="Session_WindowTitle" resname="Session_WindowTitle">
+				<source>4D Secure Session</source>
+				<target>4D Secure Session</target>
+			</trans-unit>
+			<trans-unit id="Session_AppSub" resname="Session_AppSub">
+				<source>Session Demo</source>
+				<target>Session Demo</target>
+			</trans-unit>
+			<trans-unit id="Session_SectionLabel" resname="Session_SectionLabel">
+				<source>SESSION</source>
+				<target>SESSION</target>
+			</trans-unit>
+			<trans-unit id="Session_NavInfo" resname="Session_NavInfo">
+				<source>Session info</source>
+				<target>Session info</target>
+			</trans-unit>
+			<trans-unit id="Session_Active" resname="Session_Active">
+				<source>Active</source>
+				<target>Active</target>
+			</trans-unit>
+			<trans-unit id="Session_Title" resname="Session_Title">
+				<source>Session</source>
+				<target>Session</target>
+			</trans-unit>
+			<trans-unit id="Session_Subtitle" resname="Session_Subtitle">
+				<source>Verify your session, then click Share Session</source>
+				<target>Verify your session, then click Share Session</target>
+			</trans-unit>
+			<trans-unit id="Session_InfoTitle" resname="Session_InfoTitle">
+				<source>Session information</source>
+				<target>Session information</target>
+			</trans-unit>
+			<trans-unit id="Session_InfoSub" resname="Session_InfoSub">
+				<source>Session.info :  live snapshot</source>
+				<target>Session.info :  live snapshot</target>
+			</trans-unit>
+			<trans-unit id="Session_LabelType" resname="Session_LabelType">
+				<source>Type</source>
+				<target>Type</target>
+			</trans-unit>
+			<trans-unit id="Session_LabelUser" resname="Session_LabelUser">
+				<source>User name</source>
+				<target>User name</target>
+			</trans-unit>
+			<trans-unit id="Session_LabelMachine" resname="Session_LabelMachine">
+				<source>Machine name</source>
+				<target>Machine name</target>
+			</trans-unit>
+			<trans-unit id="Session_LabelIP" resname="Session_LabelIP">
+				<source>IP address</source>
+				<target>IP address</target>
+			</trans-unit>
+			<trans-unit id="Session_LabelID" resname="Session_LabelID">
+				<source>Session ID</source>
+				<target>Session ID</target>
+			</trans-unit>
+			<trans-unit id="Session_LabelCreated" resname="Session_LabelCreated">
+				<source>Created</source>
+				<target>Created</target>
+			</trans-unit>
+			<trans-unit id="Session_LabelState" resname="Session_LabelState">
+				<source>State</source>
+				<target>State</target>
+			</trans-unit>
+			<trans-unit id="Session_Footer" resname="Session_Footer">
+				<source>Session.info · data is live</source>
+				<target>Session.info · data is live</target>
+			</trans-unit>
+			<trans-unit id="Session_ShareButton" resname="Session_ShareButton">
+				<source>Share this Session  →</source>
+				<target>Share this Session  →</target>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

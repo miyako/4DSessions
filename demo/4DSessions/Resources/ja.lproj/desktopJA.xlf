@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+	<file datatype="plaintext" original="desktop.xlf" source-language="en" target-language="ja">
+		<body>
+			<trans-unit id="Start_AlertWebServerOff" resname="Start_AlertWebServerOff">
+				<source>The web server is not running. Please start it in the Runtime Explorer before launching the demo.</source>
+				<target>Webサーバーが起動していません。デモを起動する前に、ランタイムエクスプローラーでWebサーバーを開始してください。</target>
+			</trans-unit>
+			<trans-unit id="Start_BlogURL" resname="Start_BlogURL">
+				<source>https://blog.4d.com/</source>
+				<target>https://blog.4d.com/ja/</target>
+			</trans-unit>
+			<trans-unit id="Start_DocsURL" resname="Start_DocsURL">
+				<source>https://developer.4d.com/docs/API/SessionClass</source>
+				<target>https://developer.4d.com/docs/ja/API/SessionClass</target>
+			</trans-unit>
+			<trans-unit id="Session_ConfirmOTP" resname="Session_ConfirmOTP">
+				<source>OTP created. URL for incognito test:</source>
+				<target>OTPを作成しました。シークレットウィンドウでテストするためのURL：</target>
+			</trans-unit>
+			<trans-unit id="Session_OpenInBrowser" resname="Session_OpenInBrowser">
+				<source>Open in browser</source>
+				<target>ブラウザーで開く</target>
+			</trans-unit>
+			<trans-unit id="Session_LastRefreshed" resname="Session_LastRefreshed">
+				<source>Last refreshed {time} UTC</source>
+				<target>最終更新 {time} UTC</target>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

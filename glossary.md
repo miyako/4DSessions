@@ -37,8 +37,47 @@ Full-width `（）` and `：` in prose. First occurrence of a technical term: �
 
 | English | 日本語 | Notes |
 |---|---|---|
+| session | セッション | |
+| remote user session | リモートユーザーセッション | official 4D docs; first use 日本語（English） |
+| stored procedure session | ストアドプロシージャーセッション | |
+| standalone session | スタンドアロンセッション | |
+| web session / web user session | Webセッション / Webユーザーセッション | |
+| desktop session | デスクトップセッション | |
+| remote client / 4D remote client | リモートクライアント / 4Dリモートクライアント | |
+| client-side / server-side | クライアント側 / サーバー側 | |
+| privilege | アクセス権 | official 4D docs (Session class); first use アクセス権（privilege） |
+| role | ロール | |
+| one-time password (OTP) | ワンタイムパスワード（OTP） | 4D docs also gloss it as One Time Passcode |
+| token | トークン | |
+| session sharing | セッション共有 | |
+| HTTP handler / REST handler | HTTPハンドラー / RESTハンドラー | |
+| route (e.g. /pair) | ルート | |
+| form method / object method | フォームメソッド / オブジェクトメソッド | |
+| Execute on Server (method property) | サーバー上で実行 | in 「」 |
+| query parameter | クエリパラメーター | |
+| session cookie | セッションcookie | |
+| challenge-response | チャレンジレスポンス | first use チャレンジレスポンス（challenge-response） |
+| pairing | ペアリング | |
+| compliance officer | コンプライアンス担当者 | |
+| subject (person being verified) | 当人 | 本人 avoided: clashes with 本人確認 |
+| operator | オペレーター | |
+| case | 照会 | verification case; 確認事例 → 照会 |
+| verification | 確認 / 本人確認 | |
+| identity document | 本人確認書類 | |
+| approved / rejected / more info requested | 承認 / 却下 / 追加情報の要求 | statuses in prose; UI labels stay in English |
+| private navigation | プライベートブラウズ | |
+| production | 本番環境 | |
+| Boolean | ブール型 / ブール値 | |
+| Abstract / Conclusion | 概要 / まとめ | headings |
+| Technical Note | テクニカルノート | cover |
 
 ## Proper nouns in examples
 
 | English | 日本語 | Notes |
 |---|---|---|
+| 4D Secure OTP | 4D Secure OTP | demo application name, not translated |
+| Al Mahdi Bakkali | Al Mahdi Bakkali | author, Latin script |
+| KYC (Know Your Customer) | 本人確認（KYC：Know Your Customer） | |
+| Share session (button) | このセッションを共有 | button label of the localised demo (Session_ShareButton) |
+| Session expired (message) | 「セッションの有効期限切れ」 | page title of the localised demo (Web_SessionExpired) |
+| Reports (page) | Reports | UI label kept as in the demo |

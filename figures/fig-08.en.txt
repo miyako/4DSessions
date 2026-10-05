@@ -1,0 +1,24 @@
+Case report VR- 2026-6667
+© Approved
+Generated 2026-06-25 - 15:31 UTC.
+CASE DETAILS
+Reference
+VR-2026-6667
+Channel
+QR: Mobile
+Created
+2026-06-25
+15:25 UTC
+Submitted
+2026-06-25
+15:31 UTC
+Session
+64653DD775FC4027...
+EVIDENCE
+File
+{878DCE6B-A7A2-45A5-A4A5-B6BA289B8EC9}.png
+Type
+PNG
+Size
+73.7 KB
+SHA-256

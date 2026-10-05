@@ -1,0 +1,16 @@
+Session information
+Session.int
+live snapshot
+Type
+standalone
+User name
+Designer
+Machine name
+‘ZBF-0599
+IP address
+localhost
+Session ID
+Created
+2026-06-25 01:01
+State
+Active

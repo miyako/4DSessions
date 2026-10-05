@@ -1,0 +1,791 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+	<file datatype="plaintext" original="web.xlf" source-language="en" target-language="en">
+		<body>
+			<trans-unit id="Status_pending" resname="Status_pending">
+				<source>Pending</source>
+				<target>Pending</target>
+			</trans-unit>
+			<trans-unit id="Status_verified" resname="Status_verified">
+				<source>Verified</source>
+				<target>Verified</target>
+			</trans-unit>
+			<trans-unit id="Status_under_review" resname="Status_under_review">
+				<source>Under review</source>
+				<target>Under review</target>
+			</trans-unit>
+			<trans-unit id="Status_approved" resname="Status_approved">
+				<source>Approved</source>
+				<target>Approved</target>
+			</trans-unit>
+			<trans-unit id="Status_rejected" resname="Status_rejected">
+				<source>Rejected</source>
+				<target>Rejected</target>
+			</trans-unit>
+			<trans-unit id="Status_info_requested" resname="Status_info_requested">
+				<source>Info requested</source>
+				<target>Info requested</target>
+			</trans-unit>
+			<trans-unit id="Status_expired" resname="Status_expired">
+				<source>expired</source>
+				<target>expired</target>
+			</trans-unit>
+			<trans-unit id="Reason_identity_confirmed" resname="Reason_identity_confirmed">
+				<source>Identity confirmed</source>
+				<target>Identity confirmed</target>
+			</trans-unit>
+			<trans-unit id="Reason_manual_override" resname="Reason_manual_override">
+				<source>Manual override</source>
+				<target>Manual override</target>
+			</trans-unit>
+			<trans-unit id="Reason_doc_unreadable" resname="Reason_doc_unreadable">
+				<source>Document unreadable</source>
+				<target>Document unreadable</target>
+			</trans-unit>
+			<trans-unit id="Reason_face_mismatch" resname="Reason_face_mismatch">
+				<source>Face mismatch</source>
+				<target>Face mismatch</target>
+			</trans-unit>
+			<trans-unit id="Reason_suspected_tampering" resname="Reason_suspected_tampering">
+				<source>Suspected tampering</source>
+				<target>Suspected tampering</target>
+			</trans-unit>
+			<trans-unit id="Reason_wrong_document" resname="Reason_wrong_document">
+				<source>Wrong document</source>
+				<target>Wrong document</target>
+			</trans-unit>
+			<trans-unit id="Reason_retake_photo" resname="Reason_retake_photo">
+				<source>Please retake the photo</source>
+				<target>Please retake the photo</target>
+			</trans-unit>
+			<trans-unit id="Reason_better_lighting" resname="Reason_better_lighting">
+				<source>Better lighting required</source>
+				<target>Better lighting required</target>
+			</trans-unit>
+			<trans-unit id="Reason_full_document" resname="Reason_full_document">
+				<source>Full document required</source>
+				<target>Full document required</target>
+			</trans-unit>
+			<trans-unit id="Reason_other" resname="Reason_other">
+				<source>Other</source>
+				<target>Other</target>
+			</trans-unit>
+			<trans-unit id="Option_retake_photo" resname="Option_retake_photo">
+				<source>Retake photo</source>
+				<target>Retake photo</target>
+			</trans-unit>
+			<trans-unit id="Option_better_lighting" resname="Option_better_lighting">
+				<source>Better lighting</source>
+				<target>Better lighting</target>
+			</trans-unit>
+			<trans-unit id="Option_full_document" resname="Option_full_document">
+				<source>Full document</source>
+				<target>Full document</target>
+			</trans-unit>
+			<trans-unit id="Check_FileIntegrity" resname="Check_FileIntegrity">
+				<source>File integrity</source>
+				<target>File integrity</target>
+			</trans-unit>
+			<trans-unit id="Check_Valid" resname="Check_Valid">
+				<source>Valid</source>
+				<target>Valid</target>
+			</trans-unit>
+			<trans-unit id="Check_NonEmpty" resname="Check_NonEmpty">
+				<source>Non-empty file received</source>
+				<target>Non-empty file received</target>
+			</trans-unit>
+			<trans-unit id="Check_Empty" resname="Check_Empty">
+				<source>Empty</source>
+				<target>Empty</target>
+			</trans-unit>
+			<trans-unit id="Check_NoBytes" resname="Check_NoBytes">
+				<source>No bytes received</source>
+				<target>No bytes received</target>
+			</trans-unit>
+			<trans-unit id="Check_FileSize" resname="Check_FileSize">
+				<source>File size</source>
+				<target>File size</target>
+			</trans-unit>
+			<trans-unit id="Check_WithinRange" resname="Check_WithinRange">
+				<source>Within accepted range</source>
+				<target>Within accepted range</target>
+			</trans-unit>
+			<trans-unit id="Check_FileType" resname="Check_FileType">
+				<source>File type</source>
+				<target>File type</target>
+			</trans-unit>
+			<trans-unit id="Check_RecognisedImage" resname="Check_RecognisedImage">
+				<source>Recognised image format</source>
+				<target>Recognised image format</target>
+			</trans-unit>
+			<trans-unit id="Check_Unknown" resname="Check_Unknown">
+				<source>Unknown</source>
+				<target>Unknown</target>
+			</trans-unit>
+			<trans-unit id="Check_NotStandardImage" resname="Check_NotStandardImage">
+				<source>Not a standard image format</source>
+				<target>Not a standard image format</target>
+			</trans-unit>
+			<trans-unit id="Check_ImageReadability" resname="Check_ImageReadability">
+				<source>Image readability</source>
+				<target>Image readability</target>
+			</trans-unit>
+			<trans-unit id="Check_Readable" resname="Check_Readable">
+				<source>Readable</source>
+				<target>Readable</target>
+			</trans-unit>
+			<trans-unit id="Check_DecodedOK" resname="Check_DecodedOK">
+				<source>Image decoded successfully</source>
+				<target>Image decoded successfully</target>
+			</trans-unit>
+			<trans-unit id="Check_Unreadable" resname="Check_Unreadable">
+				<source>Unreadable</source>
+				<target>Unreadable</target>
+			</trans-unit>
+			<trans-unit id="Check_DecodeFailed" resname="Check_DecodeFailed">
+				<source>Image data could not be decoded</source>
+				<target>Image data could not be decoded</target>
+			</trans-unit>
+			<trans-unit id="Check_NA" resname="Check_NA">
+				<source>n/a</source>
+				<target>n/a</target>
+			</trans-unit>
+			<trans-unit id="Check_NotImage" resname="Check_NotImage">
+				<source>Not an image file</source>
+				<target>Not an image file</target>
+			</trans-unit>
+			<trans-unit id="Check_IntegrityHash" resname="Check_IntegrityHash">
+				<source>Integrity hash</source>
+				<target>Integrity hash</target>
+			</trans-unit>
+			<trans-unit id="Check_ChainOfCustody" resname="Check_ChainOfCustody">
+				<source>SHA-256 · chain of custody</source>
+				<target>SHA-256 · chain of custody</target>
+			</trans-unit>
+			<trans-unit id="Check_Duplicate" resname="Check_Duplicate">
+				<source>Duplicate check</source>
+				<target>Duplicate check</target>
+			</trans-unit>
+			<trans-unit id="Check_Unique" resname="Check_Unique">
+				<source>Unique</source>
+				<target>Unique</target>
+			</trans-unit>
+			<trans-unit id="Check_FirstSubmission" resname="Check_FirstSubmission">
+				<source>First submission in this session</source>
+				<target>First submission in this session</target>
+			</trans-unit>
+			<trans-unit id="Msg_TapNumber" resname="Msg_TapNumber">
+				<source>Tap the number shown on the desktop screen.</source>
+				<target>Tap the number shown on the desktop screen.</target>
+			</trans-unit>
+			<trans-unit id="Msg_IdentityConfirmed" resname="Msg_IdentityConfirmed">
+				<source>Identity confirmed. Please upload your photo.</source>
+				<target>Identity confirmed. Please upload your photo.</target>
+			</trans-unit>
+			<trans-unit id="Msg_IncorrectNumber" resname="Msg_IncorrectNumber">
+				<source>That number is incorrect. Please try again.</source>
+				<target>That number is incorrect. Please try again.</target>
+			</trans-unit>
+			<trans-unit id="Msg_SubmittedForReview" resname="Msg_SubmittedForReview">
+				<source>Submitted for review.</source>
+				<target>Submitted for review.</target>
+			</trans-unit>
+			<trans-unit id="Msg_DecisionRecorded" resname="Msg_DecisionRecorded">
+				<source>Decision recorded.</source>
+				<target>Decision recorded.</target>
+			</trans-unit>
+			<trans-unit id="Msg_Approved" resname="Msg_Approved">
+				<source>Verification approved.</source>
+				<target>Verification approved.</target>
+			</trans-unit>
+			<trans-unit id="Msg_Rejected" resname="Msg_Rejected">
+				<source>Verification rejected.</source>
+				<target>Verification rejected.</target>
+			</trans-unit>
+			<trans-unit id="Msg_InfoRequested" resname="Msg_InfoRequested">
+				<source>Additional information requested.</source>
+				<target>Additional information requested.</target>
+			</trans-unit>
+			<trans-unit id="Log_CaseOpened" resname="Log_CaseOpened">
+				<source>Case {ref} opened.</source>
+				<target>Case {ref} opened.</target>
+			</trans-unit>
+			<trans-unit id="Log_IdentityVerified" resname="Log_IdentityVerified">
+				<source>Identity verified by subject.</source>
+				<target>Identity verified by subject.</target>
+			</trans-unit>
+			<trans-unit id="Log_IncorrectResponse" resname="Log_IncorrectResponse">
+				<source>Incorrect challenge response: {reply}</source>
+				<target>Incorrect challenge response: {reply}</target>
+			</trans-unit>
+			<trans-unit id="Log_UploadBlocked" resname="Log_UploadBlocked">
+				<source>Upload blocked — session not verified.</source>
+				<target>Upload blocked — session not verified.</target>
+			</trans-unit>
+			<trans-unit id="Log_EvidenceSubmitted" resname="Log_EvidenceSubmitted">
+				<source>Evidence submitted: {name} ({size}).</source>
+				<target>Evidence submitted: {name} ({size}).</target>
+			</trans-unit>
+			<trans-unit id="Log_ChecksCompleted" resname="Log_ChecksCompleted">
+				<source>Automated checks completed ({pass}/{total} passed).</source>
+				<target>Automated checks completed ({pass}/{total} passed).</target>
+			</trans-unit>
+			<trans-unit id="Log_UploadFailed" resname="Log_UploadFailed">
+				<source>Upload failed — {error}</source>
+				<target>Upload failed — {error}</target>
+			</trans-unit>
+			<trans-unit id="Log_Decision" resname="Log_Decision">
+				<source>Decision: {outcome} — {reason} by Operator.</source>
+				<target>Decision: {outcome} — {reason} by Operator.</target>
+			</trans-unit>
+			<trans-unit id="Log_DecisionNoReason" resname="Log_DecisionNoReason">
+				<source>Decision: {outcome} by Operator.</source>
+				<target>Decision: {outcome} by Operator.</target>
+			</trans-unit>
+			<trans-unit id="Log_PairDevice" resname="Log_PairDevice">
+				<source>Pair device: QR and challenge generated.</source>
+				<target>Pair device: QR and challenge generated.</target>
+			</trans-unit>
+			<trans-unit id="Json_AccessDenied" resname="Json_AccessDenied">
+				<source>Access denied. Verify the challenge first.</source>
+				<target>Access denied. Verify the challenge first.</target>
+			</trans-unit>
+			<trans-unit id="Json_NoFile" resname="Json_NoFile">
+				<source>No readable file in the request.</source>
+				<target>No readable file in the request.</target>
+			</trans-unit>
+			<trans-unit id="Json_SizeOutOfRange" resname="Json_SizeOutOfRange">
+				<source>File size is outside the accepted range.</source>
+				<target>File size is outside the accepted range.</target>
+			</trans-unit>
+			<trans-unit id="Json_SubmissionReceived" resname="Json_SubmissionReceived">
+				<source>Submission received.</source>
+				<target>Submission received.</target>
+			</trans-unit>
+			<trans-unit id="Json_UploadFailed" resname="Json_UploadFailed">
+				<source>The upload could not be processed.</source>
+				<target>The upload could not be processed.</target>
+			</trans-unit>
+			<trans-unit id="Json_NoActiveCase" resname="Json_NoActiveCase">
+				<source>No active case.</source>
+				<target>No active case.</target>
+			</trans-unit>
+			<trans-unit id="Json_NoCaseAwaiting" resname="Json_NoCaseAwaiting">
+				<source>No case is awaiting a decision.</source>
+				<target>No case is awaiting a decision.</target>
+			</trans-unit>
+			<trans-unit id="Json_InvalidBody" resname="Json_InvalidBody">
+				<source>Invalid request body.</source>
+				<target>Invalid request body.</target>
+			</trans-unit>
+			<trans-unit id="Json_UnknownOutcome" resname="Json_UnknownOutcome">
+				<source>Unknown decision outcome.</source>
+				<target>Unknown decision outcome.</target>
+			</trans-unit>
+			<trans-unit id="Json_ReasonRequired" resname="Json_ReasonRequired">
+				<source>A reason code is required for this decision.</source>
+				<target>A reason code is required for this decision.</target>
+			</trans-unit>
+			<trans-unit id="Json_NoEvidence" resname="Json_NoEvidence">
+				<source>No evidence on file.</source>
+				<target>No evidence on file.</target>
+			</trans-unit>
+			<trans-unit id="Json_EvidenceMissing" resname="Json_EvidenceMissing">
+				<source>Evidence file missing.</source>
+				<target>Evidence file missing.</target>
+			</trans-unit>
+			<trans-unit id="Json_ReportNotFound" resname="Json_ReportNotFound">
+				<source>Report not found</source>
+				<target>Report not found</target>
+			</trans-unit>
+			<trans-unit id="Json_SessionReset" resname="Json_SessionReset">
+				<source>Session reset</source>
+				<target>Session reset</target>
+			</trans-unit>
+			<trans-unit id="Web_SessionExpired" resname="Web_SessionExpired">
+				<source>Session expired</source>
+				<target>Session expired</target>
+			</trans-unit>
+			<trans-unit id="Web_LinkInvalid" resname="Web_LinkInvalid">
+				<source>This link is no longer valid.</source>
+				<target>This link is no longer valid.</target>
+			</trans-unit>
+			<trans-unit id="Web_OpenFromDesktop" resname="Web_OpenFromDesktop">
+				<source>Open this console from the desktop application to start a new session.</source>
+				<target>Open this console from the desktop application to start a new session.</target>
+			</trans-unit>
+			<trans-unit id="Web_CaseTitle" resname="Web_CaseTitle">
+				<source>Case {ref}</source>
+				<target>Case {ref}</target>
+			</trans-unit>
+			<trans-unit id="Web_QRExpired" resname="Web_QRExpired">
+				<source>QR code expired</source>
+				<target>QR code expired</target>
+			</trans-unit>
+			<trans-unit id="Web_AskRegenerate" resname="Web_AskRegenerate">
+				<source>Ask the operator to click &lt;b&gt;Regenerate QR &amp;amp; challenge&lt;/b&gt; on the pairing screen to get a fresh code.</source>
+				<target>Ask the operator to click &lt;b&gt;Regenerate QR &amp;amp; challenge&lt;/b&gt; on the pairing screen to get a fresh code.</target>
+			</trans-unit>
+			<trans-unit id="Web_Expired" resname="Web_Expired">
+				<source>Expired</source>
+				<target>Expired</target>
+			</trans-unit>
+			<trans-unit id="Web_SubmissionReceived" resname="Web_SubmissionReceived">
+				<source>Submission received</source>
+				<target>Submission received</target>
+			</trans-unit>
+			<trans-unit id="Web_Reference" resname="Web_Reference">
+				<source>Reference</source>
+				<target>Reference</target>
+			</trans-unit>
+			<trans-unit id="Web_ReferenceValue" resname="Web_ReferenceValue">
+				<source>Reference {ref}</source>
+				<target>Reference {ref}</target>
+			</trans-unit>
+			<trans-unit id="Web_File" resname="Web_File">
+				<source>File</source>
+				<target>File</target>
+			</trans-unit>
+			<trans-unit id="Web_Submitted" resname="Web_Submitted">
+				<source>Submitted</source>
+				<target>Submitted</target>
+			</trans-unit>
+			<trans-unit id="Web_UnderReviewNote" resname="Web_UnderReviewNote">
+				<source>Your submission is under review. You can close this page and reopen the link to check the outcome.</source>
+				<target>Your submission is under review. You can close this page and reopen the link to check the outcome.</target>
+			</trans-unit>
+			<trans-unit id="Web_VerificationComplete" resname="Web_VerificationComplete">
+				<source>Verification complete</source>
+				<target>Verification complete</target>
+			</trans-unit>
+			<trans-unit id="Web_Outcome" resname="Web_Outcome">
+				<source>Outcome</source>
+				<target>Outcome</target>
+			</trans-unit>
+			<trans-unit id="Web_Confirmed" resname="Web_Confirmed">
+				<source>Confirmed</source>
+				<target>Confirmed</target>
+			</trans-unit>
+			<trans-unit id="Web_Confirmation" resname="Web_Confirmation">
+				<source>Confirmation</source>
+				<target>Confirmation</target>
+			</trans-unit>
+			<trans-unit id="Web_VerificationUnsuccessful" resname="Web_VerificationUnsuccessful">
+				<source>Verification unsuccessful</source>
+				<target>Verification unsuccessful</target>
+			</trans-unit>
+			<trans-unit id="Web_AdditionalInfoNeeded" resname="Web_AdditionalInfoNeeded">
+				<source>Additional information needed</source>
+				<target>Additional information needed</target>
+			</trans-unit>
+			<trans-unit id="Web_IdentityConfirmed" resname="Web_IdentityConfirmed">
+				<source>Identity confirmed</source>
+				<target>Identity confirmed</target>
+			</trans-unit>
+			<trans-unit id="Web_UploadPrompt" resname="Web_UploadPrompt">
+				<source>Upload your verification photo to complete the process.</source>
+				<target>Upload your verification photo to complete the process.</target>
+			</trans-unit>
+			<trans-unit id="Web_IdentityVerification" resname="Web_IdentityVerification">
+				<source>Identity verification</source>
+				<target>Identity verification</target>
+			</trans-unit>
+			<trans-unit id="Web_Verification" resname="Web_Verification">
+				<source>Verification</source>
+				<target>Verification</target>
+			</trans-unit>
+			<trans-unit id="Web_Dashboard" resname="Web_Dashboard">
+				<source>Dashboard</source>
+				<target>Dashboard</target>
+			</trans-unit>
+			<trans-unit id="Web_PairDevice" resname="Web_PairDevice">
+				<source>Pair device</source>
+				<target>Pair device</target>
+			</trans-unit>
+			<trans-unit id="Web_ScanOnSubjectDevice" resname="Web_ScanOnSubjectDevice">
+				<source>Scan the QR code on the subject's device</source>
+				<target>Scan the QR code on the subject's device</target>
+			</trans-unit>
+			<trans-unit id="Web_CurrentStep" resname="Web_CurrentStep">
+				<source>Current step ·</source>
+				<target>Current step ·</target>
+			</trans-unit>
+			<trans-unit id="Web_DevicePairing" resname="Web_DevicePairing">
+				<source>Device pairing</source>
+				<target>Device pairing</target>
+			</trans-unit>
+			<trans-unit id="Web_PairingQR" resname="Web_PairingQR">
+				<source>Pairing QR</source>
+				<target>Pairing QR</target>
+			</trans-unit>
+			<trans-unit id="Web_ScanQRWithDevice" resname="Web_ScanQRWithDevice">
+				<source>Scan QR with the subject's device</source>
+				<target>Scan QR with the subject's device</target>
+			</trans-unit>
+			<trans-unit id="Web_Challenge" resname="Web_Challenge">
+				<source>Challenge</source>
+				<target>Challenge</target>
+			</trans-unit>
+			<trans-unit id="Web_ReadNumber" resname="Web_ReadNumber">
+				<source>Read this number to the subject after they scan the QR code.</source>
+				<target>Read this number to the subject after they scan the QR code.</target>
+			</trans-unit>
+			<trans-unit id="Web_OrShareLink" resname="Web_OrShareLink">
+				<source>Or share this link</source>
+				<target>Or share this link</target>
+			</trans-unit>
+			<trans-unit id="Web_CopyLink" resname="Web_CopyLink">
+				<source>Copy link</source>
+				<target>Copy link</target>
+			</trans-unit>
+			<trans-unit id="Web_Copy" resname="Web_Copy">
+				<source>Copy</source>
+				<target>Copy</target>
+			</trans-unit>
+			<trans-unit id="Web_RegenerateQR" resname="Web_RegenerateQR">
+				<source>Regenerate QR &amp;amp; challenge</source>
+				<target>Regenerate QR &amp;amp; challenge</target>
+			</trans-unit>
+			<trans-unit id="Web_Process" resname="Web_Process">
+				<source>Process</source>
+				<target>Process</target>
+			</trans-unit>
+			<trans-unit id="Web_CaseDetails" resname="Web_CaseDetails">
+				<source>Case details</source>
+				<target>Case details</target>
+			</trans-unit>
+			<trans-unit id="Web_Activity" resname="Web_Activity">
+				<source>Activity</source>
+				<target>Activity</target>
+			</trans-unit>
+			<trans-unit id="Web_AwaitingSubject" resname="Web_AwaitingSubject">
+				<source>Awaiting subject — pair a device to continue</source>
+				<target>Awaiting subject — pair a device to continue</target>
+			</trans-unit>
+			<trans-unit id="Web_ClickPairDevice" resname="Web_ClickPairDevice">
+				<source>Click &lt;b&gt;Pair device&lt;/b&gt; to generate a QR code and challenge number for the subject's phone.</source>
+				<target>Click &lt;b&gt;Pair device&lt;/b&gt; to generate a QR code and challenge number for the subject's phone.</target>
+			</trans-unit>
+			<trans-unit id="Web_IdentityVerifiedAwaiting" resname="Web_IdentityVerifiedAwaiting">
+				<source>Identity verified — awaiting evidence upload</source>
+				<target>Identity verified — awaiting evidence upload</target>
+			</trans-unit>
+			<trans-unit id="Web_EvidenceSubmission" resname="Web_EvidenceSubmission">
+				<source>Evidence submission</source>
+				<target>Evidence submission</target>
+			</trans-unit>
+			<trans-unit id="Web_SubjectUploading" resname="Web_SubjectUploading">
+				<source>Identity confirmed. The subject is now uploading their verification photo.</source>
+				<target>Identity confirmed. The subject is now uploading their verification photo.</target>
+			</trans-unit>
+			<trans-unit id="Web_DesktopConnected" resname="Web_DesktopConnected">
+				<source>Desktop session connected</source>
+				<target>Desktop session connected</target>
+			</trans-unit>
+			<trans-unit id="Web_ReadyForReview" resname="Web_ReadyForReview">
+				<source>Ready for review · submitted {time}</source>
+				<target>Ready for review · submitted {time}</target>
+			</trans-unit>
+			<trans-unit id="Web_Evidence" resname="Web_Evidence">
+				<source>Evidence</source>
+				<target>Evidence</target>
+			</trans-unit>
+			<trans-unit id="Web_OpenOriginal" resname="Web_OpenOriginal">
+				<source>Open original</source>
+				<target>Open original</target>
+			</trans-unit>
+			<trans-unit id="Web_AutomatedChecks" resname="Web_AutomatedChecks">
+				<source>Automated checks</source>
+				<target>Automated checks</target>
+			</trans-unit>
+			<trans-unit id="Web_ChecksPassed" resname="Web_ChecksPassed">
+				<source>{pass} / {total} passed</source>
+				<target>{pass} / {total} passed</target>
+			</trans-unit>
+			<trans-unit id="Web_AuditTrail" resname="Web_AuditTrail">
+				<source>Audit trail</source>
+				<target>Audit trail</target>
+			</trans-unit>
+			<trans-unit id="Web_Decision" resname="Web_Decision">
+				<source>Decision</source>
+				<target>Decision</target>
+			</trans-unit>
+			<trans-unit id="Web_Approve" resname="Web_Approve">
+				<source>Approve</source>
+				<target>Approve</target>
+			</trans-unit>
+			<trans-unit id="Web_Reject" resname="Web_Reject">
+				<source>Reject</source>
+				<target>Reject</target>
+			</trans-unit>
+			<trans-unit id="Web_RequestInfo" resname="Web_RequestInfo">
+				<source>Request info</source>
+				<target>Request info</target>
+			</trans-unit>
+			<trans-unit id="Web_ReasonCode" resname="Web_ReasonCode">
+				<source>Reason code</source>
+				<target>Reason code</target>
+			</trans-unit>
+			<trans-unit id="Web_SelectReason" resname="Web_SelectReason">
+				<source>Select reason…</source>
+				<target>Select reason…</target>
+			</trans-unit>
+			<trans-unit id="Web_Notes" resname="Web_Notes">
+				<source>Notes</source>
+				<target>Notes</target>
+			</trans-unit>
+			<trans-unit id="Web_NotesPlaceholder" resname="Web_NotesPlaceholder">
+				<source>Context for the audit record (optional)</source>
+				<target>Context for the audit record (optional)</target>
+			</trans-unit>
+			<trans-unit id="Web_SubmitDecision" resname="Web_SubmitDecision">
+				<source>Submit decision</source>
+				<target>Submit decision</target>
+			</trans-unit>
+			<trans-unit id="Web_DecisionsFinal" resname="Web_DecisionsFinal">
+				<source>Decisions are final and recorded in the audit trail.</source>
+				<target>Decisions are final and recorded in the audit trail.</target>
+			</trans-unit>
+			<trans-unit id="Web_JsSelectDecision" resname="Web_JsSelectDecision">
+				<source>Select a decision.</source>
+				<target>Select a decision.</target>
+			</trans-unit>
+			<trans-unit id="Web_JsSelectReason" resname="Web_JsSelectReason">
+				<source>Select a reason code.</source>
+				<target>Select a reason code.</target>
+			</trans-unit>
+			<trans-unit id="Web_JsDecisionRecorded" resname="Web_JsDecisionRecorded">
+				<source>Decision recorded — {ref} · archived to Reports.</source>
+				<target>Decision recorded — {ref} · archived to Reports.</target>
+			</trans-unit>
+			<trans-unit id="Web_JsFailed" resname="Web_JsFailed">
+				<source>Failed</source>
+				<target>Failed</target>
+			</trans-unit>
+			<trans-unit id="Web_JsNetworkError" resname="Web_JsNetworkError">
+				<source>Network error</source>
+				<target>Network error</target>
+			</trans-unit>
+			<trans-unit id="Web_OutcomeInfoRequested" resname="Web_OutcomeInfoRequested">
+				<source>Additional information requested from the subject.</source>
+				<target>Additional information requested from the subject.</target>
+			</trans-unit>
+			<trans-unit id="Web_OutcomeApproved" resname="Web_OutcomeApproved">
+				<source>This verification has been approved.</source>
+				<target>This verification has been approved.</target>
+			</trans-unit>
+			<trans-unit id="Web_OutcomeRejected" resname="Web_OutcomeRejected">
+				<source>This verification has been rejected.</source>
+				<target>This verification has been rejected.</target>
+			</trans-unit>
+			<trans-unit id="Web_DecisionRecordedAt" resname="Web_DecisionRecordedAt">
+				<source>Decision recorded · {time}</source>
+				<target>Decision recorded · {time}</target>
+			</trans-unit>
+			<trans-unit id="Web_Reason" resname="Web_Reason">
+				<source>Reason</source>
+				<target>Reason</target>
+			</trans-unit>
+			<trans-unit id="Web_Reviewer" resname="Web_Reviewer">
+				<source>Reviewer</source>
+				<target>Reviewer</target>
+			</trans-unit>
+			<trans-unit id="Web_Decided" resname="Web_Decided">
+				<source>Decided</source>
+				<target>Decided</target>
+			</trans-unit>
+			<trans-unit id="Web_Operator" resname="Web_Operator">
+				<source>Operator</source>
+				<target>Operator</target>
+			</trans-unit>
+			<trans-unit id="Web_OpenReport" resname="Web_OpenReport">
+				<source>Open report</source>
+				<target>Open report</target>
+			</trans-unit>
+			<trans-unit id="Web_StartOver" resname="Web_StartOver">
+				<source>Start over</source>
+				<target>Start over</target>
+			</trans-unit>
+			<trans-unit id="Web_CaseOpened" resname="Web_CaseOpened">
+				<source>Case opened</source>
+				<target>Case opened</target>
+			</trans-unit>
+			<trans-unit id="Web_VerifiedBySubject" resname="Web_VerifiedBySubject">
+				<source>Verified by subject</source>
+				<target>Verified by subject</target>
+			</trans-unit>
+			<trans-unit id="Web_WaitingPairing" resname="Web_WaitingPairing">
+				<source>Waiting for device pairing</source>
+				<target>Waiting for device pairing</target>
+			</trans-unit>
+			<trans-unit id="Web_UnlocksAfter" resname="Web_UnlocksAfter">
+				<source>Unlocks after verification</source>
+				<target>Unlocks after verification</target>
+			</trans-unit>
+			<trans-unit id="Web_Channel" resname="Web_Channel">
+				<source>Channel</source>
+				<target>Channel</target>
+			</trans-unit>
+			<trans-unit id="Web_ChannelQRMobile" resname="Web_ChannelQRMobile">
+				<source>QR · Mobile</source>
+				<target>QR · Mobile</target>
+			</trans-unit>
+			<trans-unit id="Web_Created" resname="Web_Created">
+				<source>Created</source>
+				<target>Created</target>
+			</trans-unit>
+			<trans-unit id="Web_Session" resname="Web_Session">
+				<source>Session</source>
+				<target>Session</target>
+			</trans-unit>
+			<trans-unit id="Web_NoActivity" resname="Web_NoActivity">
+				<source>No activity yet.</source>
+				<target>No activity yet.</target>
+			</trans-unit>
+			<trans-unit id="Web_UploadPhoto" resname="Web_UploadPhoto">
+				<source>Upload verification photo</source>
+				<target>Upload verification photo</target>
+			</trans-unit>
+			<trans-unit id="Web_JsChoosePhoto" resname="Web_JsChoosePhoto">
+				<source>Choose a photo first.</source>
+				<target>Choose a photo first.</target>
+			</trans-unit>
+			<trans-unit id="Web_JsUploading" resname="Web_JsUploading">
+				<source>Uploading…</source>
+				<target>Uploading…</target>
+			</trans-unit>
+			<trans-unit id="Web_JsSubmitted" resname="Web_JsSubmitted">
+				<source>Submitted. Returning to the dashboard...</source>
+				<target>Submitted. Returning to the dashboard...</target>
+			</trans-unit>
+			<trans-unit id="Web_JsUploadFailed" resname="Web_JsUploadFailed">
+				<source>Upload failed</source>
+				<target>Upload failed</target>
+			</trans-unit>
+			<trans-unit id="Web_Secure" resname="Web_Secure">
+				<source>Secure</source>
+				<target>Secure</target>
+			</trans-unit>
+			<trans-unit id="Web_SecuredBy" resname="Web_SecuredBy">
+				<source>Secured by 4D Secure OTP</source>
+				<target>Secured by 4D Secure OTP</target>
+			</trans-unit>
+			<trans-unit id="Web_CaseReport" resname="Web_CaseReport">
+				<source>Case report</source>
+				<target>Case report</target>
+			</trans-unit>
+			<trans-unit id="Web_Reports" resname="Web_Reports">
+				<source>Reports</source>
+				<target>Reports</target>
+			</trans-unit>
+			<trans-unit id="Web_NoActiveCaseSession" resname="Web_NoActiveCaseSession">
+				<source>No active case in this session.</source>
+				<target>No active case in this session.</target>
+			</trans-unit>
+			<trans-unit id="Web_GeneratedAt" resname="Web_GeneratedAt">
+				<source>Generated {time}</source>
+				<target>Generated {time}</target>
+			</trans-unit>
+			<trans-unit id="Web_PrintPDF" resname="Web_PrintPDF">
+				<source>Print / Save PDF</source>
+				<target>Print / Save PDF</target>
+			</trans-unit>
+			<trans-unit id="Web_Type" resname="Web_Type">
+				<source>Type</source>
+				<target>Type</target>
+			</trans-unit>
+			<trans-unit id="Web_Size" resname="Web_Size">
+				<source>Size</source>
+				<target>Size</target>
+			</trans-unit>
+			<trans-unit id="Web_PendingDecision" resname="Web_PendingDecision">
+				<source>Pending decision</source>
+				<target>Pending decision</target>
+			</trans-unit>
+			<trans-unit id="Web_Confidential" resname="Web_Confidential">
+				<source>Confidential</source>
+				<target>Confidential</target>
+			</trans-unit>
+			<trans-unit id="Web_Report" resname="Web_Report">
+				<source>Report</source>
+				<target>Report</target>
+			</trans-unit>
+			<trans-unit id="Web_ReportFailed" resname="Web_ReportFailed">
+				<source>The report could not be generated.</source>
+				<target>The report could not be generated.</target>
+			</trans-unit>
+			<trans-unit id="Web_TechnicalDetail" resname="Web_TechnicalDetail">
+				<source>Technical detail</source>
+				<target>Technical detail</target>
+			</trans-unit>
+			<trans-unit id="Web_BackToReports" resname="Web_BackToReports">
+				<source>Back to reports</source>
+				<target>Back to reports</target>
+			</trans-unit>
+			<trans-unit id="Web_AllReports" resname="Web_AllReports">
+				<source>All verification case reports</source>
+				<target>All verification case reports</target>
+			</trans-unit>
+			<trans-unit id="Web_CountTotal" resname="Web_CountTotal">
+				<source>{n} total</source>
+				<target>{n} total</target>
+			</trans-unit>
+			<trans-unit id="Web_SearchResults" resname="Web_SearchResults">
+				<source>Search results for “{q}”</source>
+				<target>Search results for “{q}”</target>
+			</trans-unit>
+			<trans-unit id="Web_Clear" resname="Web_Clear">
+				<source>clear</source>
+				<target>clear</target>
+			</trans-unit>
+			<trans-unit id="Web_CountFound" resname="Web_CountFound">
+				<source>{n} found</source>
+				<target>{n} found</target>
+			</trans-unit>
+			<trans-unit id="Web_Cases" resname="Web_Cases">
+				<source>Cases</source>
+				<target>Cases</target>
+			</trans-unit>
+			<trans-unit id="Web_NoMatch" resname="Web_NoMatch">
+				<source>No reports match “{q}”.</source>
+				<target>No reports match “{q}”.</target>
+			</trans-unit>
+			<trans-unit id="Web_ShowAll" resname="Web_ShowAll">
+				<source>Show all</source>
+				<target>Show all</target>
+			</trans-unit>
+			<trans-unit id="Web_NoReports" resname="Web_NoReports">
+				<source>No reports yet. Completed verifications will appear here.</source>
+				<target>No reports yet. Completed verifications will appear here.</target>
+			</trans-unit>
+			<trans-unit id="Web_Status" resname="Web_Status">
+				<source>Status</source>
+				<target>Status</target>
+			</trans-unit>
+			<trans-unit id="Web_ReportsPersist" resname="Web_ReportsPersist">
+				<source>Reports are stored and persist across sessions and restarts.</source>
+				<target>Reports are stored and persist across sessions and restarts.</target>
+			</trans-unit>
+			<trans-unit id="Web_SearchPlaceholder" resname="Web_SearchPlaceholder">
+				<source>Search (VR-…)</source>
+				<target>Search (VR-…)</target>
+			</trans-unit>
+			<trans-unit id="Web_Search" resname="Web_Search">
+				<source>Search</source>
+				<target>Search</target>
+			</trans-unit>
+			<trans-unit id="Web_Production" resname="Web_Production">
+				<source>Production</source>
+				<target>Production</target>
+			</trans-unit>
+			<trans-unit id="Web_JsCopied" resname="Web_JsCopied">
+				<source>Copied!</source>
+				<target>Copied!</target>
+			</trans-unit>
+			<trans-unit id="Web_JsTryAgain" resname="Web_JsTryAgain">
+				<source>Try again</source>
+				<target>Try again</target>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

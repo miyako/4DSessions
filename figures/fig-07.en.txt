@@ -1,0 +1,8 @@
+sone
+Pair device
+chateng
+Token consumed
+reply hander
+Tapmatch
+Upload do
+7

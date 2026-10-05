@@ -1,0 +1,153 @@
+{
+  "source": "fig-01.png",
+  "page": 5,
+  "width_pt": 426.0,
+  "localize": false,
+  "items": [
+    {
+      "box": [
+        24,
+        28,
+        139,
+        11
+      ],
+      "align": "center"
+    },
+    {
+      "box": [
+        24,
+        47,
+        53,
+        9
+      ],
+      "align": "center"
+    },
+    {
+      "box": [
+        106,
+        47,
+        67,
+        12
+      ],
+      "align": "center"
+    },
+    {
+      "box": [
+        23,
+        85,
+        29,
+        13
+      ],
+      "align": "center"
+    },
+    {
+      "box": [
+        474,
+        83,
+        69,
+        10
+      ],
+      "align": "center"
+    },
+    {
+      "box": [
+        24,
+        129,
+        65,
+        10
+      ],
+      "align": "center"
+    },
+    {
+      "box": [
+        490,
+        129,
+        53,
+        13
+      ],
+      "align": "center"
+    },
+    {
+      "box": [
+        24,
+        173,
+        89,
+        10
+      ],
+      "align": "center"
+    },
+    {
+      "box": [
+        482,
+        172,
+        61,
+        11
+      ],
+      "align": "center"
+    },
+    {
+      "box": [
+        24,
+        217,
+        61,
+        10
+      ],
+      "align": "center"
+    },
+    {
+      "box": [
+        488,
+        215,
+        55,
+        10
+      ],
+      "align": "center"
+    },
+    {
+      "box": [
+        24,
+        261,
+        62,
+        10
+      ],
+      "align": "center"
+    },
+    {
+      "box": [
+        23,
+        305,
+        47,
+        10
+      ],
+      "align": "center"
+    },
+    {
+      "box": [
+        428,
+        304,
+        112,
+        11
+      ],
+      "align": "center"
+    },
+    {
+      "box": [
+        24,
+        349,
+        30,
+        10
+      ],
+      "align": "center"
+    },
+    {
+      "box": [
+        497,
+        348,
+        32,
+        8
+      ],
+      "align": "center"
+    }
+  ],
+  "replace": "fig-01-ja.png"
+}

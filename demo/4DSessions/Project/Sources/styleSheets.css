@@ -1,0 +1,13 @@
+/* Launch button on the start screen: the default button is drawn in the accent blue */
+
+@media (prefers-color-scheme: light) {
+	.primary-button {
+		stroke: #FFFFFF;
+	}
+}
+
+@media (prefers-color-scheme: dark) {
+	.primary-button {
+		stroke: #C0C0C0;
+	}
+}

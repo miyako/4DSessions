@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+	<file datatype="plaintext" original="desktop.xlf" source-language="en" target-language="en">
+		<body>
+			<trans-unit id="Start_AlertWebServerOff" resname="Start_AlertWebServerOff">
+				<source>The web server is not running. Please start it in the Runtime Explorer before launching the demo.</source>
+				<target>The web server is not running. Please start it in the Runtime Explorer before launching the demo.</target>
+			</trans-unit>
+			<trans-unit id="Start_BlogURL" resname="Start_BlogURL">
+				<source>https://blog.4d.com/</source>
+				<target>https://blog.4d.com/</target>
+			</trans-unit>
+			<trans-unit id="Start_DocsURL" resname="Start_DocsURL">
+				<source>https://developer.4d.com/docs/API/SessionClass</source>
+				<target>https://developer.4d.com/docs/API/SessionClass</target>
+			</trans-unit>
+			<trans-unit id="Session_ConfirmOTP" resname="Session_ConfirmOTP">
+				<source>OTP created. URL for incognito test:</source>
+				<target>OTP created. URL for incognito test:</target>
+			</trans-unit>
+			<trans-unit id="Session_OpenInBrowser" resname="Session_OpenInBrowser">
+				<source>Open in browser</source>
+				<target>Open in browser</target>
+			</trans-unit>
+			<trans-unit id="Session_LastRefreshed" resname="Session_LastRefreshed">
+				<source>Last refreshed {time} UTC</source>
+				<target>Last refreshed {time} UTC</target>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>
