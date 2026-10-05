@@ -78,6 +78,6 @@ Full-width `（）` and `：` in prose. First occurrence of a technical term: �
 | 4D Secure OTP | 4D Secure OTP | demo application name, not translated |
 | Al Mahdi Bakkali | Al Mahdi Bakkali | author, Latin script |
 | KYC (Know Your Customer) | 本人確認（KYC：Know Your Customer） | |
-| Share session (button) | Share session | UI label kept as in the demo |
-| Session expired (message) | 「Session expired」 | message text from the demo, kept in English |
+| Share session (button) | このセッションを共有 | button label of the localised demo (Session_ShareButton) |
+| Session expired (message) | 「セッションの有効期限切れ」 | page title of the localised demo (Web_SessionExpired) |
 | Reports (page) | Reports | UI label kept as in the demo |
