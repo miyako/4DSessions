@@ -30,7 +30,7 @@ The demonstration 4D application accompanying this technical note was developed 
 - **4D Remote license** — required for the user desktop session; this is the session that initiates the OTP
 - **Windows 11 or macOS Tahoe**
 
-> **Note**: Desktop sessions are available in three configurations: remote user sessions in client/server applications (the session object is accessible on both the server and the client); stored procedure sessions (the virtual server session shared by all stored procedures); and standalone sessions in single-user 4D. **Standalone sessions are particularly useful during development and can be** **used for this application.** Users can use the full session functions, including OTP generation and web access sharing, without a server setup, regardless of whether the final application targets single-user or client/server deployment.
+> **Note**: Desktop sessions are available in three configurations: remote user sessions in client/server applications (the session object is accessible on both the server and the client); stored procedure sessions (the virtual server session shared by all stored procedures); and standalone sessions in single-user 4D. **Standalone sessions are particularly useful during development and can be used for this application.** Users can use the full session functions, including OTP generation and web access sharing, without a server setup, regardless of whether the final application targets single-user or client/server deployment.
 
 ## Why Client-Side Sessions?
 
