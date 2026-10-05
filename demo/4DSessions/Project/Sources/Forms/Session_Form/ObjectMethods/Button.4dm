@@ -26,7 +26,7 @@ If (Form event code:C388=On Clicked:K2:4)
 	Else
 		$url:="http://"+$host+":"+String:C10($port)+"/init?$4DSID="+$otp
 	End if
-	CONFIRM:C162("OTP created. URL for incognito test:"+Char:C90(13)+$url; "Open in browser"; "Cancel")
+	CONFIRM:C162(Localized string:C991("Session_ConfirmOTP")+Char:C90(13)+$url; Localized string:C991("Session_OpenInBrowser"); Localized string:C991("CommonCancel"))
 
 	If (ok=1)
 		OPEN URL:C673($url)

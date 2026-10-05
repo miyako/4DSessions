@@ -1,0 +1,791 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+	<file datatype="plaintext" original="web.xlf" source-language="en" target-language="ja">
+		<body>
+			<trans-unit id="Status_pending" resname="Status_pending">
+				<source>Pending</source>
+				<target>保留中</target>
+			</trans-unit>
+			<trans-unit id="Status_verified" resname="Status_verified">
+				<source>Verified</source>
+				<target>確認済み</target>
+			</trans-unit>
+			<trans-unit id="Status_under_review" resname="Status_under_review">
+				<source>Under review</source>
+				<target>審査中</target>
+			</trans-unit>
+			<trans-unit id="Status_approved" resname="Status_approved">
+				<source>Approved</source>
+				<target>承認</target>
+			</trans-unit>
+			<trans-unit id="Status_rejected" resname="Status_rejected">
+				<source>Rejected</source>
+				<target>却下</target>
+			</trans-unit>
+			<trans-unit id="Status_info_requested" resname="Status_info_requested">
+				<source>Info requested</source>
+				<target>追加情報の要求</target>
+			</trans-unit>
+			<trans-unit id="Status_expired" resname="Status_expired">
+				<source>expired</source>
+				<target>期限切れ</target>
+			</trans-unit>
+			<trans-unit id="Reason_identity_confirmed" resname="Reason_identity_confirmed">
+				<source>Identity confirmed</source>
+				<target>本人確認済み</target>
+			</trans-unit>
+			<trans-unit id="Reason_manual_override" resname="Reason_manual_override">
+				<source>Manual override</source>
+				<target>手動による上書き</target>
+			</trans-unit>
+			<trans-unit id="Reason_doc_unreadable" resname="Reason_doc_unreadable">
+				<source>Document unreadable</source>
+				<target>書類が判読できない</target>
+			</trans-unit>
+			<trans-unit id="Reason_face_mismatch" resname="Reason_face_mismatch">
+				<source>Face mismatch</source>
+				<target>顔が一致しない</target>
+			</trans-unit>
+			<trans-unit id="Reason_suspected_tampering" resname="Reason_suspected_tampering">
+				<source>Suspected tampering</source>
+				<target>改ざんの疑い</target>
+			</trans-unit>
+			<trans-unit id="Reason_wrong_document" resname="Reason_wrong_document">
+				<source>Wrong document</source>
+				<target>書類の種類が違う</target>
+			</trans-unit>
+			<trans-unit id="Reason_retake_photo" resname="Reason_retake_photo">
+				<source>Please retake the photo</source>
+				<target>写真を撮り直してください</target>
+			</trans-unit>
+			<trans-unit id="Reason_better_lighting" resname="Reason_better_lighting">
+				<source>Better lighting required</source>
+				<target>もっと明るい場所で撮影してください</target>
+			</trans-unit>
+			<trans-unit id="Reason_full_document" resname="Reason_full_document">
+				<source>Full document required</source>
+				<target>書類全体を写してください</target>
+			</trans-unit>
+			<trans-unit id="Reason_other" resname="Reason_other">
+				<source>Other</source>
+				<target>その他</target>
+			</trans-unit>
+			<trans-unit id="Option_retake_photo" resname="Option_retake_photo">
+				<source>Retake photo</source>
+				<target>写真の撮り直し</target>
+			</trans-unit>
+			<trans-unit id="Option_better_lighting" resname="Option_better_lighting">
+				<source>Better lighting</source>
+				<target>照明の改善</target>
+			</trans-unit>
+			<trans-unit id="Option_full_document" resname="Option_full_document">
+				<source>Full document</source>
+				<target>書類全体</target>
+			</trans-unit>
+			<trans-unit id="Check_FileIntegrity" resname="Check_FileIntegrity">
+				<source>File integrity</source>
+				<target>ファイルの完全性</target>
+			</trans-unit>
+			<trans-unit id="Check_Valid" resname="Check_Valid">
+				<source>Valid</source>
+				<target>正常</target>
+			</trans-unit>
+			<trans-unit id="Check_NonEmpty" resname="Check_NonEmpty">
+				<source>Non-empty file received</source>
+				<target>空でないファイルを受信</target>
+			</trans-unit>
+			<trans-unit id="Check_Empty" resname="Check_Empty">
+				<source>Empty</source>
+				<target>空</target>
+			</trans-unit>
+			<trans-unit id="Check_NoBytes" resname="Check_NoBytes">
+				<source>No bytes received</source>
+				<target>データを受信していません</target>
+			</trans-unit>
+			<trans-unit id="Check_FileSize" resname="Check_FileSize">
+				<source>File size</source>
+				<target>ファイルサイズ</target>
+			</trans-unit>
+			<trans-unit id="Check_WithinRange" resname="Check_WithinRange">
+				<source>Within accepted range</source>
+				<target>許容範囲内</target>
+			</trans-unit>
+			<trans-unit id="Check_FileType" resname="Check_FileType">
+				<source>File type</source>
+				<target>ファイル形式</target>
+			</trans-unit>
+			<trans-unit id="Check_RecognisedImage" resname="Check_RecognisedImage">
+				<source>Recognised image format</source>
+				<target>対応している画像形式</target>
+			</trans-unit>
+			<trans-unit id="Check_Unknown" resname="Check_Unknown">
+				<source>Unknown</source>
+				<target>不明</target>
+			</trans-unit>
+			<trans-unit id="Check_NotStandardImage" resname="Check_NotStandardImage">
+				<source>Not a standard image format</source>
+				<target>標準的な画像形式ではありません</target>
+			</trans-unit>
+			<trans-unit id="Check_ImageReadability" resname="Check_ImageReadability">
+				<source>Image readability</source>
+				<target>画像の読み取り</target>
+			</trans-unit>
+			<trans-unit id="Check_Readable" resname="Check_Readable">
+				<source>Readable</source>
+				<target>読み取り可</target>
+			</trans-unit>
+			<trans-unit id="Check_DecodedOK" resname="Check_DecodedOK">
+				<source>Image decoded successfully</source>
+				<target>画像を正常にデコードしました</target>
+			</trans-unit>
+			<trans-unit id="Check_Unreadable" resname="Check_Unreadable">
+				<source>Unreadable</source>
+				<target>読み取り不可</target>
+			</trans-unit>
+			<trans-unit id="Check_DecodeFailed" resname="Check_DecodeFailed">
+				<source>Image data could not be decoded</source>
+				<target>画像データをデコードできませんでした</target>
+			</trans-unit>
+			<trans-unit id="Check_NA" resname="Check_NA">
+				<source>n/a</source>
+				<target>該当なし</target>
+			</trans-unit>
+			<trans-unit id="Check_NotImage" resname="Check_NotImage">
+				<source>Not an image file</source>
+				<target>画像ファイルではありません</target>
+			</trans-unit>
+			<trans-unit id="Check_IntegrityHash" resname="Check_IntegrityHash">
+				<source>Integrity hash</source>
+				<target>完全性ハッシュ</target>
+			</trans-unit>
+			<trans-unit id="Check_ChainOfCustody" resname="Check_ChainOfCustody">
+				<source>SHA-256 · chain of custody</source>
+				<target>SHA-256 · 証拠保全</target>
+			</trans-unit>
+			<trans-unit id="Check_Duplicate" resname="Check_Duplicate">
+				<source>Duplicate check</source>
+				<target>重複チェック</target>
+			</trans-unit>
+			<trans-unit id="Check_Unique" resname="Check_Unique">
+				<source>Unique</source>
+				<target>重複なし</target>
+			</trans-unit>
+			<trans-unit id="Check_FirstSubmission" resname="Check_FirstSubmission">
+				<source>First submission in this session</source>
+				<target>このセッションでの最初の提出</target>
+			</trans-unit>
+			<trans-unit id="Msg_TapNumber" resname="Msg_TapNumber">
+				<source>Tap the number shown on the desktop screen.</source>
+				<target>デスクトップの画面に表示されている数字をタップしてください。</target>
+			</trans-unit>
+			<trans-unit id="Msg_IdentityConfirmed" resname="Msg_IdentityConfirmed">
+				<source>Identity confirmed. Please upload your photo.</source>
+				<target>本人確認が完了しました。写真をアップロードしてください。</target>
+			</trans-unit>
+			<trans-unit id="Msg_IncorrectNumber" resname="Msg_IncorrectNumber">
+				<source>That number is incorrect. Please try again.</source>
+				<target>数字が正しくありません。もう一度お試しください。</target>
+			</trans-unit>
+			<trans-unit id="Msg_SubmittedForReview" resname="Msg_SubmittedForReview">
+				<source>Submitted for review.</source>
+				<target>審査のために提出しました。</target>
+			</trans-unit>
+			<trans-unit id="Msg_DecisionRecorded" resname="Msg_DecisionRecorded">
+				<source>Decision recorded.</source>
+				<target>判定を記録しました。</target>
+			</trans-unit>
+			<trans-unit id="Msg_Approved" resname="Msg_Approved">
+				<source>Verification approved.</source>
+				<target>確認が承認されました。</target>
+			</trans-unit>
+			<trans-unit id="Msg_Rejected" resname="Msg_Rejected">
+				<source>Verification rejected.</source>
+				<target>確認が却下されました。</target>
+			</trans-unit>
+			<trans-unit id="Msg_InfoRequested" resname="Msg_InfoRequested">
+				<source>Additional information requested.</source>
+				<target>追加情報を要求しました。</target>
+			</trans-unit>
+			<trans-unit id="Log_CaseOpened" resname="Log_CaseOpened">
+				<source>Case {ref} opened.</source>
+				<target>事例 {ref} を開始しました。</target>
+			</trans-unit>
+			<trans-unit id="Log_IdentityVerified" resname="Log_IdentityVerified">
+				<source>Identity verified by subject.</source>
+				<target>当事者が本人確認を完了しました。</target>
+			</trans-unit>
+			<trans-unit id="Log_IncorrectResponse" resname="Log_IncorrectResponse">
+				<source>Incorrect challenge response: {reply}</source>
+				<target>チャレンジへの誤った回答：{reply}</target>
+			</trans-unit>
+			<trans-unit id="Log_UploadBlocked" resname="Log_UploadBlocked">
+				<source>Upload blocked — session not verified.</source>
+				<target>アップロードをブロックしました（セッションが未確認）。</target>
+			</trans-unit>
+			<trans-unit id="Log_EvidenceSubmitted" resname="Log_EvidenceSubmitted">
+				<source>Evidence submitted: {name} ({size}).</source>
+				<target>証拠を提出しました：{name}（{size}）。</target>
+			</trans-unit>
+			<trans-unit id="Log_ChecksCompleted" resname="Log_ChecksCompleted">
+				<source>Automated checks completed ({pass}/{total} passed).</source>
+				<target>自動チェックが完了しました（{total}件中{pass}件合格）。</target>
+			</trans-unit>
+			<trans-unit id="Log_UploadFailed" resname="Log_UploadFailed">
+				<source>Upload failed — {error}</source>
+				<target>アップロードに失敗しました：{error}</target>
+			</trans-unit>
+			<trans-unit id="Log_Decision" resname="Log_Decision">
+				<source>Decision: {outcome} — {reason} by Operator.</source>
+				<target>オペレーターの判定：{outcome}（{reason}）。</target>
+			</trans-unit>
+			<trans-unit id="Log_DecisionNoReason" resname="Log_DecisionNoReason">
+				<source>Decision: {outcome} by Operator.</source>
+				<target>オペレーターの判定：{outcome}。</target>
+			</trans-unit>
+			<trans-unit id="Log_PairDevice" resname="Log_PairDevice">
+				<source>Pair device: QR and challenge generated.</source>
+				<target>デバイスのペアリング：QRコードとチャレンジを生成しました。</target>
+			</trans-unit>
+			<trans-unit id="Json_AccessDenied" resname="Json_AccessDenied">
+				<source>Access denied. Verify the challenge first.</source>
+				<target>アクセスが拒否されました。先にチャレンジに回答してください。</target>
+			</trans-unit>
+			<trans-unit id="Json_NoFile" resname="Json_NoFile">
+				<source>No readable file in the request.</source>
+				<target>リクエストに読み取り可能なファイルがありません。</target>
+			</trans-unit>
+			<trans-unit id="Json_SizeOutOfRange" resname="Json_SizeOutOfRange">
+				<source>File size is outside the accepted range.</source>
+				<target>ファイルサイズが許容範囲外です。</target>
+			</trans-unit>
+			<trans-unit id="Json_SubmissionReceived" resname="Json_SubmissionReceived">
+				<source>Submission received.</source>
+				<target>提出を受け付けました。</target>
+			</trans-unit>
+			<trans-unit id="Json_UploadFailed" resname="Json_UploadFailed">
+				<source>The upload could not be processed.</source>
+				<target>アップロードを処理できませんでした。</target>
+			</trans-unit>
+			<trans-unit id="Json_NoActiveCase" resname="Json_NoActiveCase">
+				<source>No active case.</source>
+				<target>進行中の事例はありません。</target>
+			</trans-unit>
+			<trans-unit id="Json_NoCaseAwaiting" resname="Json_NoCaseAwaiting">
+				<source>No case is awaiting a decision.</source>
+				<target>判定待ちの事例はありません。</target>
+			</trans-unit>
+			<trans-unit id="Json_InvalidBody" resname="Json_InvalidBody">
+				<source>Invalid request body.</source>
+				<target>リクエストの本文が無効です。</target>
+			</trans-unit>
+			<trans-unit id="Json_UnknownOutcome" resname="Json_UnknownOutcome">
+				<source>Unknown decision outcome.</source>
+				<target>不明な判定結果です。</target>
+			</trans-unit>
+			<trans-unit id="Json_ReasonRequired" resname="Json_ReasonRequired">
+				<source>A reason code is required for this decision.</source>
+				<target>この判定には理由コードが必要です。</target>
+			</trans-unit>
+			<trans-unit id="Json_NoEvidence" resname="Json_NoEvidence">
+				<source>No evidence on file.</source>
+				<target>証拠ファイルがありません。</target>
+			</trans-unit>
+			<trans-unit id="Json_EvidenceMissing" resname="Json_EvidenceMissing">
+				<source>Evidence file missing.</source>
+				<target>証拠ファイルが見つかりません。</target>
+			</trans-unit>
+			<trans-unit id="Json_ReportNotFound" resname="Json_ReportNotFound">
+				<source>Report not found</source>
+				<target>レポートが見つかりません</target>
+			</trans-unit>
+			<trans-unit id="Json_SessionReset" resname="Json_SessionReset">
+				<source>Session reset</source>
+				<target>セッションをリセットしました</target>
+			</trans-unit>
+			<trans-unit id="Web_SessionExpired" resname="Web_SessionExpired">
+				<source>Session expired</source>
+				<target>セッションの有効期限切れ</target>
+			</trans-unit>
+			<trans-unit id="Web_LinkInvalid" resname="Web_LinkInvalid">
+				<source>This link is no longer valid.</source>
+				<target>このリンクは無効になりました。</target>
+			</trans-unit>
+			<trans-unit id="Web_OpenFromDesktop" resname="Web_OpenFromDesktop">
+				<source>Open this console from the desktop application to start a new session.</source>
+				<target>新しいセッションを開始するには、デスクトップアプリケーションからこのコンソールを開いてください。</target>
+			</trans-unit>
+			<trans-unit id="Web_CaseTitle" resname="Web_CaseTitle">
+				<source>Case {ref}</source>
+				<target>事例 {ref}</target>
+			</trans-unit>
+			<trans-unit id="Web_QRExpired" resname="Web_QRExpired">
+				<source>QR code expired</source>
+				<target>QRコードの有効期限切れ</target>
+			</trans-unit>
+			<trans-unit id="Web_AskRegenerate" resname="Web_AskRegenerate">
+				<source>Ask the operator to click &lt;b&gt;Regenerate QR &amp;amp; challenge&lt;/b&gt; on the pairing screen to get a fresh code.</source>
+				<target>新しいコードを取得するには、ペアリング画面で&lt;b&gt;QRコードとチャレンジを再生成&lt;/b&gt;をクリックするようオペレーターに依頼してください。</target>
+			</trans-unit>
+			<trans-unit id="Web_Expired" resname="Web_Expired">
+				<source>Expired</source>
+				<target>期限切れ</target>
+			</trans-unit>
+			<trans-unit id="Web_SubmissionReceived" resname="Web_SubmissionReceived">
+				<source>Submission received</source>
+				<target>提出を受け付けました</target>
+			</trans-unit>
+			<trans-unit id="Web_Reference" resname="Web_Reference">
+				<source>Reference</source>
+				<target>参照番号</target>
+			</trans-unit>
+			<trans-unit id="Web_ReferenceValue" resname="Web_ReferenceValue">
+				<source>Reference {ref}</source>
+				<target>参照番号 {ref}</target>
+			</trans-unit>
+			<trans-unit id="Web_File" resname="Web_File">
+				<source>File</source>
+				<target>ファイル</target>
+			</trans-unit>
+			<trans-unit id="Web_Submitted" resname="Web_Submitted">
+				<source>Submitted</source>
+				<target>提出日時</target>
+			</trans-unit>
+			<trans-unit id="Web_UnderReviewNote" resname="Web_UnderReviewNote">
+				<source>Your submission is under review. You can close this page and reopen the link to check the outcome.</source>
+				<target>提出内容は審査中です。このページを閉じ、あとでリンクを開き直すと結果を確認できます。</target>
+			</trans-unit>
+			<trans-unit id="Web_VerificationComplete" resname="Web_VerificationComplete">
+				<source>Verification complete</source>
+				<target>確認が完了しました</target>
+			</trans-unit>
+			<trans-unit id="Web_Outcome" resname="Web_Outcome">
+				<source>Outcome</source>
+				<target>結果</target>
+			</trans-unit>
+			<trans-unit id="Web_Confirmed" resname="Web_Confirmed">
+				<source>Confirmed</source>
+				<target>確認日時</target>
+			</trans-unit>
+			<trans-unit id="Web_Confirmation" resname="Web_Confirmation">
+				<source>Confirmation</source>
+				<target>確認番号</target>
+			</trans-unit>
+			<trans-unit id="Web_VerificationUnsuccessful" resname="Web_VerificationUnsuccessful">
+				<source>Verification unsuccessful</source>
+				<target>確認できませんでした</target>
+			</trans-unit>
+			<trans-unit id="Web_AdditionalInfoNeeded" resname="Web_AdditionalInfoNeeded">
+				<source>Additional information needed</source>
+				<target>追加情報が必要です</target>
+			</trans-unit>
+			<trans-unit id="Web_IdentityConfirmed" resname="Web_IdentityConfirmed">
+				<source>Identity confirmed</source>
+				<target>本人確認が完了しました</target>
+			</trans-unit>
+			<trans-unit id="Web_UploadPrompt" resname="Web_UploadPrompt">
+				<source>Upload your verification photo to complete the process.</source>
+				<target>手続きを完了するには、確認用の写真をアップロードしてください。</target>
+			</trans-unit>
+			<trans-unit id="Web_IdentityVerification" resname="Web_IdentityVerification">
+				<source>Identity verification</source>
+				<target>本人確認</target>
+			</trans-unit>
+			<trans-unit id="Web_Verification" resname="Web_Verification">
+				<source>Verification</source>
+				<target>本人確認</target>
+			</trans-unit>
+			<trans-unit id="Web_Dashboard" resname="Web_Dashboard">
+				<source>Dashboard</source>
+				<target>ダッシュボード</target>
+			</trans-unit>
+			<trans-unit id="Web_PairDevice" resname="Web_PairDevice">
+				<source>Pair device</source>
+				<target>デバイスのペアリング</target>
+			</trans-unit>
+			<trans-unit id="Web_ScanOnSubjectDevice" resname="Web_ScanOnSubjectDevice">
+				<source>Scan the QR code on the subject's device</source>
+				<target>当事者のデバイスでQRコードを読み取ってください</target>
+			</trans-unit>
+			<trans-unit id="Web_CurrentStep" resname="Web_CurrentStep">
+				<source>Current step ·</source>
+				<target>現在のステップ ·</target>
+			</trans-unit>
+			<trans-unit id="Web_DevicePairing" resname="Web_DevicePairing">
+				<source>Device pairing</source>
+				<target>デバイスのペアリング</target>
+			</trans-unit>
+			<trans-unit id="Web_PairingQR" resname="Web_PairingQR">
+				<source>Pairing QR</source>
+				<target>ペアリング用QRコード</target>
+			</trans-unit>
+			<trans-unit id="Web_ScanQRWithDevice" resname="Web_ScanQRWithDevice">
+				<source>Scan QR with the subject's device</source>
+				<target>当事者のデバイスでQRコードを読み取る</target>
+			</trans-unit>
+			<trans-unit id="Web_Challenge" resname="Web_Challenge">
+				<source>Challenge</source>
+				<target>チャレンジ</target>
+			</trans-unit>
+			<trans-unit id="Web_ReadNumber" resname="Web_ReadNumber">
+				<source>Read this number to the subject after they scan the QR code.</source>
+				<target>当事者がQRコードを読み取ったら、この数字を伝えてください。</target>
+			</trans-unit>
+			<trans-unit id="Web_OrShareLink" resname="Web_OrShareLink">
+				<source>Or share this link</source>
+				<target>またはこのリンクを共有</target>
+			</trans-unit>
+			<trans-unit id="Web_CopyLink" resname="Web_CopyLink">
+				<source>Copy link</source>
+				<target>リンクをコピー</target>
+			</trans-unit>
+			<trans-unit id="Web_Copy" resname="Web_Copy">
+				<source>Copy</source>
+				<target>コピー</target>
+			</trans-unit>
+			<trans-unit id="Web_RegenerateQR" resname="Web_RegenerateQR">
+				<source>Regenerate QR &amp;amp; challenge</source>
+				<target>QRコードとチャレンジを再生成</target>
+			</trans-unit>
+			<trans-unit id="Web_Process" resname="Web_Process">
+				<source>Process</source>
+				<target>進行状況</target>
+			</trans-unit>
+			<trans-unit id="Web_CaseDetails" resname="Web_CaseDetails">
+				<source>Case details</source>
+				<target>事例の詳細</target>
+			</trans-unit>
+			<trans-unit id="Web_Activity" resname="Web_Activity">
+				<source>Activity</source>
+				<target>アクティビティ</target>
+			</trans-unit>
+			<trans-unit id="Web_AwaitingSubject" resname="Web_AwaitingSubject">
+				<source>Awaiting subject — pair a device to continue</source>
+				<target>当事者を待っています：続けるにはデバイスをペアリングしてください</target>
+			</trans-unit>
+			<trans-unit id="Web_ClickPairDevice" resname="Web_ClickPairDevice">
+				<source>Click &lt;b&gt;Pair device&lt;/b&gt; to generate a QR code and challenge number for the subject's phone.</source>
+				<target>&lt;b&gt;デバイスのペアリング&lt;/b&gt;をクリックすると、当事者のスマートフォン用のQRコードとチャレンジの数字が生成されます。</target>
+			</trans-unit>
+			<trans-unit id="Web_IdentityVerifiedAwaiting" resname="Web_IdentityVerifiedAwaiting">
+				<source>Identity verified — awaiting evidence upload</source>
+				<target>本人確認済み：証拠のアップロードを待っています</target>
+			</trans-unit>
+			<trans-unit id="Web_EvidenceSubmission" resname="Web_EvidenceSubmission">
+				<source>Evidence submission</source>
+				<target>証拠の提出</target>
+			</trans-unit>
+			<trans-unit id="Web_SubjectUploading" resname="Web_SubjectUploading">
+				<source>Identity confirmed. The subject is now uploading their verification photo.</source>
+				<target>本人確認が完了しました。当事者が確認用の写真をアップロードしています。</target>
+			</trans-unit>
+			<trans-unit id="Web_DesktopConnected" resname="Web_DesktopConnected">
+				<source>Desktop session connected</source>
+				<target>デスクトップセッションに接続済み</target>
+			</trans-unit>
+			<trans-unit id="Web_ReadyForReview" resname="Web_ReadyForReview">
+				<source>Ready for review · submitted {time}</source>
+				<target>審査待ち · 提出日時 {time}</target>
+			</trans-unit>
+			<trans-unit id="Web_Evidence" resname="Web_Evidence">
+				<source>Evidence</source>
+				<target>証拠</target>
+			</trans-unit>
+			<trans-unit id="Web_OpenOriginal" resname="Web_OpenOriginal">
+				<source>Open original</source>
+				<target>元のファイルを開く</target>
+			</trans-unit>
+			<trans-unit id="Web_AutomatedChecks" resname="Web_AutomatedChecks">
+				<source>Automated checks</source>
+				<target>自動チェック</target>
+			</trans-unit>
+			<trans-unit id="Web_ChecksPassed" resname="Web_ChecksPassed">
+				<source>{pass} / {total} passed</source>
+				<target>{total}件中{pass}件合格</target>
+			</trans-unit>
+			<trans-unit id="Web_AuditTrail" resname="Web_AuditTrail">
+				<source>Audit trail</source>
+				<target>監査証跡</target>
+			</trans-unit>
+			<trans-unit id="Web_Decision" resname="Web_Decision">
+				<source>Decision</source>
+				<target>判定</target>
+			</trans-unit>
+			<trans-unit id="Web_Approve" resname="Web_Approve">
+				<source>Approve</source>
+				<target>承認する</target>
+			</trans-unit>
+			<trans-unit id="Web_Reject" resname="Web_Reject">
+				<source>Reject</source>
+				<target>却下する</target>
+			</trans-unit>
+			<trans-unit id="Web_RequestInfo" resname="Web_RequestInfo">
+				<source>Request info</source>
+				<target>追加情報を要求する</target>
+			</trans-unit>
+			<trans-unit id="Web_ReasonCode" resname="Web_ReasonCode">
+				<source>Reason code</source>
+				<target>理由コード</target>
+			</trans-unit>
+			<trans-unit id="Web_SelectReason" resname="Web_SelectReason">
+				<source>Select reason…</source>
+				<target>理由を選択…</target>
+			</trans-unit>
+			<trans-unit id="Web_Notes" resname="Web_Notes">
+				<source>Notes</source>
+				<target>メモ</target>
+			</trans-unit>
+			<trans-unit id="Web_NotesPlaceholder" resname="Web_NotesPlaceholder">
+				<source>Context for the audit record (optional)</source>
+				<target>監査記録用の補足（任意）</target>
+			</trans-unit>
+			<trans-unit id="Web_SubmitDecision" resname="Web_SubmitDecision">
+				<source>Submit decision</source>
+				<target>判定を送信</target>
+			</trans-unit>
+			<trans-unit id="Web_DecisionsFinal" resname="Web_DecisionsFinal">
+				<source>Decisions are final and recorded in the audit trail.</source>
+				<target>判定は確定され、監査証跡に記録されます。</target>
+			</trans-unit>
+			<trans-unit id="Web_JsSelectDecision" resname="Web_JsSelectDecision">
+				<source>Select a decision.</source>
+				<target>判定を選択してください。</target>
+			</trans-unit>
+			<trans-unit id="Web_JsSelectReason" resname="Web_JsSelectReason">
+				<source>Select a reason code.</source>
+				<target>理由コードを選択してください。</target>
+			</trans-unit>
+			<trans-unit id="Web_JsDecisionRecorded" resname="Web_JsDecisionRecorded">
+				<source>Decision recorded — {ref} · archived to Reports.</source>
+				<target>判定を記録しました：{ref} · レポートに保存しました。</target>
+			</trans-unit>
+			<trans-unit id="Web_JsFailed" resname="Web_JsFailed">
+				<source>Failed</source>
+				<target>失敗しました</target>
+			</trans-unit>
+			<trans-unit id="Web_JsNetworkError" resname="Web_JsNetworkError">
+				<source>Network error</source>
+				<target>ネットワークエラー</target>
+			</trans-unit>
+			<trans-unit id="Web_OutcomeInfoRequested" resname="Web_OutcomeInfoRequested">
+				<source>Additional information requested from the subject.</source>
+				<target>当事者に追加情報を要求しました。</target>
+			</trans-unit>
+			<trans-unit id="Web_OutcomeApproved" resname="Web_OutcomeApproved">
+				<source>This verification has been approved.</source>
+				<target>この確認は承認されました。</target>
+			</trans-unit>
+			<trans-unit id="Web_OutcomeRejected" resname="Web_OutcomeRejected">
+				<source>This verification has been rejected.</source>
+				<target>この確認は却下されました。</target>
+			</trans-unit>
+			<trans-unit id="Web_DecisionRecordedAt" resname="Web_DecisionRecordedAt">
+				<source>Decision recorded · {time}</source>
+				<target>判定を記録しました · {time}</target>
+			</trans-unit>
+			<trans-unit id="Web_Reason" resname="Web_Reason">
+				<source>Reason</source>
+				<target>理由</target>
+			</trans-unit>
+			<trans-unit id="Web_Reviewer" resname="Web_Reviewer">
+				<source>Reviewer</source>
+				<target>審査担当者</target>
+			</trans-unit>
+			<trans-unit id="Web_Decided" resname="Web_Decided">
+				<source>Decided</source>
+				<target>判定日時</target>
+			</trans-unit>
+			<trans-unit id="Web_Operator" resname="Web_Operator">
+				<source>Operator</source>
+				<target>オペレーター</target>
+			</trans-unit>
+			<trans-unit id="Web_OpenReport" resname="Web_OpenReport">
+				<source>Open report</source>
+				<target>レポートを開く</target>
+			</trans-unit>
+			<trans-unit id="Web_StartOver" resname="Web_StartOver">
+				<source>Start over</source>
+				<target>最初からやり直す</target>
+			</trans-unit>
+			<trans-unit id="Web_CaseOpened" resname="Web_CaseOpened">
+				<source>Case opened</source>
+				<target>事例を開始</target>
+			</trans-unit>
+			<trans-unit id="Web_VerifiedBySubject" resname="Web_VerifiedBySubject">
+				<source>Verified by subject</source>
+				<target>当事者が確認済み</target>
+			</trans-unit>
+			<trans-unit id="Web_WaitingPairing" resname="Web_WaitingPairing">
+				<source>Waiting for device pairing</source>
+				<target>デバイスのペアリング待ち</target>
+			</trans-unit>
+			<trans-unit id="Web_UnlocksAfter" resname="Web_UnlocksAfter">
+				<source>Unlocks after verification</source>
+				<target>本人確認後に利用可能</target>
+			</trans-unit>
+			<trans-unit id="Web_Channel" resname="Web_Channel">
+				<source>Channel</source>
+				<target>チャネル</target>
+			</trans-unit>
+			<trans-unit id="Web_ChannelQRMobile" resname="Web_ChannelQRMobile">
+				<source>QR · Mobile</source>
+				<target>QR · モバイル</target>
+			</trans-unit>
+			<trans-unit id="Web_Created" resname="Web_Created">
+				<source>Created</source>
+				<target>作成日時</target>
+			</trans-unit>
+			<trans-unit id="Web_Session" resname="Web_Session">
+				<source>Session</source>
+				<target>セッション</target>
+			</trans-unit>
+			<trans-unit id="Web_NoActivity" resname="Web_NoActivity">
+				<source>No activity yet.</source>
+				<target>まだアクティビティはありません。</target>
+			</trans-unit>
+			<trans-unit id="Web_UploadPhoto" resname="Web_UploadPhoto">
+				<source>Upload verification photo</source>
+				<target>確認用の写真をアップロード</target>
+			</trans-unit>
+			<trans-unit id="Web_JsChoosePhoto" resname="Web_JsChoosePhoto">
+				<source>Choose a photo first.</source>
+				<target>先に写真を選択してください。</target>
+			</trans-unit>
+			<trans-unit id="Web_JsUploading" resname="Web_JsUploading">
+				<source>Uploading…</source>
+				<target>アップロード中…</target>
+			</trans-unit>
+			<trans-unit id="Web_JsSubmitted" resname="Web_JsSubmitted">
+				<source>Submitted. Returning to the dashboard...</source>
+				<target>提出しました。ダッシュボードに戻ります…</target>
+			</trans-unit>
+			<trans-unit id="Web_JsUploadFailed" resname="Web_JsUploadFailed">
+				<source>Upload failed</source>
+				<target>アップロードに失敗しました</target>
+			</trans-unit>
+			<trans-unit id="Web_Secure" resname="Web_Secure">
+				<source>Secure</source>
+				<target>セキュア</target>
+			</trans-unit>
+			<trans-unit id="Web_SecuredBy" resname="Web_SecuredBy">
+				<source>Secured by 4D Secure OTP</source>
+				<target>4D Secure OTPで保護されています</target>
+			</trans-unit>
+			<trans-unit id="Web_CaseReport" resname="Web_CaseReport">
+				<source>Case report</source>
+				<target>事例レポート</target>
+			</trans-unit>
+			<trans-unit id="Web_Reports" resname="Web_Reports">
+				<source>Reports</source>
+				<target>レポート</target>
+			</trans-unit>
+			<trans-unit id="Web_NoActiveCaseSession" resname="Web_NoActiveCaseSession">
+				<source>No active case in this session.</source>
+				<target>このセッションには進行中の事例がありません。</target>
+			</trans-unit>
+			<trans-unit id="Web_GeneratedAt" resname="Web_GeneratedAt">
+				<source>Generated {time}</source>
+				<target>生成日時 {time}</target>
+			</trans-unit>
+			<trans-unit id="Web_PrintPDF" resname="Web_PrintPDF">
+				<source>Print / Save PDF</source>
+				<target>印刷 / PDFとして保存</target>
+			</trans-unit>
+			<trans-unit id="Web_Type" resname="Web_Type">
+				<source>Type</source>
+				<target>形式</target>
+			</trans-unit>
+			<trans-unit id="Web_Size" resname="Web_Size">
+				<source>Size</source>
+				<target>サイズ</target>
+			</trans-unit>
+			<trans-unit id="Web_PendingDecision" resname="Web_PendingDecision">
+				<source>Pending decision</source>
+				<target>判定待ち</target>
+			</trans-unit>
+			<trans-unit id="Web_Confidential" resname="Web_Confidential">
+				<source>Confidential</source>
+				<target>社外秘</target>
+			</trans-unit>
+			<trans-unit id="Web_Report" resname="Web_Report">
+				<source>Report</source>
+				<target>レポート</target>
+			</trans-unit>
+			<trans-unit id="Web_ReportFailed" resname="Web_ReportFailed">
+				<source>The report could not be generated.</source>
+				<target>レポートを生成できませんでした。</target>
+			</trans-unit>
+			<trans-unit id="Web_TechnicalDetail" resname="Web_TechnicalDetail">
+				<source>Technical detail</source>
+				<target>技術的な詳細</target>
+			</trans-unit>
+			<trans-unit id="Web_BackToReports" resname="Web_BackToReports">
+				<source>Back to reports</source>
+				<target>レポートに戻る</target>
+			</trans-unit>
+			<trans-unit id="Web_AllReports" resname="Web_AllReports">
+				<source>All verification case reports</source>
+				<target>すべての確認事例のレポート</target>
+			</trans-unit>
+			<trans-unit id="Web_CountTotal" resname="Web_CountTotal">
+				<source>{n} total</source>
+				<target>全{n}件</target>
+			</trans-unit>
+			<trans-unit id="Web_SearchResults" resname="Web_SearchResults">
+				<source>Search results for “{q}”</source>
+				<target>「{q}」の検索結果</target>
+			</trans-unit>
+			<trans-unit id="Web_Clear" resname="Web_Clear">
+				<source>clear</source>
+				<target>クリア</target>
+			</trans-unit>
+			<trans-unit id="Web_CountFound" resname="Web_CountFound">
+				<source>{n} found</source>
+				<target>{n}件</target>
+			</trans-unit>
+			<trans-unit id="Web_Cases" resname="Web_Cases">
+				<source>Cases</source>
+				<target>事例</target>
+			</trans-unit>
+			<trans-unit id="Web_NoMatch" resname="Web_NoMatch">
+				<source>No reports match “{q}”.</source>
+				<target>「{q}」に一致するレポートはありません。</target>
+			</trans-unit>
+			<trans-unit id="Web_ShowAll" resname="Web_ShowAll">
+				<source>Show all</source>
+				<target>すべて表示</target>
+			</trans-unit>
+			<trans-unit id="Web_NoReports" resname="Web_NoReports">
+				<source>No reports yet. Completed verifications will appear here.</source>
+				<target>まだレポートはありません。完了した確認がここに表示されます。</target>
+			</trans-unit>
+			<trans-unit id="Web_Status" resname="Web_Status">
+				<source>Status</source>
+				<target>ステータス</target>
+			</trans-unit>
+			<trans-unit id="Web_ReportsPersist" resname="Web_ReportsPersist">
+				<source>Reports are stored and persist across sessions and restarts.</source>
+				<target>レポートは保存され、セッションや再起動のあとも保持されます。</target>
+			</trans-unit>
+			<trans-unit id="Web_SearchPlaceholder" resname="Web_SearchPlaceholder">
+				<source>Search (VR-…)</source>
+				<target>検索（VR-…）</target>
+			</trans-unit>
+			<trans-unit id="Web_Search" resname="Web_Search">
+				<source>Search</source>
+				<target>検索</target>
+			</trans-unit>
+			<trans-unit id="Web_Production" resname="Web_Production">
+				<source>Production</source>
+				<target>本番</target>
+			</trans-unit>
+			<trans-unit id="Web_JsCopied" resname="Web_JsCopied">
+				<source>Copied!</source>
+				<target>コピーしました</target>
+			</trans-unit>
+			<trans-unit id="Web_JsTryAgain" resname="Web_JsTryAgain">
+				<source>Try again</source>
+				<target>もう一度お試しください</target>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

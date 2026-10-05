@@ -13,7 +13,7 @@
 	"height": 430,
 	"rightMargin": 0,
 	"bottomMargin": 0,
-	"windowTitle": "Secure Sessions  ·  4D Tech Note",
+	"windowTitle": ":xliff:Start_WindowTitle",
 	"destination": "detailScreen",
 	"fluentUI": true,
 	"method": "method.4dm",
@@ -84,7 +84,7 @@
 				},
 				"brandName": {
 					"type": "text",
-					"text": "Secure Sessions",
+					"text": ":xliff:Start_BrandName",
 					"top": 82,
 					"left": 24,
 					"width": 168,
@@ -95,7 +95,7 @@
 				},
 				"brandTagline": {
 					"type": "text",
-					"text": "Cross-device verification",
+					"text": ":xliff:Start_BrandTagline",
 					"top": 106,
 					"left": 24,
 					"width": 174,
@@ -126,7 +126,7 @@
 				},
 				"featTxt1": {
 					"type": "text",
-					"text": "QR session pairing",
+					"text": ":xliff:Start_Feature1",
 					"top": 153,
 					"left": 38,
 					"width": 160,
@@ -147,7 +147,7 @@
 				},
 				"featTxt2": {
 					"type": "text",
-					"text": "OTP & privileges",
+					"text": ":xliff:Start_Feature2",
 					"top": 177,
 					"left": 38,
 					"width": 160,
@@ -168,7 +168,7 @@
 				},
 				"featTxt3": {
 					"type": "text",
-					"text": "Gated file upload",
+					"text": ":xliff:Start_Feature3",
 					"top": 201,
 					"left": 38,
 					"width": 160,
@@ -178,7 +178,7 @@
 				},
 				"brandVer": {
 					"type": "text",
-					"text": "Demo project",
+					"text": ":xliff:Start_BrandVersion",
 					"top": 400,
 					"left": 24,
 					"width": 170,
@@ -189,7 +189,7 @@
 				},
 				"eyebrow": {
 					"type": "text",
-					"text": "HOW IT WORKS",
+					"text": ":xliff:Start_Eyebrow",
 					"top": 28,
 					"left": 232,
 					"width": 200,
@@ -201,7 +201,7 @@
 				},
 				"heading": {
 					"type": "text",
-					"text": "Cross-Device Identity Verification",
+					"text": ":xliff:Start_Heading",
 					"top": 44,
 					"left": 232,
 					"width": 362,
@@ -212,7 +212,7 @@
 				},
 				"descBody": {
 					"type": "text",
-					"text": "This 4D application demonstrates a  cross-device session sharing. After sharing the session, a web page displays a challenge number and a QR code; scanning it on a phone restores the SAME 4D session through a one-time token ($4DSID). Tapping the matching number grants the \"verified_user\" privilege, which then unlocks a privilege-gated photo upload.",
+					"text": ":xliff:Start_Description",
 					"top": 74,
 					"left": 232,
 					"width": 362,
@@ -234,7 +234,7 @@
 				},
 				"card1Label": {
 					"type": "text",
-					"text": "VERSION",
+					"text": ":xliff:Start_Card1Label",
 					"top": 174,
 					"left": 244,
 					"width": 90,
@@ -267,7 +267,7 @@
 				},
 				"card2Label": {
 					"type": "text",
-					"text": "STACK",
+					"text": ":xliff:Start_Card2Label",
 					"top": 174,
 					"left": 368,
 					"width": 90,
@@ -279,7 +279,7 @@
 				},
 				"card2V1": {
 					"type": "text",
-					"text": "4D · Web Server",
+					"text": ":xliff:Start_Card2Value1",
 					"top": 190,
 					"left": 368,
 					"width": 96,
@@ -291,7 +291,7 @@
 				},
 				"card2V2": {
 					"type": "text",
-					"text": "Sessions · OTP",
+					"text": ":xliff:Start_Card2Value2",
 					"top": 206,
 					"left": 368,
 					"width": 96,
@@ -312,7 +312,7 @@
 				},
 				"card3Label": {
 					"type": "text",
-					"text": "DOCS & BLOG",
+					"text": ":xliff:Start_Card3Label",
 					"top": 174,
 					"left": 492,
 					"width": 96,
@@ -328,7 +328,7 @@
 					"left": 492,
 					"width": 96,
 					"height": 14,
-					"dataSource": "\"Blog\"",
+					"dataSource": "Localized string(\"Start_LinkBlog\")",
 					"stroke": "#007AFF",
 					"textDecoration": "underline",
 					"focusable": false,
@@ -349,7 +349,7 @@
 					"left": 492,
 					"width": 96,
 					"height": 14,
-					"dataSource": "\"Session class\"",
+					"dataSource": "Localized string(\"Start_LinkDocs\")",
 					"stroke": "#007AFF",
 					"textDecoration": "underline",
 					"focusable": false,
@@ -376,7 +376,7 @@
 				},
 				"taglineTxt": {
 					"type": "text",
-					"text": "Same session across devices  ·  verified and privilege-gated.",
+					"text": ":xliff:Start_Tagline",
 					"top": 252,
 					"left": 248,
 					"width": 330,
@@ -386,7 +386,7 @@
 				},
 				"primaryBtn": {
 					"type": "button",
-					"text": "Launch Demo  →",
+					"text": ":xliff:Start_LaunchButton",
 					"top": 298,
 					"left": 232,
 					"width": 216,
@@ -416,7 +416,7 @@
 				},
 				"copyTxt": {
 					"type": "text",
-					"text": "© 2026  ·  4D Tech Note",
+					"text": ":xliff:Start_Copyright",
 					"top": 405,
 					"left": 330,
 					"width": 280,

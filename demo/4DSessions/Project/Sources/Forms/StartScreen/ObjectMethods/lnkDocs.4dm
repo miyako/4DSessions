@@ -14,5 +14,5 @@
 // Open the 4D Session class documentation in the default browser.
 
 If (Form event code:C388=On Clicked:K2:4)
-	OPEN URL:C673("https://developer.4d.com/docs/API/SessionClass")
+	OPEN URL:C673(Localized string:C991("Start_DocsURL"))
 End if

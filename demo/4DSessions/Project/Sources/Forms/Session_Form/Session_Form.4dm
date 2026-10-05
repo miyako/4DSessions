@@ -31,5 +31,5 @@ Case of
 		var $dt : Text:=String:C10($info.creationDateTime)
 		$dt:=Replace string:C233($dt; "T"; " ")
 		OBJECT SET TITLE(* ; "valCreated"; Substring:C12($dt; 1; 16))
-		OBJECT SET TITLE(* ; "statePillTxt"; "Active")
+		OBJECT SET TITLE(* ; "statePillTxt"; Localized string:C991("Session_Active"))
 End case

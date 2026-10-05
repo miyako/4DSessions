@@ -30,7 +30,7 @@
 		"onTimer",
 		"onBoundVariableChange"
 	],
-	"windowTitle": "4D Secure Session",
+	"windowTitle": ":xliff:Session_WindowTitle",
 	"destination": "detailScreen",
 	"method": "Session_Form.4dm",
 	"pages": [
@@ -104,7 +104,7 @@
 				},
 				"appSub": {
 					"type": "text",
-					"text": "Session Demo",
+					"text": ":xliff:Session_AppSub",
 					"top": 37,
 					"left": 56,
 					"width": 150,
@@ -114,7 +114,7 @@
 				},
 				"sectLabel": {
 					"type": "text",
-					"text": "SESSION",
+					"text": ":xliff:Session_SectionLabel",
 					"top": 74,
 					"left": 22,
 					"width": 160,
@@ -135,7 +135,7 @@
 				},
 				"navDash": {
 					"type": "text",
-					"text": "Session info",
+					"text": ":xliff:Session_NavInfo",
 					"top": 100,
 					"left": 28,
 					"width": 170,
@@ -167,7 +167,7 @@
 				},
 				"sideStatus": {
 					"type": "text",
-					"text": "Active",
+					"text": ":xliff:Session_Active",
 					"top": 645,
 					"left": 36,
 					"width": 120,
@@ -188,7 +188,7 @@
 				},
 				"title": {
 					"type": "text",
-					"text": "Session",
+					"text": ":xliff:Session_Title",
 					"top": 18,
 					"left": 248,
 					"width": 410,
@@ -199,7 +199,7 @@
 				},
 				"subtitle": {
 					"type": "text",
-					"text": "Verify your session, then click Share Session",
+					"text": ":xliff:Session_Subtitle",
 					"top": 48,
 					"left": 248,
 					"width": 400,
@@ -239,7 +239,7 @@
 				},
 				"hdrTitle": {
 					"type": "text",
-					"text": "Session information",
+					"text": ":xliff:Session_InfoTitle",
 					"top": 166,
 					"left": 340,
 					"width": 320,
@@ -250,7 +250,7 @@
 				},
 				"hdrSub": {
 					"type": "text",
-					"text": "Session.info :  live snapshot",
+					"text": ":xliff:Session_InfoSub",
 					"top": 187,
 					"left": 340,
 					"width": 360,
@@ -282,7 +282,7 @@
 				},
 				"activePillTxt": {
 					"type": "text",
-					"text": "Active",
+					"text": ":xliff:Session_Active",
 					"top": 172,
 					"left": 802,
 					"width": 52,
@@ -293,7 +293,7 @@
 				},
 				"lblType": {
 					"type": "text",
-					"text": "Type",
+					"text": ":xliff:Session_LabelType",
 					"top": 223,
 					"left": 340,
 					"width": 250,
@@ -325,7 +325,7 @@
 				},
 				"lblUser": {
 					"type": "text",
-					"text": "User name",
+					"text": ":xliff:Session_LabelUser",
 					"top": 267,
 					"left": 340,
 					"width": 250,
@@ -356,7 +356,7 @@
 				},
 				"lblMachine": {
 					"type": "text",
-					"text": "Machine name",
+					"text": ":xliff:Session_LabelMachine",
 					"top": 311,
 					"left": 340,
 					"width": 250,
@@ -387,7 +387,7 @@
 				},
 				"lblIP": {
 					"type": "text",
-					"text": "IP address",
+					"text": ":xliff:Session_LabelIP",
 					"top": 355,
 					"left": 340,
 					"width": 250,
@@ -419,7 +419,7 @@
 				},
 				"lblSID": {
 					"type": "text",
-					"text": "Session ID",
+					"text": ":xliff:Session_LabelID",
 					"top": 399,
 					"left": 340,
 					"width": 250,
@@ -451,7 +451,7 @@
 				},
 				"lblCreated": {
 					"type": "text",
-					"text": "Created",
+					"text": ":xliff:Session_LabelCreated",
 					"top": 443,
 					"left": 340,
 					"width": 250,
@@ -482,7 +482,7 @@
 				},
 				"lblState": {
 					"type": "text",
-					"text": "State",
+					"text": ":xliff:Session_LabelState",
 					"top": 487,
 					"left": 340,
 					"width": 250,
@@ -535,7 +535,7 @@
 				},
 				"footerTxt": {
 					"type": "text",
-					"text": "Session.info · data is live",
+					"text": ":xliff:Session_Footer",
 					"top": 521,
 					"left": 340,
 					"width": 300,
@@ -545,7 +545,7 @@
 				},
 				"RefreshBtn": {
 					"type": "button",
-					"text": "Share this Session  →",
+					"text": ":xliff:Session_ShareButton",
 					"top": 534,
 					"left": 336,
 					"width": 528,

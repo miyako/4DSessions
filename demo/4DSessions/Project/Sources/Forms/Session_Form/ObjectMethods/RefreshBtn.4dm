@@ -35,5 +35,5 @@ If (Form event code:C388=On Clicked:K2:4)
 	OBJECT SET TITLE(* ; "valSID"; Uppercase:C13(Substring:C12($sid; 1; 8))+"…"+Uppercase:C13(Substring:C12($sid; Length:C16($sid)-5; 6)))
 	OBJECT SET TITLE(* ; "valCreated"; Substring:C12(Timestamp:C1445; 1; 16)+" UTC")
 
-	OBJECT SET TITLE(* ; "footerTxt"; "Last refreshed "+Substring:C12(Timestamp:C1445; 12; 5)+" UTC")
+	OBJECT SET TITLE(* ; "footerTxt"; Replace string:C233(Localized string:C991("Session_LastRefreshed"); "{time}"; Substring:C12(Timestamp:C1445; 12; 5)))
 End if

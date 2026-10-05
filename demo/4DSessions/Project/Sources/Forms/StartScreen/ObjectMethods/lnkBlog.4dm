@@ -13,5 +13,5 @@
 
 
 If (Form event code:C388=On Clicked:K2:4)
-	OPEN URL:C673("https://blog.4d.com/")
+	OPEN URL:C673(Localized string:C991("Start_BlogURL"))
 End if 
