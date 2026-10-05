@@ -45,7 +45,7 @@ Full-width `（）` and `：` in prose. First occurrence of a technical term: �
 | desktop session | デスクトップセッション | |
 | remote client / 4D remote client | リモートクライアント / 4Dリモートクライアント | |
 | client-side / server-side | クライアント側 / サーバー側 | |
-| privilege | アクセス権 | official 4D docs (Session class); first use アクセス権（privilege） |
+| privilege | 権限 | official 4D docs (ORDA/privileges); first use 権限（privilege）. Not アクセス権 (avoids confusion with classic user/group access rights) |
 | role | ロール | |
 | one-time password (OTP) | ワンタイムパスワード（OTP） | 4D docs also gloss it as One Time Passcode |
 | token | トークン | |
