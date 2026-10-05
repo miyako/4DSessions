@@ -202,7 +202,7 @@
 					"text": ":xliff:Session_Subtitle",
 					"top": 48,
 					"left": 248,
-					"width": 400,
+					"width": 440,
 					"height": 16,
 					"fontSize": 12,
 					"stroke": "#86868b"
@@ -222,7 +222,7 @@
 					"top": 150,
 					"left": 320,
 					"width": 560,
-					"height": 420,
+					"height": 435,
 					"fill": "#ffffff",
 					"stroke": "#E5E5E7",
 					"borderRadius": 12
@@ -517,7 +517,7 @@
 					"top": 518,
 					"left": 320,
 					"width": 560,
-					"height": 52,
+					"height": 67,
 					"fill": "#F2F2F4",
 					"stroke": "#F2F2F4",
 					"strokeWidth": 0,
@@ -563,12 +563,13 @@
 			}
 		}
 	],
-	"geometryStamp": 28,
+	"geometryStamp": 33,
 	"editor": {
 		"activeView": "View 1",
 		"defaultView": "View 1",
 		"views": {
 			"View 1": {}
 		}
-	}
+	},
+	"menuBar": "Edit"
 }
