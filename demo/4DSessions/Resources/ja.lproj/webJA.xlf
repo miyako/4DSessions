@@ -208,11 +208,11 @@
 			</trans-unit>
 			<trans-unit id="Log_CaseOpened" resname="Log_CaseOpened">
 				<source>Case {ref} opened.</source>
-				<target>事例 {ref} を開始しました。</target>
+				<target>照会 {ref} を開始しました。</target>
 			</trans-unit>
 			<trans-unit id="Log_IdentityVerified" resname="Log_IdentityVerified">
 				<source>Identity verified by subject.</source>
-				<target>当事者が本人確認を完了しました。</target>
+				<target>当人が本人確認を完了しました。</target>
 			</trans-unit>
 			<trans-unit id="Log_IncorrectResponse" resname="Log_IncorrectResponse">
 				<source>Incorrect challenge response: {reply}</source>
@@ -268,11 +268,11 @@
 			</trans-unit>
 			<trans-unit id="Json_NoActiveCase" resname="Json_NoActiveCase">
 				<source>No active case.</source>
-				<target>進行中の事例はありません。</target>
+				<target>進行中の照会はありません。</target>
 			</trans-unit>
 			<trans-unit id="Json_NoCaseAwaiting" resname="Json_NoCaseAwaiting">
 				<source>No case is awaiting a decision.</source>
-				<target>判定待ちの事例はありません。</target>
+				<target>判定待ちの照会はありません。</target>
 			</trans-unit>
 			<trans-unit id="Json_InvalidBody" resname="Json_InvalidBody">
 				<source>Invalid request body.</source>
@@ -316,7 +316,7 @@
 			</trans-unit>
 			<trans-unit id="Web_CaseTitle" resname="Web_CaseTitle">
 				<source>Case {ref}</source>
-				<target>事例 {ref}</target>
+				<target>照会 {ref}</target>
 			</trans-unit>
 			<trans-unit id="Web_QRExpired" resname="Web_QRExpired">
 				<source>QR code expired</source>
@@ -404,7 +404,7 @@
 			</trans-unit>
 			<trans-unit id="Web_ScanOnSubjectDevice" resname="Web_ScanOnSubjectDevice">
 				<source>Scan the QR code on the subject's device</source>
-				<target>当事者のデバイスでQRコードを読み取ってください</target>
+				<target>当人のデバイスでQRコードを読み取ってください</target>
 			</trans-unit>
 			<trans-unit id="Web_CurrentStep" resname="Web_CurrentStep">
 				<source>Current step ·</source>
@@ -420,7 +420,7 @@
 			</trans-unit>
 			<trans-unit id="Web_ScanQRWithDevice" resname="Web_ScanQRWithDevice">
 				<source>Scan QR with the subject's device</source>
-				<target>当事者のデバイスでQRコードを読み取る</target>
+				<target>当人のデバイスでQRコードを読み取る</target>
 			</trans-unit>
 			<trans-unit id="Web_Challenge" resname="Web_Challenge">
 				<source>Challenge</source>
@@ -428,7 +428,7 @@
 			</trans-unit>
 			<trans-unit id="Web_ReadNumber" resname="Web_ReadNumber">
 				<source>Read this number to the subject after they scan the QR code.</source>
-				<target>当事者がQRコードを読み取ったら、この数字を伝えてください。</target>
+				<target>当人がQRコードを読み取ったら、この数字を伝えてください。</target>
 			</trans-unit>
 			<trans-unit id="Web_OrShareLink" resname="Web_OrShareLink">
 				<source>Or share this link</source>
@@ -452,7 +452,7 @@
 			</trans-unit>
 			<trans-unit id="Web_CaseDetails" resname="Web_CaseDetails">
 				<source>Case details</source>
-				<target>事例の詳細</target>
+				<target>照会の詳細</target>
 			</trans-unit>
 			<trans-unit id="Web_Activity" resname="Web_Activity">
 				<source>Activity</source>
@@ -460,11 +460,11 @@
 			</trans-unit>
 			<trans-unit id="Web_AwaitingSubject" resname="Web_AwaitingSubject">
 				<source>Awaiting subject — pair a device to continue</source>
-				<target>当事者を待っています：続けるにはデバイスをペアリングしてください</target>
+				<target>当人を待っています：続けるにはデバイスをペアリングしてください</target>
 			</trans-unit>
 			<trans-unit id="Web_ClickPairDevice" resname="Web_ClickPairDevice">
 				<source>Click &lt;b&gt;Pair device&lt;/b&gt; to generate a QR code and challenge number for the subject's phone.</source>
-				<target>&lt;b&gt;デバイスのペアリング&lt;/b&gt;をクリックすると、当事者のスマートフォン用のQRコードとチャレンジの数字が生成されます。</target>
+				<target>&lt;b&gt;デバイスのペアリング&lt;/b&gt;をクリックすると、当人のスマートフォン用のQRコードとチャレンジの数字が生成されます。</target>
 			</trans-unit>
 			<trans-unit id="Web_IdentityVerifiedAwaiting" resname="Web_IdentityVerifiedAwaiting">
 				<source>Identity verified — awaiting evidence upload</source>
@@ -476,7 +476,7 @@
 			</trans-unit>
 			<trans-unit id="Web_SubjectUploading" resname="Web_SubjectUploading">
 				<source>Identity confirmed. The subject is now uploading their verification photo.</source>
-				<target>本人確認が完了しました。当事者が確認用の写真をアップロードしています。</target>
+				<target>本人確認が完了しました。当人が確認用の写真をアップロードしています。</target>
 			</trans-unit>
 			<trans-unit id="Web_DesktopConnected" resname="Web_DesktopConnected">
 				<source>Desktop session connected</source>
@@ -568,7 +568,7 @@
 			</trans-unit>
 			<trans-unit id="Web_OutcomeInfoRequested" resname="Web_OutcomeInfoRequested">
 				<source>Additional information requested from the subject.</source>
-				<target>当事者に追加情報を要求しました。</target>
+				<target>当人に追加情報を要求しました。</target>
 			</trans-unit>
 			<trans-unit id="Web_OutcomeApproved" resname="Web_OutcomeApproved">
 				<source>This verification has been approved.</source>
@@ -608,11 +608,11 @@
 			</trans-unit>
 			<trans-unit id="Web_CaseOpened" resname="Web_CaseOpened">
 				<source>Case opened</source>
-				<target>事例を開始</target>
+				<target>照会を開始</target>
 			</trans-unit>
 			<trans-unit id="Web_VerifiedBySubject" resname="Web_VerifiedBySubject">
 				<source>Verified by subject</source>
-				<target>当事者が確認済み</target>
+				<target>当人が確認済み</target>
 			</trans-unit>
 			<trans-unit id="Web_WaitingPairing" resname="Web_WaitingPairing">
 				<source>Waiting for device pairing</source>
@@ -672,7 +672,7 @@
 			</trans-unit>
 			<trans-unit id="Web_CaseReport" resname="Web_CaseReport">
 				<source>Case report</source>
-				<target>事例レポート</target>
+				<target>照会レポート</target>
 			</trans-unit>
 			<trans-unit id="Web_Reports" resname="Web_Reports">
 				<source>Reports</source>
@@ -680,7 +680,7 @@
 			</trans-unit>
 			<trans-unit id="Web_NoActiveCaseSession" resname="Web_NoActiveCaseSession">
 				<source>No active case in this session.</source>
-				<target>このセッションには進行中の事例がありません。</target>
+				<target>このセッションには進行中の照会がありません。</target>
 			</trans-unit>
 			<trans-unit id="Web_GeneratedAt" resname="Web_GeneratedAt">
 				<source>Generated {time}</source>
@@ -724,7 +724,7 @@
 			</trans-unit>
 			<trans-unit id="Web_AllReports" resname="Web_AllReports">
 				<source>All verification case reports</source>
-				<target>すべての確認事例のレポート</target>
+				<target>すべての照会のレポート</target>
 			</trans-unit>
 			<trans-unit id="Web_CountTotal" resname="Web_CountTotal">
 				<source>{n} total</source>
@@ -744,7 +744,7 @@
 			</trans-unit>
 			<trans-unit id="Web_Cases" resname="Web_Cases">
 				<source>Cases</source>
-				<target>事例</target>
+				<target>照会</target>
 			</trans-unit>
 			<trans-unit id="Web_NoMatch" resname="Web_NoMatch">
 				<source>No reports match “{q}”.</source>
