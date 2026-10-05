@@ -16,6 +16,57 @@
 shared singleton Class constructor()
 	
 	
+	// ─── LOCALISATION  ────────────────────────────
+	
+Function useLanguage($request : 4D:C1709.IncomingMessage)
+	// Each web request follows the browser language (en or ja) for this process only
+	var $lang : Text:="en"
+	var $header : Text:=Lowercase:C14(String:C10($request.getHeader("accept-language")))
+	var $item : Text
+	For each ($item; Split string($header; ","; sk trim spaces))
+		$item:=Substring:C12($item; 1; 2)
+		If ($item="ja") | ($item="en")
+			$lang:=$item
+			break
+		End if 
+	End for each 
+	SET DATABASE LOCALIZATION($lang; *)
+	
+Function lang() : Text
+	return Get database localization(Current localization)
+	
+Function t($id : Text; $args : Object) : Text
+	// Stored values are XLIFF IDs; older raw text is returned unchanged
+	var $text : Text:=Localized string($id)
+	If ($text="")
+		$text:=$id
+	End if 
+	If ($args#Null:C1517)
+		var $key : Text
+		For each ($key; $args)
+			var $value : Text:=String:C10($args[$key])
+			If ($value="Status_@") | ($value="Reason_@")
+				var $label : Text:=Localized string($value)
+				If ($label="")
+					$label:=Substring:C12($value; Position:C15("_"; $value)+1)
+				End if 
+				$value:=$label
+			End if 
+			$text:=Replace string:C233($text; "{"+$key+"}"; $value)
+		End for each 
+	End if 
+	return $text
+	
+Function js($id : Text; $args : Object) : Text
+	return JSON Stringify:C1217(This:C1470.t($id; $args))
+	
+Function logText($entry : Object) : Text
+	var $args : Object:=Null:C1517
+	If (String:C10($entry.a)#"")
+		$args:=JSON Parse:C1218(String:C10($entry.a))
+	End if 
+	return This:C1470.t(String:C10($entry.m); $args)
+	
 Function sanitizeFileName($name : Text) : Text
 	var $clean : Text:=Trim:C1853($name)
 	$clean:=Replace string:C233($clean; "\\"; "_")
@@ -69,29 +120,14 @@ Function fmtTime($ts : Text) : Text
 	return Substring:C12($ts; 1; 10)+" · "+Substring:C12($ts; 12; 5)+" UTC"
 	
 Function reasonLabel($code : Text) : Text
-	Case of 
-		: ($code="identity_confirmed")
-			return "Identity confirmed"
-		: ($code="manual_override")
-			return "Manual override"
-		: ($code="doc_unreadable")
-			return "Document unreadable"
-		: ($code="face_mismatch")
-			return "Face mismatch"
-		: ($code="suspected_tampering")
-			return "Suspected tampering"
-		: ($code="wrong_document")
-			return "Wrong document"
-		: ($code="retake_photo")
-			return "Please retake the photo"
-		: ($code="better_lighting")
-			return "Better lighting required"
-		: ($code="full_document")
-			return "Full document required"
-		: ($code="other")
-			return "Other"
-	End case 
-	return $code
+	If ($code="")
+		return ""
+	End if 
+	var $label : Text:=Localized string("Reason_"+$code)
+	If ($label="")
+		return $code
+	End if 
+	return $label
 	
 Function pill($status : Text) : Text
 	var $label : Text:=$status
@@ -166,7 +202,7 @@ Function newChallenge()
 			"challenge"; String:C10($correct); \
 			"options"; New shared collection:C1527($o[0]; $o[1]; $o[2]); \
 			"status"; "pending"; \
-			"message"; "Tap the number shown on the desktop screen."; \
+			"message"; "Msg_TapNumber"; \
 			"reply"; ""; \
 			"createdAt"; Timestamp:C1445; \
 			"submittedAt"; ""; \
@@ -181,7 +217,7 @@ Function newChallenge()
 			"decidedAt"; ""; \
 			"reviewer"; "")
 	End use 
-	This:C1470.addLog("Case "+$ref+" opened.")
+	This:C1470.addLog("Log_CaseOpened"; {ref: $ref})
 	
 	
 Function ensureChallenge()
@@ -189,14 +225,19 @@ Function ensureChallenge()
 		This:C1470.newChallenge()
 	End if 
 	
-Function addLog($msg : Text)
+Function addLog($id : Text; $args : Object)
+	// Log entries store an XLIFF ID and its parameters; they are translated on display
+	var $a : Text:=""
+	If ($args#Null:C1517)
+		$a:=JSON Stringify:C1217($args)
+	End if 
 	If (Session:C1714.storage.log=Null:C1517)
 		Use (Session:C1714.storage)
 			Session:C1714.storage.log:=New shared collection:C1527
 		End use 
 	End if 
 	Use (Session:C1714.storage.log)
-		Session:C1714.storage.log.push(New shared object:C1526("t"; Timestamp:C1445; "m"; $msg))
+		Session:C1714.storage.log.push(New shared object:C1526("t"; Timestamp:C1445; "m"; $id; "a"; $a))
 		While (Session:C1714.storage.log.length>30)
 			Session:C1714.storage.log.remove(0)
 		End while 
@@ -213,7 +254,7 @@ Function caseObject() : Object
 	End if 
 	$o.ref:=String:C10($d.ref)
 	$o.status:=String:C10($d.status)
-	$o.message:=String:C10($d.message)
+	$o.message:=This:C1470.t(String:C10($d.message))
 	$o.reply:=String:C10($d.reply)
 	$o.createdAt:=String:C10($d.createdAt)
 	$o.submittedAt:=String:C10($d.submittedAt)
@@ -236,23 +277,23 @@ Function runChecks($content : Blob; $name : Text; $file : 4D:C1709.File; $sha : 
 	
 	// 1 · file integrity
 	If ($size>0)
-		$checks.push(New object:C1471("state"; "pass"; "label"; "File integrity"; "value"; "Valid"; "note"; "Non-empty file received"))
+		$checks.push(New object:C1471("state"; "pass"; "label"; "Check_FileIntegrity"; "value"; "Check_Valid"; "note"; "Check_NonEmpty"))
 	Else 
-		$checks.push(New object:C1471("state"; "fail"; "label"; "File integrity"; "value"; "Empty"; "note"; "No bytes received"))
+		$checks.push(New object:C1471("state"; "fail"; "label"; "Check_FileIntegrity"; "value"; "Check_Empty"; "note"; "Check_NoBytes"))
 	End if 
 	
 	// 2 · file size
-	$checks.push(New object:C1471("state"; "pass"; "label"; "File size"; "value"; This:C1470.humanSize($size); "note"; "Within accepted range"))
+	$checks.push(New object:C1471("state"; "pass"; "label"; "Check_FileSize"; "value"; This:C1470.humanSize($size); "note"; "Check_WithinRange"))
 	
 	// 3 · file type
 	If ($isImg)
-		$checks.push(New object:C1471("state"; "pass"; "label"; "File type"; "value"; Uppercase:C13($ext); "note"; "Recognised image format"))
+		$checks.push(New object:C1471("state"; "pass"; "label"; "Check_FileType"; "value"; Uppercase:C13($ext); "note"; "Check_RecognisedImage"))
 	Else 
-		var $tv : Text:="Unknown"
+		var $tv : Text:="Check_Unknown"
 		If ($ext#"")
 			$tv:=Uppercase:C13($ext)
 		End if 
-		$checks.push(New object:C1471("state"; "info"; "label"; "File type"; "value"; $tv; "note"; "Not a standard image format"))
+		$checks.push(New object:C1471("state"; "info"; "label"; "Check_FileType"; "value"; $tv; "note"; "Check_NotStandardImage"))
 	End if 
 	
 	// 4 · image readability
@@ -266,21 +307,21 @@ Function runChecks($content : Blob; $name : Text; $file : 4D:C1709.File; $sha : 
 			$ok:=False:C215
 		End try
 		If ($ok)
-			$checks.push(New object:C1471("state"; "pass"; "label"; "Image readability"; "value"; "Readable"; "note"; "Image decoded successfully"))
+			$checks.push(New object:C1471("state"; "pass"; "label"; "Check_ImageReadability"; "value"; "Check_Readable"; "note"; "Check_DecodedOK"))
 		Else 
-			$checks.push(New object:C1471("state"; "warn"; "label"; "Image readability"; "value"; "Unreadable"; "note"; "Image data could not be decoded"))
+			$checks.push(New object:C1471("state"; "warn"; "label"; "Check_ImageReadability"; "value"; "Check_Unreadable"; "note"; "Check_DecodeFailed"))
 		End if 
 	Else 
-		$checks.push(New object:C1471("state"; "info"; "label"; "Image readability"; "value"; "n/a"; "note"; "Not an image file"))
+		$checks.push(New object:C1471("state"; "info"; "label"; "Check_ImageReadability"; "value"; "Check_NA"; "note"; "Check_NotImage"))
 	End if 
 	
 	// 5 · integrity hash (chain of custody)
 	If ($sha#"")
-		$checks.push(New object:C1471("state"; "info"; "label"; "Integrity hash"; "value"; Substring:C12($sha; 1; 16)+"…"; "note"; "SHA-256 · chain of custody"))
+		$checks.push(New object:C1471("state"; "info"; "label"; "Check_IntegrityHash"; "value"; Substring:C12($sha; 1; 16)+"…"; "note"; "Check_ChainOfCustody"))
 	End if 
 	
 	// 6 · duplicate detection
-	$checks.push(New object:C1471("state"; "info"; "label"; "Duplicate check"; "value"; "Unique"; "note"; "First submission in this session"))
+	$checks.push(New object:C1471("state"; "info"; "label"; "Check_Duplicate"; "value"; "Check_Unique"; "note"; "Check_FirstSubmission"))
 	
 	return $checks
 	
@@ -335,15 +376,16 @@ Function extractUploadedFile($request : 4D:C1709.IncomingMessage) : Object
 	// ─── ROUTE: GET /init  ────────────────────────────
 	
 Function initialize($request : 4D:C1709.IncomingMessage) : 4D:C1709.OutgoingMessage
+	This:C1470.useLanguage($request)
 	// Null data means no valid desktop OTP was used — expired or direct URL access.
 	// Same guard as /scan and /reply.
 	If (Session:C1714.storage.data=Null:C1517)
-		var $errMain : Text:="<div class='pagehead'><div><h1>Session expired</h1>"
-		$errMain+="<p class='substatus'>This link is no longer valid.</p></div></div>"
+		var $errMain : Text:="<div class='pagehead'><div><h1>"+This:C1470.t("Web_SessionExpired")+"</h1>"
+		$errMain+="<p class='substatus'>"+This:C1470.t("Web_LinkInvalid")+"</p></div></div>"
 		$errMain+="<section class='card'><div class='card-body'>"
-		$errMain+="<div class='banner warn'>Open this console from the desktop application to start a new session.</div>"
+		$errMain+="<div class='banner warn'>"+This:C1470.t("Web_OpenFromDesktop")+"</div>"
 		$errMain+="</div></section>"
-		return This:C1470.htmlResult(This:C1470.verifyShell("Session expired"; $errMain; "expired"; "dashboard"); 403)
+		return This:C1470.htmlResult(This:C1470.verifyShell(This:C1470.t("Web_SessionExpired"); $errMain; "expired"; "dashboard"); 403)
 	End if 
 	var $d : Object:=Session:C1714.storage.data
 	var $status : Text:=String:C10($d.status)
@@ -356,18 +398,19 @@ Function initialize($request : 4D:C1709.IncomingMessage) : 4D:C1709.OutgoingMess
 		Else 
 			$main:=This:C1470.progressMain($request)
 	End case 
-	return This:C1470.htmlResult(This:C1470.verifyShell("Case "+String:C10($d.ref); $main; $status; "dashboard"); 0)
+	return This:C1470.htmlResult(This:C1470.verifyShell(This:C1470.t("Web_CaseTitle"; {ref: String:C10($d.ref)}); $main; $status; "dashboard"); 0)
 	
 	
 	// ─── ROUTE: GET /scan  ──────────────────────────────
 	
 Function scan($request : 4D:C1709.IncomingMessage) : 4D:C1709.OutgoingMessage
+	This:C1470.useLanguage($request)
 	If (Session:C1714.storage.data=Null:C1517)
-		var $e : Text:="<div class='scard center'><div class='banner warn'>QR code expired</div>"
-		$e+="<p class='muted'>This link is no longer valid.</p>"
-		$e+="<p class='muted' style='margin-top:8px'>Ask the operator to click <b>Regenerate QR &amp; challenge</b> on the pairing screen to get a fresh code.</p>"
+		var $e : Text:="<div class='scard center'><div class='banner warn'>"+This:C1470.t("Web_QRExpired")+"</div>"
+		$e+="<p class='muted'>"+This:C1470.t("Web_LinkInvalid")+"</p>"
+		$e+="<p class='muted' style='margin-top:8px'>"+This:C1470.t("Web_AskRegenerate")+"</p>"
 		$e+="</div>"
-		return This:C1470.htmlResult(This:C1470.subjectShell("Expired"; $e; "expired"); 403)
+		return This:C1470.htmlResult(This:C1470.subjectShell(This:C1470.t("Web_Expired"); $e; "expired"); 403)
 	End if 
 	
 	var $d : Object:=Session:C1714.storage.data
@@ -376,22 +419,22 @@ Function scan($request : 4D:C1709.IncomingMessage) : 4D:C1709.OutgoingMessage
 	
 	Case of 
 		: ($status="under_review")
-			$m:="<div class='scard'><div class='stitle'>✓ Submission received</div>"
+			$m:="<div class='scard'><div class='stitle'>✓ "+This:C1470.t("Web_SubmissionReceived")+"</div>"
 			$m+="<div class='steps2'><div class='s on'></div><div class='s on'></div><div class='s on'></div></div>"
-			$m+="<dl class='def'><dt>Reference</dt><dd>"+String:C10($d.ref)+"</dd><dt>File</dt><dd>"+This:C1470.htmlEscape(String:C10($d.fileName))+"</dd><dt>Submitted</dt><dd>"+This:C1470.fmtTime(String:C10($d.submittedAt))+"</dd></dl>"
-			$m+="<p class='note'>Your submission is under review. You can close this page and reopen the link to check the outcome.</p></div>"
+			$m+="<dl class='def'><dt>"+This:C1470.t("Web_Reference")+"</dt><dd>"+String:C10($d.ref)+"</dd><dt>"+This:C1470.t("Web_File")+"</dt><dd>"+This:C1470.htmlEscape(String:C10($d.fileName))+"</dd><dt>"+This:C1470.t("Web_Submitted")+"</dt><dd>"+This:C1470.fmtTime(String:C10($d.submittedAt))+"</dd></dl>"
+			$m+="<p class='note'>"+This:C1470.t("Web_UnderReviewNote")+"</p></div>"
 			
 		: ($status="approved")
-			$m:="<div class='scard center'><div class='banner ok'>Verification complete</div>"
-			$m+="<dl class='def'><dt>Reference</dt><dd>"+String:C10($d.ref)+"</dd><dt>Outcome</dt><dd>Approved</dd><dt>Confirmed</dt><dd>"+This:C1470.fmtTime(String:C10($d.decidedAt))+"</dd><dt>Confirmation</dt><dd><span class='code'>CNF-"+Uppercase:C13(Substring:C12(String:C10($d.sha256); 1; 8))+"</span></dd></dl></div>"
+			$m:="<div class='scard center'><div class='banner ok'>"+This:C1470.t("Web_VerificationComplete")+"</div>"
+			$m+="<dl class='def'><dt>"+This:C1470.t("Web_Reference")+"</dt><dd>"+String:C10($d.ref)+"</dd><dt>"+This:C1470.t("Web_Outcome")+"</dt><dd>"+This:C1470.t("Status_approved")+"</dd><dt>"+This:C1470.t("Web_Confirmed")+"</dt><dd>"+This:C1470.fmtTime(String:C10($d.decidedAt))+"</dd><dt>"+This:C1470.t("Web_Confirmation")+"</dt><dd><span class='code'>CNF-"+Uppercase:C13(Substring:C12(String:C10($d.sha256); 1; 8))+"</span></dd></dl></div>"
 			
 		: ($status="rejected")
-			$m:="<div class='scard center'><div class='banner bad'>Verification unsuccessful</div>"
+			$m:="<div class='scard center'><div class='banner bad'>"+This:C1470.t("Web_VerificationUnsuccessful")+"</div>"
 			$m+="<p>"+This:C1470.reasonLabel(String:C10($d.decisionReason))+"</p>"
-			$m+="<dl class='def'><dt>Reference</dt><dd>"+String:C10($d.ref)+"</dd></dl></div>"
+			$m+="<dl class='def'><dt>"+This:C1470.t("Web_Reference")+"</dt><dd>"+String:C10($d.ref)+"</dd></dl></div>"
 			
 		: ($status="info_requested")
-			$m:="<div class='scard'><div class='banner warn'>Additional information needed</div>"
+			$m:="<div class='scard'><div class='banner warn'>"+This:C1470.t("Web_AdditionalInfoNeeded")+"</div>"
 			$m+="<p>"+This:C1470.reasonLabel(String:C10($d.decisionReason))+"</p>"
 			var $nn : Text:=String:C10($d.decisionNotes)
 			If ($nn#"")
@@ -401,31 +444,32 @@ Function scan($request : 4D:C1709.IncomingMessage) : 4D:C1709.OutgoingMessage
 			$m+=This:C1470.uploadFormHtml()+"</div>"
 			
 		: ($status="verified")
-			$m:="<div class='scard'><div class='banner ok'>✓ Identity confirmed</div><p>Upload your verification photo to complete the process.</p>"
+			$m:="<div class='scard'><div class='banner ok'>✓ "+This:C1470.t("Web_IdentityConfirmed")+"</div><p>"+This:C1470.t("Web_UploadPrompt")+"</p>"
 			$m+="<div class='steps2'><div class='s on'></div><div class='s on'></div><div class='s'></div></div>"
 			$m+=This:C1470.uploadFormHtml()+"</div>"
 			
 		Else 
-			$m:="<div class='scard'><div class='stitle'>Identity verification</div><div class='muted'>Reference "+String:C10($d.ref)+"</div>"
+			$m:="<div class='scard'><div class='stitle'>"+This:C1470.t("Web_IdentityVerification")+"</div><div class='muted'>"+This:C1470.t("Web_ReferenceValue"; {ref: String:C10($d.ref)})+"</div>"
 			$m+="<div class='steps2'><div class='s on'></div><div class='s'></div><div class='s'></div></div>"
-			$m+="<p style='margin:10px 0 4px'>"+This:C1470.htmlEscape(String:C10($d.message))+"</p>"
+			$m+="<p style='margin:10px 0 4px'>"+This:C1470.htmlEscape(This:C1470.t(String:C10($d.message)))+"</p>"
 			var $i : Integer
 			For ($i; 0; $d.options.length-1)
 				var $v : Text:=String:C10($d.options[$i])
 				$m+="<button class='numbtn' onclick='pick("+$v+")'>"+$v+"</button>"
 			End for 
 			$m+="<div id='msg' class='note'></div></div>"
-			$m+="<script>async function pick(v){var r=await fetch('/reply',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({reply:v})});var d=await r.json();if(d.status==='verified'){location.reload();return;}var m=document.getElementByI"+"d('msg');if(m){m.textContent=d.message||'Try again';}}</script>"
+			$m+="<script>async function pick(v){var r=await fetch('/reply',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({reply:v})});var d=await r.json();if(d.status==='verified'){location.reload();return;}var m=document.getElementByI"+"d('msg');if(m){m.textContent=d.message||"+This:C1470.js("Web_JsTryAgain")+";}}</script>"
 	End case 
 	
-	return This:C1470.htmlResult(This:C1470.subjectShell("Verification"; $m; $status); 0)
+	return This:C1470.htmlResult(This:C1470.subjectShell(This:C1470.t("Web_Verification"); $m; $status); 0)
 	
 	
 	// ─── ROUTE: POST /reply  (user submits a number) ──────────────────
 	
 Function reply($request : 4D:C1709.IncomingMessage) : 4D:C1709.OutgoingMessage
+	This:C1470.useLanguage($request)
 	If (Session:C1714.storage.data=Null:C1517)
-		return This:C1470.jsonResult(New object:C1471("ok"; False:C215; "status"; "expired"; "message"; "Session expired"); 403)
+		return This:C1470.jsonResult(New object:C1471("ok"; False:C215; "status"; "expired"; "message"; This:C1470.t("Web_SessionExpired")); 403)
 	End if 
 	
 	var $reply : Text:=""
@@ -451,31 +495,36 @@ Function reply($request : 4D:C1709.IncomingMessage) : 4D:C1709.OutgoingMessage
 		Use (Session:C1714.storage.data)
 			Session:C1714.storage.data.reply:=$reply
 			Session:C1714.storage.data.status:="verified"
-			Session:C1714.storage.data.message:="Identity confirmed. Please upload your photo."
+			Session:C1714.storage.data.message:="Msg_IdentityConfirmed"
 		End use 
 		If (Session:C1714.setPrivileges("verified_user"))
-			This:C1470.addLog("Identity verified by subject.")
+			This:C1470.addLog("Log_IdentityVerified")
 		End if 
 	Else 
 		Use (Session:C1714.storage.data)
-			Session:C1714.storage.data.message:="That number is incorrect. Please try again."
+			Session:C1714.storage.data.message:="Msg_IncorrectNumber"
 		End use 
-		This:C1470.addLog("Incorrect challenge response: "+$reply)
+		This:C1470.addLog("Log_IncorrectResponse"; {reply: $reply})
 	End if 
 	
 	var $o : Object:=New object:C1471
 	$o.ok:=$correct
 	$o.status:=String:C10(Session:C1714.storage.data.status)
-	$o.message:=String:C10(Session:C1714.storage.data.message)
+	$o.message:=This:C1470.t(String:C10(Session:C1714.storage.data.message))
 	return This:C1470.jsonResult($o; 0)
 	
 	
 	// ─── ROUTE: GET /status   ──────────────────────────────
 	
 Function status($request : 4D:C1709.IncomingMessage) : 4D:C1709.OutgoingMessage
+	This:C1470.useLanguage($request)
 	var $o : Object:=This:C1470.caseObject()
 	If (Session:C1714.storage.log#Null:C1517)
-		$o.log:=Session:C1714.storage.log.copy()
+		$o.log:=New collection:C1472
+		var $entry : Object
+		For each ($entry; Session:C1714.storage.log)
+			$o.log.push(New object:C1471("t"; String:C10($entry.t); "m"; This:C1470.logText($entry)))
+		End for each 
 	Else 
 		$o.log:=New collection:C1472
 	End if 
@@ -485,21 +534,22 @@ Function status($request : 4D:C1709.IncomingMessage) : 4D:C1709.OutgoingMessage
 	// ─── ROUTE: POST /fileUpload  (evidence submission) ──────────────────
 	
 Function upload($request : 4D:C1709.IncomingMessage) : 4D:C1709.OutgoingMessage
+	This:C1470.useLanguage($request)
 	If (Not:C34(Session:C1714.hasPrivilege("verified_user")))
-		This:C1470.addLog("Upload blocked — session not verified.")
-		return This:C1470.jsonResult(New object:C1471("ok"; False:C215; "message"; "Access denied. Verify the challenge first."); 403)
+		This:C1470.addLog("Log_UploadBlocked")
+		return This:C1470.jsonResult(New object:C1471("ok"; False:C215; "message"; This:C1470.t("Json_AccessDenied")); 403)
 	End if 
 	
 	Try
 		var $part : Object:=This:C1470.extractUploadedFile($request)
 		If ($part=Null:C1517)
-			return This:C1470.jsonResult(New object:C1471("ok"; False:C215; "message"; "No readable file in the request."); 400)
+			return This:C1470.jsonResult(New object:C1471("ok"; False:C215; "message"; This:C1470.t("Json_NoFile")); 400)
 		End if 
 		
 		var $content : Blob:=$part.content
 		var $size : Integer:=BLOB size:C605($content)
 		If ($size<10) | ($size>10485760)
-			return This:C1470.jsonResult(New object:C1471("ok"; False:C215; "message"; "File size is outside the accepted range."); 400)
+			return This:C1470.jsonResult(New object:C1471("ok"; False:C215; "message"; This:C1470.t("Json_SizeOutOfRange")); 400)
 		End if 
 		
 		var $name : Text:=This:C1470.sanitizeFileName(String:C10($part.name))
@@ -537,53 +587,54 @@ Function upload($request : 4D:C1709.IncomingMessage) : 4D:C1709.OutgoingMessage
 			Session:C1714.storage.data.fileType:=Uppercase:C13(This:C1470.fileExt($name))
 			Session:C1714.storage.data.sha256:=$sha
 			Session:C1714.storage.data.checks:=JSON Stringify:C1217($checks)
-			Session:C1714.storage.data.message:="Submitted for review."
+			Session:C1714.storage.data.message:="Msg_SubmittedForReview"
 		End use 
-		This:C1470.addLog("Evidence submitted: "+$name+" ("+This:C1470.humanSize($size)+").")
-		This:C1470.addLog("Automated checks completed ("+String:C10($pass)+"/"+String:C10($checks.length)+" passed).")
+		This:C1470.addLog("Log_EvidenceSubmitted"; {name: $name; size: This:C1470.humanSize($size)})
+		This:C1470.addLog("Log_ChecksCompleted"; {pass: String:C10($pass); total: String:C10($checks.length)})
 		
-		return This:C1470.jsonResult(New object:C1471("ok"; True:C214; "status"; "under_review"; "ref"; String:C10(Session:C1714.storage.data.ref); "message"; "Submission received."); 0)
+		return This:C1470.jsonResult(New object:C1471("ok"; True:C214; "status"; "under_review"; "ref"; String:C10(Session:C1714.storage.data.ref); "message"; This:C1470.t("Json_SubmissionReceived")); 0)
 		
 	Catch
-		This:C1470.addLog("Upload failed — "+JSON Stringify:C1217(Last errors:C1799))
-		return This:C1470.jsonResult(New object:C1471("ok"; False:C215; "message"; "The upload could not be processed."); 500)
+		This:C1470.addLog("Log_UploadFailed"; {error: JSON Stringify:C1217(Last errors:C1799)})
+		return This:C1470.jsonResult(New object:C1471("ok"; False:C215; "message"; This:C1470.t("Json_UploadFailed")); 500)
 	End try
 	
 	
 	// ─── ROUTE: POST /decision  (reviewer records an outcome) ────────────
 	
 Function decision($request : 4D:C1709.IncomingMessage) : 4D:C1709.OutgoingMessage
+	This:C1470.useLanguage($request)
 	var $d : Object:=Session:C1714.storage.data
 	If ($d=Null:C1517)
-		return This:C1470.jsonResult(New object:C1471("ok"; False:C215; "message"; "No active case."); 403)
+		return This:C1470.jsonResult(New object:C1471("ok"; False:C215; "message"; This:C1470.t("Json_NoActiveCase")); 403)
 	End if 
 	If (String:C10($d.status)#"under_review")
-		return This:C1470.jsonResult(New object:C1471("ok"; False:C215; "message"; "No case is awaiting a decision."); 409)
+		return This:C1470.jsonResult(New object:C1471("ok"; False:C215; "message"; This:C1470.t("Json_NoCaseAwaiting")); 409)
 	End if 
 	
 	var $body : Object:=$request.getJSON()
 	If ($body=Null:C1517)
-		return This:C1470.jsonResult(New object:C1471("ok"; False:C215; "message"; "Invalid request body."); 400)
+		return This:C1470.jsonResult(New object:C1471("ok"; False:C215; "message"; This:C1470.t("Json_InvalidBody")); 400)
 	End if 
 	var $outcome : Text:=String:C10($body.outcome)
 	var $reason : Text:=String:C10($body.reasonCode)
 	var $notes : Text:=String:C10($body.notes)
 	
 	If ($outcome#"approved") & ($outcome#"rejected") & ($outcome#"info_requested")
-		return This:C1470.jsonResult(New object:C1471("ok"; False:C215; "message"; "Unknown decision outcome."); 400)
+		return This:C1470.jsonResult(New object:C1471("ok"; False:C215; "message"; This:C1470.t("Json_UnknownOutcome")); 400)
 	End if 
 	If (($outcome="rejected") | ($outcome="info_requested")) & ($reason="")
-		return This:C1470.jsonResult(New object:C1471("ok"; False:C215; "message"; "A reason code is required for this decision."); 400)
+		return This:C1470.jsonResult(New object:C1471("ok"; False:C215; "message"; This:C1470.t("Json_ReasonRequired")); 400)
 	End if 
 	
-	var $msg : Text:="Decision recorded."
+	var $msg : Text:="Msg_DecisionRecorded"
 	Case of 
 		: ($outcome="approved")
-			$msg:="Verification approved."
+			$msg:="Msg_Approved"
 		: ($outcome="rejected")
-			$msg:="Verification rejected."
+			$msg:="Msg_Rejected"
 		: ($outcome="info_requested")
-			$msg:="Additional information requested."
+			$msg:="Msg_InfoRequested"
 	End case 
 	
 	Use (Session:C1714.storage.data)
@@ -592,19 +643,14 @@ Function decision($request : 4D:C1709.IncomingMessage) : 4D:C1709.OutgoingMessag
 		Session:C1714.storage.data.decisionReason:=$reason
 		Session:C1714.storage.data.decisionNotes:=$notes
 		Session:C1714.storage.data.decidedAt:=Timestamp:C1445
-		Session:C1714.storage.data.reviewer:="Operator"
+		Session:C1714.storage.data.reviewer:="Web_Operator"
 		Session:C1714.storage.data.message:=$msg
 	End use 
-	var $outLabel : Text:=$outcome
-	Case of 
-		: ($outcome="approved")
-			$outLabel:="Approved"
-		: ($outcome="rejected")
-			$outLabel:="Rejected"
-		: ($outcome="info_requested")
-			$outLabel:="Info requested"
-	End case 
-	This:C1470.addLog("Decision: "+$outLabel+" — "+This:C1470.reasonLabel($reason)+" by Operator.")
+	If ($reason="")
+		This:C1470.addLog("Log_DecisionNoReason"; {outcome: "Status_"+$outcome})
+	Else 
+		This:C1470.addLog("Log_Decision"; {outcome: "Status_"+$outcome; reason: "Reason_"+$reason})
+	End if 
 	
 	var $decidedRef : Text:=String:C10(Session:C1714.storage.data.ref)
 	This:C1470.archiveCurrent()
@@ -617,19 +663,20 @@ Function decision($request : 4D:C1709.IncomingMessage) : 4D:C1709.OutgoingMessag
 		End if 
 	End if 
 	
-	return This:C1470.jsonResult(New object:C1471("ok"; True:C214; "status"; $outcome; "message"; $msg; "ref"; $decidedRef); 0)
+	return This:C1470.jsonResult(New object:C1471("ok"; True:C214; "status"; $outcome; "message"; This:C1470.t($msg); "ref"; $decidedRef); 0)
 	
 	
 	// ─── ROUTE: GET /evidence  (serve the stored file for preview) ───────
 	
 Function evidence($request : 4D:C1709.IncomingMessage) : 4D:C1709.OutgoingMessage
+	This:C1470.useLanguage($request)
 	var $d : Object:=Session:C1714.storage.data
 	If ($d=Null:C1517) | (String:C10($d.fileName)="")
-		return This:C1470.jsonResult(New object:C1471("ok"; False:C215; "message"; "No evidence on file."); 404)
+		return This:C1470.jsonResult(New object:C1471("ok"; False:C215; "message"; This:C1470.t("Json_NoEvidence")); 404)
 	End if 
 	var $file : 4D:C1709.File:=Folder:C1567("/PACKAGE/Files").file(String:C10($d.fileName))
 	If (Not:C34($file.exists))
-		return This:C1470.jsonResult(New object:C1471("ok"; False:C215; "message"; "Evidence file missing."); 404)
+		return This:C1470.jsonResult(New object:C1471("ok"; False:C215; "message"; This:C1470.t("Json_EvidenceMissing")); 404)
 	End if 
 	
 	var $r:=4D:C1709.OutgoingMessage.new()
@@ -653,6 +700,7 @@ Function evidence($request : 4D:C1709.IncomingMessage) : 4D:C1709.OutgoingMessag
 	// ─── ROUTE: GET /report  (printable case report / JSON) ──────────────
 	
 Function report($request : 4D:C1709.IncomingMessage) : 4D:C1709.OutgoingMessage
+	This:C1470.useLanguage($request)
 	Try
 		var $ref : Text:=String:C10($request.urlQuery.ref)
 		var $fmt : Text:=String:C10($request.urlQuery.format)
@@ -673,19 +721,19 @@ Function report($request : 4D:C1709.IncomingMessage) : 4D:C1709.OutgoingMessage
 		
 		If ($fmt="json")
 			If ($src=Null:C1517)
-				return This:C1470.jsonResult(New object:C1471("error"; "Report not found"); 404)
+				return This:C1470.jsonResult(New object:C1471("error"; This:C1470.t("Json_ReportNotFound")); 404)
 			End if 
 			return This:C1470.jsonResult($src; 0)
 		End if 
 		return This:C1470.htmlResult(This:C1470.reportPage($src; $log); 0)
 		
 	Catch
-		var $err : Text:="<!DOCTYPE html><html lang='en'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>Report</title>"
+		var $err : Text:="<!DOCTYPE html><html lang='"+This:C1470.lang()+"'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>"+This:C1470.t("Web_Report")+"</title>"
 		$err+="<link href='https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap' rel='stylesheet'>"
 		$err+="<style>"+This:C1470.consoleCss()+"</style></head><body><main style='max-width:680px'>"
-		$err+="<section class='card'><div class='card-body'><div class='banner bad'>The report could not be generated.</div>"
-		$err+="<div class='muted'>Technical detail</div><pre style='white-space:pre-wrap;font-size:12px;color:var(--slate);margin-top:6px'>"+This:C1470.htmlEscape(JSON Stringify:C1217(Last errors:C1799))+"</pre>"
-		$err+="<div class='hint'><a href='/reports'>← Back to reports</a></div></div></section></main></body></html>"
+		$err+="<section class='card'><div class='card-body'><div class='banner bad'>"+This:C1470.t("Web_ReportFailed")+"</div>"
+		$err+="<div class='muted'>"+This:C1470.t("Web_TechnicalDetail")+"</div><pre style='white-space:pre-wrap;font-size:12px;color:var(--slate);margin-top:6px'>"+This:C1470.htmlEscape(JSON Stringify:C1217(Last errors:C1799))+"</pre>"
+		$err+="<div class='hint'><a href='/reports'>← "+This:C1470.t("Web_BackToReports")+"</a></div></div></section></main></body></html>"
 		return This:C1470.htmlResult($err; 200)
 	End try
 	
@@ -693,6 +741,7 @@ Function report($request : 4D:C1709.IncomingMessage) : 4D:C1709.OutgoingMessage
 	// ─── ROUTE: GET /reports  (case report list ) ────────
 	
 Function reportsList($request : 4D:C1709.IncomingMessage) : 4D:C1709.OutgoingMessage
+	This:C1470.useLanguage($request)
 	var $rows : Text:=""
 	var $count : Integer:=0
 	var $seen : Object:=New object:C1471
@@ -726,36 +775,36 @@ Function reportsList($request : 4D:C1709.IncomingMessage) : 4D:C1709.OutgoingMes
 		End if 
 	End for 
 	
-	var $sub : Text:="All verification case reports"
-	var $chipTxt : Text:=String:C10($count)+" total"
+	var $sub : Text:=This:C1470.t("Web_AllReports")
+	var $chipTxt : Text:=This:C1470.t("Web_CountTotal"; {n: String:C10($count)})
 	If ($q#"")
-		$sub:="Search results for “"+This:C1470.htmlEscape($q)+"” · <a href='/reports'>clear</a>"
-		$chipTxt:=String:C10($count)+" found"
+		$sub:=This:C1470.t("Web_SearchResults"; {q: This:C1470.htmlEscape($q)})+" · <a href='/reports'>"+This:C1470.t("Web_Clear")+"</a>"
+		$chipTxt:=This:C1470.t("Web_CountFound"; {n: String:C10($count)})
 	End if 
 	
-	var $main : Text:="<div class='crumb'><a href='/init'>Dashboard</a><span class='sep'>/</span><span>Reports</span></div>"
-	$main+="<div class='pagehead'><div><h1>Reports</h1><p class='substatus'>"+$sub+"</p></div>"
+	var $main : Text:="<div class='crumb'><a href='/init'>"+This:C1470.t("Web_Dashboard")+"</a><span class='sep'>/</span><span>"+This:C1470.t("Web_Reports")+"</span></div>"
+	$main+="<div class='pagehead'><div><h1>"+This:C1470.t("Web_Reports")+"</h1><p class='substatus'>"+$sub+"</p></div>"
 	$main+="<span class='chip neutral'><span class='d'></span> "+$chipTxt+"</span></div>"
-	$main+="<section class='card'><div class='card-head'><span class='lbl'>Cases</span></div>"
+	$main+="<section class='card'><div class='card-head'><span class='lbl'>"+This:C1470.t("Web_Cases")+"</span></div>"
 	If ($count=0)
 		If ($q#"")
-			$main+="<div class='empty'>No reports match “"+This:C1470.htmlEscape($q)+"”. <a href='/reports'>Show all</a></div>"
+			$main+="<div class='empty'>"+This:C1470.t("Web_NoMatch"; {q: This:C1470.htmlEscape($q)})+" <a href='/reports'>"+This:C1470.t("Web_ShowAll")+"</a></div>"
 		Else 
-			$main+="<div class='empty'>No reports yet. Completed verifications will appear here.</div>"
+			$main+="<div class='empty'>"+This:C1470.t("Web_NoReports")+"</div>"
 		End if 
 	Else 
-		$main+="<table><thead><tr><th>Reference</th><th>Submitted</th><th>File</th><th>Status</th><th></th></tr></thead><tbody>"+$rows+"</tbody></table>"
+		$main+="<table><thead><tr><th>"+This:C1470.t("Web_Reference")+"</th><th>"+This:C1470.t("Web_Submitted")+"</th><th>"+This:C1470.t("Web_File")+"</th><th>"+This:C1470.t("Web_Status")+"</th><th></th></tr></thead><tbody>"+$rows+"</tbody></table>"
 	End if 
 	$main+="</section>"
-	$main+="<div class='hint'>Reports are stored and persist across sessions and restarts.</div>"
-	return This:C1470.htmlResult(This:C1470.verifyShell("Reports"; $main; $curStatus; "reports"); 0)
+	$main+="<div class='hint'>"+This:C1470.t("Web_ReportsPersist")+"</div>"
+	return This:C1470.htmlResult(This:C1470.verifyShell(This:C1470.t("Web_Reports"); $main; $curStatus; "reports"); 0)
 	
 Function reportRow($ref : Text; $submitted : Text; $file : Text; $status : Text) : Text
 	var $h : Text:="<tr><td class='mono'>"+$ref+"</td>"
 	$h+="<td>"+This:C1470.fmtTime($submitted)+"</td>"
 	$h+="<td>"+This:C1470.htmlEscape($file)+"</td>"
 	$h+="<td>"+This:C1470.verifyChip($status)+"</td>"
-	$h+="<td><a href='/report?ref="+$ref+"' target='_blank'>Open report ↗</a></td></tr>"
+	$h+="<td><a href='/report?ref="+$ref+"' target='_blank'>"+This:C1470.t("Web_OpenReport")+" ↗</a></td></tr>"
 	return $h
 	
 Function findCase($ref : Text) : Object
@@ -847,6 +896,7 @@ Function archiveCurrent()
 	// ─── ROUTE: GET/POST /reset   ───────────────
 	
 Function reset($request : 4D:C1709.IncomingMessage) : 4D:C1709.OutgoingMessage
+	This:C1470.useLanguage($request)
 	// Archive the outgoing case (if it reached submission) before clearing
 	var $cd : Object:=Session:C1714.storage.data
 	If ($cd#Null:C1517)
@@ -863,7 +913,7 @@ Function reset($request : 4D:C1709.IncomingMessage) : 4D:C1709.OutgoingMessage
 		End use 
 		This:C1470.newChallenge()
 	End if 
-	return This:C1470.jsonResult(New object:C1471("ok"; True:C214; "message"; "Session reset"); 0)
+	return This:C1470.jsonResult(New object:C1471("ok"; True:C214; "message"; This:C1470.t("Json_SessionReset")); 0)
 	
 	
 	// ─── ROUTE: GET /pair  (generate OTP2, render QR for mobile) ────────
@@ -871,6 +921,7 @@ Function reset($request : 4D:C1709.IncomingMessage) : 4D:C1709.OutgoingMessage
 	// subject's device can join the same desktop session via QR scan.
 	
 Function pair($request : 4D:C1709.IncomingMessage) : 4D:C1709.OutgoingMessage
+	This:C1470.useLanguage($request)
 	If (Session:C1714.storage.data=Null:C1517)
 		var $redir:=4D:C1709.OutgoingMessage.new()
 		$redir.setHeader("Location"; "/init")
@@ -897,26 +948,26 @@ Function pair($request : 4D:C1709.IncomingMessage) : 4D:C1709.OutgoingMessage
 	var $challenge : Text:=String:C10($d.challenge)
 	var $chip : Text:=This:C1470.verifyChip($status)
 	
-	This:C1470.addLog("Pair device: QR and challenge generated.")
+	This:C1470.addLog("Log_PairDevice")
 	
-	var $m : Text:="<div class='crumb'><a href='/init'>Dashboard</a><span class='sep'>/</span><span class='mono'>"+$ref+"</span><span class='sep'>/</span><span>Pair device</span></div>"
-	$m+="<div class='pagehead'><div><h1>Verification <span class='ref mono'>"+$ref+"</span></h1>"
-	$m+="<p class='substatus'><span class='pulse'></span> Scan the QR code on the subject's device</p></div>"+$chip+"</div>"
+	var $m : Text:="<div class='crumb'><a href='/init'>"+This:C1470.t("Web_Dashboard")+"</a><span class='sep'>/</span><span class='mono'>"+$ref+"</span><span class='sep'>/</span><span>"+This:C1470.t("Web_PairDevice")+"</span></div>"
+	$m+="<div class='pagehead'><div><h1>"+This:C1470.t("Web_Verification")+" <span class='ref mono'>"+$ref+"</span></h1>"
+	$m+="<p class='substatus'><span class='pulse'></span> "+This:C1470.t("Web_ScanOnSubjectDevice")+"</p></div>"+$chip+"</div>"
 	
-	$m+="<section class='card hero'><div class='hero-top'><div class='step-ctx'><span class='num'>2</span> <span>Current step ·</span> <b>Device pairing</b></div>"+$chip+"</div>"
-	$m+="<div class='hero-body'><div><div class='qr-tile'><img src='"+$qrURL+"' alt='Pairing QR'></div><div class='qr-cap'>Scan QR with the subject's device</div></div>"
-	$m+="<div class='hero-info'><div class='code-block'><div class='code-badge'><div class='lbl'>Challenge</div><div class='num'>"+$challenge+"</div></div>"
-	$m+="<div class='code-meta'>Read this number to the subject after they scan the QR code.</div></div>"
-	$m+="<div class='linkrow'><span class='tag'>Or share this link</span><span class='val mono' id='link'>"+$scanURL+"</span><button class='copy' id='copy' type='button' aria-label='Copy link'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round'><rect x='9' y='9' width='11' height='11' rx='2'/><path d='M5 15V5a2 2 "+"0 0 1 2-2h10'/></svg><span id='ctext'>Copy</span></button></div>"
-	$m+="<div style='margin-top:12px'><a href='/pair' style='display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border:1.5px solid #86868b;border-radius:8px;color:#555;font-size:12px;font-weight:600;text-decoration:none'>&#8635; Regenerate QR &amp"+"; challenge</a></div>"
+	$m+="<section class='card hero'><div class='hero-top'><div class='step-ctx'><span class='num'>2</span> <span>"+This:C1470.t("Web_CurrentStep")+"</span> <b>"+This:C1470.t("Web_DevicePairing")+"</b></div>"+$chip+"</div>"
+	$m+="<div class='hero-body'><div><div class='qr-tile'><img src='"+$qrURL+"' alt='"+This:C1470.t("Web_PairingQR")+"'></div><div class='qr-cap'>"+This:C1470.t("Web_ScanQRWithDevice")+"</div></div>"
+	$m+="<div class='hero-info'><div class='code-block'><div class='code-badge'><div class='lbl'>"+This:C1470.t("Web_Challenge")+"</div><div class='num'>"+$challenge+"</div></div>"
+	$m+="<div class='code-meta'>"+This:C1470.t("Web_ReadNumber")+"</div></div>"
+	$m+="<div class='linkrow'><span class='tag'>"+This:C1470.t("Web_OrShareLink")+"</span><span class='val mono' id='link'>"+$scanURL+"</span><button class='copy' id='copy' type='button' aria-label='"+This:C1470.t("Web_CopyLink")+"'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round'><rect x='9' y='9' width='11' height='11' rx='2'/><path d='M5 15V5a2 2 "+"0 0 1 2-2h10'/></svg><span id='ctext'>"+This:C1470.t("Web_Copy")+"</span></button></div>"
+	$m+="<div style='margin-top:12px'><a href='/pair' style='display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border:1.5px solid #86868b;border-radius:8px;color:#555;font-size:12px;font-weight:600;text-decoration:none'>&#8635; "+This:C1470.t("Web_RegenerateQR")+"</a></div>"
 	$m+="</div></div></section>"
 	
 	$m+="<div class='row'>"
-	$m+="<section class='card'><div class='card-head'><span class='lbl'>Process</span></div><div class='card-body'>"+This:C1470.verifySteps($status)+"</div></section>"
-	$m+="<section class='card'><div class='card-head'><span class='lbl'>Case details</span></div><div class='card-body'>"+This:C1470.verifyDetails()+"</div></section>"
-	$m+="<section class='card'><div class='card-head'><span class='lbl'>Activity</span></div><div class='card-body'>"+This:C1470.verifyActivity()+"</div></section>"
+	$m+="<section class='card'><div class='card-head'><span class='lbl'>"+This:C1470.t("Web_Process")+"</span></div><div class='card-body'>"+This:C1470.verifySteps($status)+"</div></section>"
+	$m+="<section class='card'><div class='card-head'><span class='lbl'>"+This:C1470.t("Web_CaseDetails")+"</span></div><div class='card-body'>"+This:C1470.verifyDetails()+"</div></section>"
+	$m+="<section class='card'><div class='card-head'><span class='lbl'>"+This:C1470.t("Web_Activity")+"</span></div><div class='card-body'>"+This:C1470.verifyActivity()+"</div></section>"
 	$m+="</div>"
-	return This:C1470.htmlResult(This:C1470.verifyShell("Pair device · "+$ref; $m; $status; "dashboard"); 0)
+	return This:C1470.htmlResult(This:C1470.verifyShell(This:C1470.t("Web_PairDevice")+" · "+$ref; $m; $status; "dashboard"); 0)
 	
 	
 	// ─── User dashboard — STATE VIEWS ──────────────────────────────────
@@ -930,23 +981,23 @@ Function progressMain($request : 4D:C1709.IncomingMessage) : Text
 	var $dm : Object
 	var $connHost : Text
 	
-	var $m : Text:="<div class='crumb'><a href='/init'>Dashboard</a><span class='sep'>/</span><span class='mono'>"+$ref+"</span></div>"
-	$m+="<div class='pagehead'><div><h1>Verification <span class='ref mono'>"+$ref+"</span></h1>"
+	var $m : Text:="<div class='crumb'><a href='/init'>"+This:C1470.t("Web_Dashboard")+"</a><span class='sep'>/</span><span class='mono'>"+$ref+"</span></div>"
+	$m+="<div class='pagehead'><div><h1>"+This:C1470.t("Web_Verification")+" <span class='ref mono'>"+$ref+"</span></h1>"
 	
 	If ($status="pending")
-		$m+="<p class='substatus'><span class='pulse'></span> Awaiting subject — pair a device to continue</p></div>"+$chip+"</div>"
-		$m+="<section class='card hero'><div class='hero-top'><div class='step-ctx'><span class='num'>2</span> <span>Current step ·</span> <b>Device pairing</b></div>"+$chip+"</div>"
+		$m+="<p class='substatus'><span class='pulse'></span> "+This:C1470.t("Web_AwaitingSubject")+"</p></div>"+$chip+"</div>"
+		$m+="<section class='card hero'><div class='hero-top'><div class='step-ctx'><span class='num'>2</span> <span>"+This:C1470.t("Web_CurrentStep")+"</span> <b>"+This:C1470.t("Web_DevicePairing")+"</b></div>"+$chip+"</div>"
 		$m+="<div class='hero-body'><div class='hero-info'>"
-		$m+="<p class='code-meta'>Click <b>Pair device</b> to generate a QR code and challenge number for the subject's phone.</p>"
+		$m+="<p class='code-meta'>"+This:C1470.t("Web_ClickPairDevice")+"</p>"
 		$m+="<a href='/pair' class='btn primary' style='margin-top:16px;display:inline-flex;align-items:center;gap:8px'>"
 		$m+="<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='width:16px;height:16px'><rect x='2' y='2' width='9' height='9' rx='1'/><rect x='13' y='2' width='9' height='9' rx='1'/><r"+"ect x='2' y='13' width='9' height='9' rx='1'/><rect x='13' y='17' width='2' height='4'/><rect x='17' y='13' width='4' height='2'/></svg>"
-		$m+="Pair device</a>"
+		$m+=This:C1470.t("Web_PairDevice")+"</a>"
 		$m+="</div></div></section>"
 	Else 
-		$m+="<p class='substatus'><span class='pulse'></span> Identity verified — awaiting evidence upload</p></div>"+$chip+"</div>"
-		$m+="<section class='card hero'><div class='hero-top'><div class='step-ctx'><span class='num'>3</span> <span>Current step ·</span> <b>Evidence submission</b></div>"+$chip+"</div>"
-		$m+="<div class='hero-body'><div class='hero-info'><div class='code-block'><div class='code-badge'><div class='lbl'>Challenge</div><div class='num'>"+$challenge+"</div></div>"
-		$m+="<div class='code-meta'>Identity confirmed. The subject is now uploading their verification photo.</div></div>"
+		$m+="<p class='substatus'><span class='pulse'></span> "+This:C1470.t("Web_IdentityVerifiedAwaiting")+"</p></div>"+$chip+"</div>"
+		$m+="<section class='card hero'><div class='hero-top'><div class='step-ctx'><span class='num'>3</span> <span>"+This:C1470.t("Web_CurrentStep")+"</span> <b>"+This:C1470.t("Web_EvidenceSubmission")+"</b></div>"+$chip+"</div>"
+		$m+="<div class='hero-body'><div class='hero-info'><div class='code-block'><div class='code-badge'><div class='lbl'>"+This:C1470.t("Web_Challenge")+"</div><div class='num'>"+$challenge+"</div></div>"
+		$m+="<div class='code-meta'>"+This:C1470.t("Web_SubjectUploading")+"</div></div>"
 		$m+="</div></div></section>"
 	End if 
 	
@@ -956,7 +1007,7 @@ Function progressMain($request : 4D:C1709.IncomingMessage) : Text
 		$connHost:=$request.getHeader("host")
 		$m+="<div class='banner ok' style='display:flex;align-items:center;gap:10px;margin-bottom:6px'>"
 		$m+="<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='width:16px;height:16px;flex-shrink:0'><path d='m5 12 4.5 4.5L19 7'/></svg>"
-		$m+="<span><b>Desktop session connected</b>"
+		$m+="<span><b>"+This:C1470.t("Web_DesktopConnected")+"</b>"
 		If ($connHost#"")
 			$m+=" <span style='opacity:.6'>·</span> <code style='font-size:12px'>"+This:C1470.htmlEscape($connHost)+"</code>"
 		End if 
@@ -967,9 +1018,9 @@ Function progressMain($request : 4D:C1709.IncomingMessage) : Text
 	End if 
 	
 	$m+="<div class='row'>"
-	$m+="<section class='card'><div class='card-head'><span class='lbl'>Process</span></div><div class='card-body'>"+This:C1470.verifySteps($status)+"</div></section>"
-	$m+="<section class='card'><div class='card-head'><span class='lbl'>Case details</span></div><div class='card-body'>"+This:C1470.verifyDetails()+"</div></section>"
-	$m+="<section class='card'><div class='card-head'><span class='lbl'>Activity</span></div><div class='card-body'>"+This:C1470.verifyActivity()+"</div></section>"
+	$m+="<section class='card'><div class='card-head'><span class='lbl'>"+This:C1470.t("Web_Process")+"</span></div><div class='card-body'>"+This:C1470.verifySteps($status)+"</div></section>"
+	$m+="<section class='card'><div class='card-head'><span class='lbl'>"+This:C1470.t("Web_CaseDetails")+"</span></div><div class='card-body'>"+This:C1470.verifyDetails()+"</div></section>"
+	$m+="<section class='card'><div class='card-head'><span class='lbl'>"+This:C1470.t("Web_Activity")+"</span></div><div class='card-body'>"+This:C1470.verifyActivity()+"</div></section>"
 	$m+="</div>"
 	return $m
 	
@@ -992,37 +1043,37 @@ Function reviewMain() : Text
 		$thumb:="<img src='/evidence' style='width:100%;height:100%;object-fit:cover;border-radius:6px'>"
 	End if 
 	
-	var $m : Text:="<div class='crumb'><a href='/init'>Dashboard</a><span class='sep'>/</span><span class='mono'>"+String:C10($d.ref)+"</span></div>"
-	$m+="<div class='pagehead'><div><h1>Verification <span class='ref mono'>"+String:C10($d.ref)+"</span></h1>"
-	$m+="<p class='substatus'>Ready for review · submitted "+This:C1470.fmtTime(String:C10($d.submittedAt))+"</p></div>"+This:C1470.verifyChip("under_review")+"</div>"
+	var $m : Text:="<div class='crumb'><a href='/init'>"+This:C1470.t("Web_Dashboard")+"</a><span class='sep'>/</span><span class='mono'>"+String:C10($d.ref)+"</span></div>"
+	$m+="<div class='pagehead'><div><h1>"+This:C1470.t("Web_Verification")+" <span class='ref mono'>"+String:C10($d.ref)+"</span></h1>"
+	$m+="<p class='substatus'>"+This:C1470.t("Web_ReadyForReview"; {time: This:C1470.fmtTime(String:C10($d.submittedAt))})+"</p></div>"+This:C1470.verifyChip("under_review")+"</div>"
 	$m+="<div class='grid2'><div class='gcol'>"
-	$m+="<section class='card'><div class='card-head'><span class='lbl'>Evidence</span></div><div class='card-body'><div class='evi'><div class='thumb'>"+$thumb+"</div>"
+	$m+="<section class='card'><div class='card-head'><span class='lbl'>"+This:C1470.t("Web_Evidence")+"</span></div><div class='card-body'><div class='evi'><div class='thumb'>"+$thumb+"</div>"
 	$m+="<div><div class='ename'>"+This:C1470.htmlEscape(String:C10($d.fileName))+"</div>"
 	$m+="<div class='muted'>"+String:C10($d.fileType)+" · "+String:C10($d.fileSize)+"</div>"
-	$m+="<a class='ilink' href='/evidence' target='_blank'>Open original ↗</a></div></div></div></section>"
-	$m+="<section class='card'><div class='card-head'><span class='lbl'>Automated checks</span><span class='muted'>"+String:C10($pass)+" / "+String:C10($checks.length)+" passed</span></div><div class='card-body'>"+This:C1470.renderChecks($checks)+"</div></section>"
-	$m+="<section class='card'><div class='card-head'><span class='lbl'>Audit trail</span></div><div class='card-body'>"+This:C1470.verifyActivity()+"</div></section>"
+	$m+="<a class='ilink' href='/evidence' target='_blank'>"+This:C1470.t("Web_OpenOriginal")+" ↗</a></div></div></div></section>"
+	$m+="<section class='card'><div class='card-head'><span class='lbl'>"+This:C1470.t("Web_AutomatedChecks")+"</span><span class='muted'>"+This:C1470.t("Web_ChecksPassed"; {pass: String:C10($pass); total: String:C10($checks.length)})+"</span></div><div class='card-body'>"+This:C1470.renderChecks($checks)+"</div></section>"
+	$m+="<section class='card'><div class='card-head'><span class='lbl'>"+This:C1470.t("Web_AuditTrail")+"</span></div><div class='card-body'>"+This:C1470.verifyActivity()+"</div></section>"
 	$m+="</div><div class='gcol'>"
-	$m+="<section class='card'><div class='card-head'><span class='lbl'>Case details</span></div><div class='card-body'>"+This:C1470.verifyDetails()+"</div></section>"
-	$m+="<section class='card'><div class='card-head'><span class='lbl'>Decision</span></div><div class='card-body'>"
+	$m+="<section class='card'><div class='card-head'><span class='lbl'>"+This:C1470.t("Web_CaseDetails")+"</span></div><div class='card-body'>"+This:C1470.verifyDetails()+"</div></section>"
+	$m+="<section class='card'><div class='card-head'><span class='lbl'>"+This:C1470.t("Web_Decision")+"</span></div><div class='card-body'>"
 	$m+="<div class='radios'>"
-	$m+="<label class='radio'><input type='radio' name='o' value='approved'> Approve</label>"
-	$m+="<label class='radio'><input type='radio' name='o' value='rejected'> Reject</label>"
-	$m+="<label class='radio'><input type='radio' name='o' value='info_requested'> Request info</label>"
+	$m+="<label class='radio'><input type='radio' name='o' value='approved'> "+This:C1470.t("Web_Approve")+"</label>"
+	$m+="<label class='radio'><input type='radio' name='o' value='rejected'> "+This:C1470.t("Web_Reject")+"</label>"
+	$m+="<label class='radio'><input type='radio' name='o' value='info_requested'> "+This:C1470.t("Web_RequestInfo")+"</label>"
 	$m+="</div>"
-	$m+="<label class='fl'>Reason code</label>"
-	$m+="<select id='reason'><option value=''>Select reason…</option>"
-	$m+="<optgroup label='Approve'><option value='identity_confirmed'>Identity confirmed</option><option value='manual_override'>Manual override</option></optgroup>"
-	$m+="<optgroup label='Reject'><option value='doc_unreadable'>Document unreadable</option><option value='face_mismatch'>Face mismatch</option><option value='suspected_tampering'>Suspected tampering</option><option value='wrong_document'>Wrong document</opti"+"on><option value='other'>Other</option></optgroup>"
-	$m+="<optgroup label='Request info'><option value='retake_photo'>Retake photo</option><option value='better_lighting'>Better lighting</option><option value='full_document'>Full document</option><option value='other'>Other</option></optgroup>"
+	$m+="<label class='fl'>"+This:C1470.t("Web_ReasonCode")+"</label>"
+	$m+="<select id='reason'><option value=''>"+This:C1470.t("Web_SelectReason")+"</option>"
+	$m+="<optgroup label='"+This:C1470.t("Web_Approve")+"'><option value='identity_confirmed'>"+This:C1470.t("Reason_identity_confirmed")+"</option><option value='manual_override'>"+This:C1470.t("Reason_manual_override")+"</option></optgroup>"
+	$m+="<optgroup label='"+This:C1470.t("Web_Reject")+"'><option value='doc_unreadable'>"+This:C1470.t("Reason_doc_unreadable")+"</option><option value='face_mismatch'>"+This:C1470.t("Reason_face_mismatch")+"</option><option value='suspected_tampering'>"+This:C1470.t("Reason_suspected_tampering")+"</option><option value='wrong_document'>"+This:C1470.t("Reason_wrong_document")+"</option><option value='other'>"+This:C1470.t("Reason_other")+"</option></optgroup>"
+	$m+="<optgroup label='"+This:C1470.t("Web_RequestInfo")+"'><option value='retake_photo'>"+This:C1470.t("Option_retake_photo")+"</option><option value='better_lighting'>"+This:C1470.t("Option_better_lighting")+"</option><option value='full_document'>"+This:C1470.t("Option_full_document")+"</option><option value='other'>"+This:C1470.t("Reason_other")+"</option></optgroup>"
 	$m+="</select>"
-	$m+="<label class='fl'>Notes</label><textarea id='notes' placeholder='Context for the audit record (optional)'></textarea>"
-	$m+="<div class='btnrow'><button class='btn primary' id='submit' onclick='submitDecision()'>Submit decision</button></div>"
+	$m+="<label class='fl'>"+This:C1470.t("Web_Notes")+"</label><textarea id='notes' placeholder='"+This:C1470.t("Web_NotesPlaceholder")+"'></textarea>"
+	$m+="<div class='btnrow'><button class='btn primary' id='submit' onclick='submitDecision()'>"+This:C1470.t("Web_SubmitDecision")+"</button></div>"
 	$m+="<div id='fb' class='note'></div>"
-	$m+="<div class='note'>Decisions are final and recorded in the audit trail.</div>"
+	$m+="<div class='note'>"+This:C1470.t("Web_DecisionsFinal")+"</div>"
 	$m+="</div></section>"
 	$m+="</div></div>"
-	$m+="<script>async function submitDecision(){var o=document.querySelector('input[name=o]:checked');if(!o){alert('Select a decision.');return;}var reason=document.getElementById('reason').value;if((o.value==='rejected'||o.value==='info_requested')&&!reason)"+"{alert('Select a reason code.');return;}var btn=document.getElementById('submit');btn.disabled=true;var body={outcome:o.value,reasonCode:reason,notes:document.getElementById('notes').value};try{var r=await fetch('/decision',{method:'POST',headers:{'Co"+"ntent-Type':'application/json'},body:JSON.stringify(body)});var d=await r.json();if(d.ok){document.getElementById('fb').textContent='Decision recorded — '+(d.ref||'')+' · archived to Reports.';setTimeout(function(){location.reload();},1000);}else{d"+"ocument.getElementById('fb').textContent=d.message||'Failed';btn.disabled=false;}}catch(e){document.getElementById('fb').textContent='Network error';btn.disabled=false;}}</script>"
+	$m+="<script>async function submitDecision(){var o=document.querySelector('input[name=o]:checked');if(!o){alert("+This:C1470.js("Web_JsSelectDecision")+");return;}var reason=document.getElementById('reason').value;if((o.value==='rejected'||o.value==='info_requested')&&!reason)"+"{alert("+This:C1470.js("Web_JsSelectReason")+");return;}var btn=document.getElementById('submit');btn.disabled=true;var body={outcome:o.value,reasonCode:reason,notes:document.getElementById('notes').value};try{var r=await fetch('/decision',{method:'POST',headers:{'Co"+"ntent-Type':'application/json'},body:JSON.stringify(body)});var d=await r.json();if(d.ok){document.getElementById('fb').textContent="+This:C1470.js("Web_JsDecisionRecorded")+".replace('{ref}',d.ref||'');setTimeout(function(){location.reload();},1000);}else{d"+"ocument.getElementById('fb').textContent=d.message||"+This:C1470.js("Web_JsFailed")+";btn.disabled=false;}}catch(e){document.getElementById('fb').textContent="+This:C1470.js("Web_JsNetworkError")+";btn.disabled=false;}}</script>"
 	return $m
 	
 Function outcomeMain() : Text
@@ -1033,14 +1084,14 @@ Function outcomeMain() : Text
 		$checks:=JSON Parse:C1218(String:C10($d.checks))
 	End if 
 	var $bclass : Text:="warn"
-	var $btext : Text:="Additional information requested from the subject."
+	var $btext : Text:=This:C1470.t("Web_OutcomeInfoRequested")
 	Case of 
 		: ($outcome="approved")
 			$bclass:="ok"
-			$btext:="✓ This verification has been approved."
+			$btext:="✓ "+This:C1470.t("Web_OutcomeApproved")
 		: ($outcome="rejected")
 			$bclass:="bad"
-			$btext:="✕ This verification has been rejected."
+			$btext:="✕ "+This:C1470.t("Web_OutcomeRejected")
 	End case 
 	var $isImg : Boolean:=This:C1470.isImageExt(This:C1470.fileExt(String:C10($d.fileName)))
 	var $thumb : Text:="📄"
@@ -1048,27 +1099,27 @@ Function outcomeMain() : Text
 		$thumb:="<img src='/evidence' style='width:100%;height:100%;object-fit:cover;border-radius:6px'>"
 	End if 
 	
-	var $m : Text:="<div class='crumb'><a href='/init'>Dashboard</a><span class='sep'>/</span><span class='mono'>"+String:C10($d.ref)+"</span></div>"
-	$m+="<div class='pagehead'><div><h1>Verification <span class='ref mono'>"+String:C10($d.ref)+"</span></h1>"
-	$m+="<p class='substatus'>Decision recorded · "+This:C1470.fmtTime(String:C10($d.decidedAt))+"</p></div>"+This:C1470.verifyChip($outcome)+"</div>"
+	var $m : Text:="<div class='crumb'><a href='/init'>"+This:C1470.t("Web_Dashboard")+"</a><span class='sep'>/</span><span class='mono'>"+String:C10($d.ref)+"</span></div>"
+	$m+="<div class='pagehead'><div><h1>"+This:C1470.t("Web_Verification")+" <span class='ref mono'>"+String:C10($d.ref)+"</span></h1>"
+	$m+="<p class='substatus'>"+This:C1470.t("Web_DecisionRecordedAt"; {time: This:C1470.fmtTime(String:C10($d.decidedAt))})+"</p></div>"+This:C1470.verifyChip($outcome)+"</div>"
 	$m+="<div class='banner "+$bclass+"'>"+$btext+"</div>"
 	$m+="<div class='grid2'><div class='gcol'>"
-	$m+="<section class='card'><div class='card-head'><span class='lbl'>Evidence</span></div><div class='card-body'><div class='evi'><div class='thumb'>"+$thumb+"</div><div><div class='ename'>"+This:C1470.htmlEscape(String:C10($d.fileName))+"</div><div class='muted'>"+String:C10($d.fileType)+" · "+String:C10($d.fileSize)+"</div></div></div></div></section>"
-	$m+="<section class='card'><div class='card-head'><span class='lbl'>Automated checks</span></div><div class='card-body'>"+This:C1470.renderChecks($checks)+"</div></section>"
-	$m+="<section class='card'><div class='card-head'><span class='lbl'>Audit trail</span></div><div class='card-body'>"+This:C1470.verifyActivity()+"</div></section>"
+	$m+="<section class='card'><div class='card-head'><span class='lbl'>"+This:C1470.t("Web_Evidence")+"</span></div><div class='card-body'><div class='evi'><div class='thumb'>"+$thumb+"</div><div><div class='ename'>"+This:C1470.htmlEscape(String:C10($d.fileName))+"</div><div class='muted'>"+String:C10($d.fileType)+" · "+String:C10($d.fileSize)+"</div></div></div></div></section>"
+	$m+="<section class='card'><div class='card-head'><span class='lbl'>"+This:C1470.t("Web_AutomatedChecks")+"</span></div><div class='card-body'>"+This:C1470.renderChecks($checks)+"</div></section>"
+	$m+="<section class='card'><div class='card-head'><span class='lbl'>"+This:C1470.t("Web_AuditTrail")+"</span></div><div class='card-body'>"+This:C1470.verifyActivity()+"</div></section>"
 	$m+="</div><div class='gcol'>"
-	$m+="<section class='card'><div class='card-head'><span class='lbl'>Case details</span></div><div class='card-body'>"+This:C1470.verifyDetails()+"</div></section>"
-	$m+="<section class='card'><div class='card-head'><span class='lbl'>Decision</span></div><div class='card-body'><dl class='def'>"
-	$m+="<dt>Outcome</dt><dd>"+This:C1470.verifyChip($outcome)+"</dd>"
-	$m+="<dt>Reason</dt><dd>"+This:C1470.reasonLabel(String:C10($d.decisionReason))+"</dd>"
+	$m+="<section class='card'><div class='card-head'><span class='lbl'>"+This:C1470.t("Web_CaseDetails")+"</span></div><div class='card-body'>"+This:C1470.verifyDetails()+"</div></section>"
+	$m+="<section class='card'><div class='card-head'><span class='lbl'>"+This:C1470.t("Web_Decision")+"</span></div><div class='card-body'><dl class='def'>"
+	$m+="<dt>"+This:C1470.t("Web_Outcome")+"</dt><dd>"+This:C1470.verifyChip($outcome)+"</dd>"
+	$m+="<dt>"+This:C1470.t("Web_Reason")+"</dt><dd>"+This:C1470.reasonLabel(String:C10($d.decisionReason))+"</dd>"
 	var $notes : Text:=String:C10($d.decisionNotes)
 	If ($notes="")
 		$notes:="—"
 	End if 
-	$m+="<dt>Notes</dt><dd>"+This:C1470.htmlEscape($notes)+"</dd>"
-	$m+="<dt>Reviewer</dt><dd>"+String:C10($d.reviewer)+"</dd>"
-	$m+="<dt>Decided</dt><dd>"+This:C1470.fmtTime(String:C10($d.decidedAt))+"</dd>"
-	$m+="</dl><div class='btnrow'><a class='btn sec' href='/report' target='_blank'>Open report</a><button class='btn ghost' onclick='resetFlow()'>Start over</button></div></div></section>"
+	$m+="<dt>"+This:C1470.t("Web_Notes")+"</dt><dd>"+This:C1470.htmlEscape($notes)+"</dd>"
+	$m+="<dt>"+This:C1470.t("Web_Reviewer")+"</dt><dd>"+This:C1470.t(String:C10($d.reviewer))+"</dd>"
+	$m+="<dt>"+This:C1470.t("Web_Decided")+"</dt><dd>"+This:C1470.fmtTime(String:C10($d.decidedAt))+"</dd>"
+	$m+="</dl><div class='btnrow'><a class='btn sec' href='/report' target='_blank'>"+This:C1470.t("Web_OpenReport")+"</a><button class='btn ghost' onclick='resetFlow()'>"+This:C1470.t("Web_StartOver")+"</button></div></div></section>"
 	$m+="</div></div>"
 	$m+="<script>async function resetFlow(){await fetch('/reset');location.reload();}</script>"
 	return $m
@@ -1125,9 +1176,9 @@ Function renderChecks($checks : Collection) : Text
 					$g:="✕"
 			End case 
 			$h+="<div class='chk "+$state+"'><div class='g'>"+$g+"</div>"
-			$h+="<div class='t'><div class='cl'>"+This:C1470.htmlEscape(String:C10($c.label))+"</div>"
-			$h+="<div class='cn'>"+This:C1470.htmlEscape(String:C10($c.note))+"</div></div>"
-			$h+="<div class='cv'>"+This:C1470.htmlEscape(String:C10($c.value))+"</div></div>"
+			$h+="<div class='t'><div class='cl'>"+This:C1470.htmlEscape(This:C1470.t(String:C10($c.label)))+"</div>"
+			$h+="<div class='cn'>"+This:C1470.htmlEscape(This:C1470.t(String:C10($c.note)))+"</div></div>"
+			$h+="<div class='cv'>"+This:C1470.htmlEscape(This:C1470.t(String:C10($c.value)))+"</div></div>"
 		End for 
 	End if 
 	$h+="</div>"
@@ -1154,9 +1205,9 @@ Function renderTimelineFrom($log : Collection) : Text
 	
 Function uploadFormHtml() : Text
 	var $h : Text:="<input type='file' id='photo' accept='image/*' class='filein'>"
-	$h+="<button class='btn primary' id='sendbtn' onclick='send()' style='margin-top:10px;width:100%'>Upload verification photo</button>"
+	$h+="<button class='btn primary' id='sendbtn' onclick='send()' style='margin-top:10px;width:100%'>"+This:C1470.t("Web_UploadPhoto")+"</button>"
 	$h+="<div id='fb' class='note'></div>"
-	$h+="<script>async function send(){var f=document.getElementById('photo').files[0];if(!f){alert('Choose a photo first.');return;}var fd=new FormData();fd.append('photoFile',f);var b=document.getElementById('sendbtn');b.disabled=true;var fb=document.getElem"+"entById('fb');fb.textContent='Uploading…';try{var r=await fetch('/fileUpload',{method:'POST',body:fd});var d=await r.json();if(d.ok){fb.textContent='Submitted. Returning to the dashboard...';try{window.close();}catch(e){}window.location.href='/init'"+";}else{fb.textContent=d.message||'Upload failed';b.disabled=false;}}catch(e){fb.textContent='Networ"+"k error';b.disabled=false;}}</script>"
+	$h+="<script>async function send(){var f=document.getElementById('photo').files[0];if(!f){alert("+This:C1470.js("Web_JsChoosePhoto")+");return;}var fd=new FormData();fd.append('photoFile',f);var b=document.getElementById('sendbtn');b.disabled=true;var fb=document.getElem"+"entById('fb');fb.textContent="+This:C1470.js("Web_JsUploading")+";try{var r=await fetch('/fileUpload',{method:'POST',body:fd});var d=await r.json();if(d.ok){fb.textContent="+This:C1470.js("Web_JsSubmitted")+";try{window.close();}catch(e){}window.location.href='/init'"+";}else{fb.textContent=d.message||"+This:C1470.js("Web_JsUploadFailed")+";b.disabled=false;}}catch(e){fb.textContent="+This:C1470.js("Web_JsNetworkError")+";b.disabled=false;}}</script>"
 	return $h
 	
 	
@@ -1178,75 +1229,75 @@ Function consoleShell($title : Text; $crumb : Text; $main : Text; $status : Text
 	return $h
 	
 Function subjectShell($title : Text; $main : Text; $status : Text) : Text
-	var $h : Text:="<!DOCTYPE html><html lang='en'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'>"
+	var $h : Text:="<!DOCTYPE html><html lang='"+This:C1470.lang()+"'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'>"
 	$h+="<title>"+$title+" · 4D Secure OTP</title>"
 	$h+="<link rel='preconnect' href='https://fonts.googleapis.com'><link rel='preconnect' href='https://fonts.gstatic.com' crossorigin>"
 	$h+="<link href='https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap' rel='stylesheet'>"
 	$h+="<style>"+This:C1470.consoleCss()+"</style></head><body>"
 	$h+="<header class='nav'><div class='nav-inner subjnav'>"
 	$h+="<div class='brand'><svg viewBox='0 0 24 24' fill='none'><path d='M12 2 21 7v10l-9 5-9-5V7l9-5Z' stroke='#4F46E5' stroke-width='1.6' stroke-linejoin='round'/><path d='M12 7 16.5 9.5v5L12 17l-4.5-2.5v-5L12 7Z' fill='#4F46E5'/></svg><b>4D Secure OTP</b><"+"/div"+">"
-	$h+="<span class='env'><span class='d'></span><span class='t'>Secure</span></span>"
+	$h+="<span class='env'><span class='d'></span><span class='t'>"+This:C1470.t("Web_Secure")+"</span></span>"
 	$h+="</div></header>"
 	$h+="<main><div class='subjwrap'>"+$main
-	$h+="<div class='muted' style='text-align:center;margin-top:16px'>Secured by 4D Secure OTP</div></div></main>"
+	$h+="<div class='muted' style='text-align:center;margin-top:16px'>"+This:C1470.t("Web_SecuredBy")+"</div></div></main>"
 	$h+="<script>var S='"+$status+"';async function poll(){try{var r=await fetch('/status',{cache:'no-store'});var d=await r.json();if(String(d.status)!==S){location.reload();}}catch(e){}}setInterval(poll,2500);</script>"
 	$h+="</body></html>"
 	return $h
 	
 Function reportPage($src : Object; $log : Collection) : Text
 	var $d : Object:=$src
-	var $h : Text:="<!DOCTYPE html><html lang='en'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'>"
-	$h+="<title>Case report · 4D Secure OTP</title>"
+	var $h : Text:="<!DOCTYPE html><html lang='"+This:C1470.lang()+"'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'>"
+	$h+="<title>"+This:C1470.t("Web_CaseReport")+" · 4D Secure OTP</title>"
 	$h+="<link rel='preconnect' href='https://fonts.googleapis.com'><link rel='preconnect' href='https://fonts.gstatic.com' crossorigin>"
 	$h+="<link href='https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap' rel='stylesheet'>"
 	$h+="<style>"+This:C1470.consoleCss()+"@media print{.nav{display:none}main{padding-top:18px}}</style></head><body>"
 	$h+="<header class='nav'><div class='nav-inner'>"
 	$h+="<div class='brand'><svg viewBox='0 0 24 24' fill='none'><path d='M12 2 21 7v10l-9 5-9-5V7l9-5Z' stroke='#4F46E5' stroke-width='1.6' stroke-linejoin='round'/><path d='M12 7 16.5 9.5v5L12 17l-4.5-2.5v-5L12 7Z' fill='#4F46E5'/></svg><b>4D Secure OTP</b><"+"/div"+">"
-	$h+="<div class='nav-right'><a class='btn sec' href='/reports'>← Reports</a></div>"
+	$h+="<div class='nav-right'><a class='btn sec' href='/reports'>← "+This:C1470.t("Web_Reports")+"</a></div>"
 	$h+="</div></header><main style='max-width:780px'>"
 	If ($d=Null:C1517)
-		$h+="<section class='card'><div class='card-body'><div class='banner warn'>No active case in this session.</div></div></section></main></body></html>"
+		$h+="<section class='card'><div class='card-body'><div class='banner warn'>"+This:C1470.t("Web_NoActiveCaseSession")+"</div></div></section></main></body></html>"
 		return $h
 	End if 
 	var $checks : Collection:=New collection:C1472
 	If (String:C10($d.checks)#"")
 		$checks:=JSON Parse:C1218(String:C10($d.checks))
 	End if 
-	$h+="<div class='pagehead'><div><h1>Case report <span class='ref mono'>"+String:C10($d.ref)+"</span></h1>"
-	$h+="<p class='substatus'>Generated "+This:C1470.fmtTime(Timestamp:C1445)+"</p></div>"+This:C1470.verifyChip(String:C10($d.status))+"</div>"
-	$h+="<div class='btnrow' style='margin:-12px 0 18px'><button class='btn primary' onclick='window.print()'>Print / Save PDF</button></div>"
-	$h+="<section class='card'><div class='card-head'><span class='lbl'>Case details</span></div><div class='card-body'>"
-	$h+="<div class='drow'><span class='k'>Reference</span><span class='v mono'>"+String:C10($d.ref)+"</span></div>"
-	$h+="<div class='drow'><span class='k'>Channel</span><span class='v'>QR · Mobile</span></div>"
-	$h+="<div class='drow'><span class='k'>Created</span><span class='v mono'>"+This:C1470.fmtTime(String:C10($d.createdAt))+"</span></div>"
-	$h+="<div class='drow'><span class='k'>Submitted</span><span class='v mono'>"+This:C1470.fmtTime(String:C10($d.submittedAt))+"</span></div>"
-	$h+="<div class='drow'><span class='k'>Session</span><span class='v mono'>"+Substring:C12(Session:C1714.id; 1; 16)+"…</span></div>"
+	$h+="<div class='pagehead'><div><h1>"+This:C1470.t("Web_CaseReport")+" <span class='ref mono'>"+String:C10($d.ref)+"</span></h1>"
+	$h+="<p class='substatus'>"+This:C1470.t("Web_GeneratedAt"; {time: This:C1470.fmtTime(Timestamp:C1445)})+"</p></div>"+This:C1470.verifyChip(String:C10($d.status))+"</div>"
+	$h+="<div class='btnrow' style='margin:-12px 0 18px'><button class='btn primary' onclick='window.print()'>"+This:C1470.t("Web_PrintPDF")+"</button></div>"
+	$h+="<section class='card'><div class='card-head'><span class='lbl'>"+This:C1470.t("Web_CaseDetails")+"</span></div><div class='card-body'>"
+	$h+="<div class='drow'><span class='k'>"+This:C1470.t("Web_Reference")+"</span><span class='v mono'>"+String:C10($d.ref)+"</span></div>"
+	$h+="<div class='drow'><span class='k'>"+This:C1470.t("Web_Channel")+"</span><span class='v'>"+This:C1470.t("Web_ChannelQRMobile")+"</span></div>"
+	$h+="<div class='drow'><span class='k'>"+This:C1470.t("Web_Created")+"</span><span class='v mono'>"+This:C1470.fmtTime(String:C10($d.createdAt))+"</span></div>"
+	$h+="<div class='drow'><span class='k'>"+This:C1470.t("Web_Submitted")+"</span><span class='v mono'>"+This:C1470.fmtTime(String:C10($d.submittedAt))+"</span></div>"
+	$h+="<div class='drow'><span class='k'>"+This:C1470.t("Web_Session")+"</span><span class='v mono'>"+Substring:C12(Session:C1714.id; 1; 16)+"…</span></div>"
 	$h+="</div></section>"
-	$h+="<section class='card'><div class='card-head'><span class='lbl'>Evidence</span></div><div class='card-body'>"
-	$h+="<div class='drow'><span class='k'>File</span><span class='v'>"+This:C1470.htmlEscape(String:C10($d.fileName))+"</span></div>"
-	$h+="<div class='drow'><span class='k'>Type</span><span class='v'>"+String:C10($d.fileType)+"</span></div>"
-	$h+="<div class='drow'><span class='k'>Size</span><span class='v'>"+String:C10($d.fileSize)+"</span></div>"
+	$h+="<section class='card'><div class='card-head'><span class='lbl'>"+This:C1470.t("Web_Evidence")+"</span></div><div class='card-body'>"
+	$h+="<div class='drow'><span class='k'>"+This:C1470.t("Web_File")+"</span><span class='v'>"+This:C1470.htmlEscape(String:C10($d.fileName))+"</span></div>"
+	$h+="<div class='drow'><span class='k'>"+This:C1470.t("Web_Type")+"</span><span class='v'>"+String:C10($d.fileType)+"</span></div>"
+	$h+="<div class='drow'><span class='k'>"+This:C1470.t("Web_Size")+"</span><span class='v'>"+String:C10($d.fileSize)+"</span></div>"
 	$h+="<div class='drow'><span class='k'>SHA-256</span><span class='v mono' style='word-break:break-all;text-align:right'>"+String:C10($d.sha256)+"</span></div>"
 	$h+="</div></section>"
-	$h+="<section class='card'><div class='card-head'><span class='lbl'>Automated checks</span></div><div class='card-body'>"+This:C1470.renderChecks($checks)+"</div></section>"
-	$h+="<section class='card'><div class='card-head'><span class='lbl'>Decision</span></div><div class='card-body'><dl class='def'>"
+	$h+="<section class='card'><div class='card-head'><span class='lbl'>"+This:C1470.t("Web_AutomatedChecks")+"</span></div><div class='card-body'>"+This:C1470.renderChecks($checks)+"</div></section>"
+	$h+="<section class='card'><div class='card-head'><span class='lbl'>"+This:C1470.t("Web_Decision")+"</span></div><div class='card-body'><dl class='def'>"
 	var $oc : Text:=String:C10($d.decisionOutcome)
 	If ($oc="")
-		$h+="<dt>Outcome</dt><dd>Pending decision</dd>"
+		$h+="<dt>"+This:C1470.t("Web_Outcome")+"</dt><dd>"+This:C1470.t("Web_PendingDecision")+"</dd>"
 	Else 
-		$h+="<dt>Outcome</dt><dd>"+This:C1470.verifyChip($oc)+"</dd>"
-		$h+="<dt>Reason</dt><dd>"+This:C1470.reasonLabel(String:C10($d.decisionReason))+"</dd>"
+		$h+="<dt>"+This:C1470.t("Web_Outcome")+"</dt><dd>"+This:C1470.verifyChip($oc)+"</dd>"
+		$h+="<dt>"+This:C1470.t("Web_Reason")+"</dt><dd>"+This:C1470.reasonLabel(String:C10($d.decisionReason))+"</dd>"
 		var $n : Text:=String:C10($d.decisionNotes)
 		If ($n="")
 			$n:="—"
 		End if 
-		$h+="<dt>Notes</dt><dd>"+This:C1470.htmlEscape($n)+"</dd>"
-		$h+="<dt>Reviewer</dt><dd>"+String:C10($d.reviewer)+"</dd>"
-		$h+="<dt>Decided</dt><dd>"+This:C1470.fmtTime(String:C10($d.decidedAt))+"</dd>"
+		$h+="<dt>"+This:C1470.t("Web_Notes")+"</dt><dd>"+This:C1470.htmlEscape($n)+"</dd>"
+		$h+="<dt>"+This:C1470.t("Web_Reviewer")+"</dt><dd>"+This:C1470.t(String:C10($d.reviewer))+"</dd>"
+		$h+="<dt>"+This:C1470.t("Web_Decided")+"</dt><dd>"+This:C1470.fmtTime(String:C10($d.decidedAt))+"</dd>"
 	End if 
 	$h+="</dl></div></section>"
-	$h+="<section class='card'><div class='card-head'><span class='lbl'>Audit trail</span></div><div class='card-body'>"+This:C1470.verifyActivityFrom($log)+"</div></section>"
-	$h+="<div class='hint' style='text-align:center'>Generated "+This:C1470.fmtTime(Timestamp:C1445)+" · 4D Secure OTP · Confidential</div>"
+	$h+="<section class='card'><div class='card-head'><span class='lbl'>"+This:C1470.t("Web_AuditTrail")+"</span></div><div class='card-body'>"+This:C1470.verifyActivityFrom($log)+"</div></section>"
+	$h+="<div class='hint' style='text-align:center'>"+This:C1470.t("Web_GeneratedAt"; {time: This:C1470.fmtTime(Timestamp:C1445)})+" · 4D Secure OTP · "+This:C1470.t("Web_Confidential")+"</div>"
 	$h+="</main></body></html>"
 	return $h
 	
@@ -1260,7 +1311,7 @@ Function verifyShell($title : Text; $main : Text; $status : Text; $active : Text
 	Else 
 		$dashA:=" class='active'"
 	End if 
-	var $h : Text:="<!DOCTYPE html><html lang='en'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'>"
+	var $h : Text:="<!DOCTYPE html><html lang='"+This:C1470.lang()+"'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'>"
 	$h+="<title>"+$title+" · 4D Secure OTP</title>"
 	$h+="<link rel='preconnect' href='https://fonts.googleapis.com'><link rel='preconnect' href='https://fonts.gstatic.com' crossorigin>"
 	$h+="<link href='https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap' rel='stylesheet'>"
@@ -1268,38 +1319,27 @@ Function verifyShell($title : Text; $main : Text; $status : Text; $active : Text
 	$h+="<header class='nav'><div class='nav-inner'>"
 	$h+="<div class='brand'><svg viewBox='0 0 24 24' fill='none'><path d='M12 2 21 7v10l-9 5-9-5V7l9-5Z' stroke='#4F46E5' stroke-width='1.6' stroke-linejoin='round'/><path d='M12 7 16.5 9.5v5L12 17l-4.5-2.5v-5L12 7Z' fill='#4F46E5'/></svg><b>4D Secure OTP</b><"+"/div"+">"
 	$h+="<nav class='links'>"
-	$h+="<a href='/init'"+$dashA+"><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='3' width='7' height='9' rx='1.5'/><rect x='14' y='3' width='7' height='5' rx='1.5'/><rect x='14' y='12' width='7' height='9' rx='"+"1.5'/><rect x='3' y='16' width='7' height='5' rx='1.5'/></svg><span>Dashboard</span></a>"
-	$h+="<a href='/reports'"+$repA+"><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round'><path d='M6 3h9l5 5v13H6z'/><path d='M14 3v5h5'/><path d='M9 13h7M9 17h7'/></svg><span>Reports</span></a>"
+	$h+="<a href='/init'"+$dashA+"><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='3' width='7' height='9' rx='1.5'/><rect x='14' y='3' width='7' height='5' rx='1.5'/><rect x='14' y='12' width='7' height='9' rx='"+"1.5'/><rect x='3' y='16' width='7' height='5' rx='1.5'/></svg><span>"+This:C1470.t("Web_Dashboard")+"</span></a>"
+	$h+="<a href='/reports'"+$repA+"><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round'><path d='M6 3h9l5 5v13H6z'/><path d='M14 3v5h5'/><path d='M9 13h7M9 17h7'/></svg><span>"+This:C1470.t("Web_Reports")+"</span></a>"
 	$h+="</nav>"
-	$h+="<div class='nav-right'><form class='search' onsubmit='return goSearch(event)'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round'><circle cx='11' cy='11' r='7'/><path d='m20 20-3.2-3.2'/></svg><inp"+"ut id='q' type='text' placeholder='Search (VR-…)' aria-label='Search'></form>"
-	$h+="<span class='env'><span class='d'></span><span class='t'>Production</span></span><div class='op' title='Operator'>OTP</div></div>"
+	$h+="<div class='nav-right'><form class='search' onsubmit='return goSearch(event)'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round'><circle cx='11' cy='11' r='7'/><path d='m20 20-3.2-3.2'/></svg><inp"+"ut id='q' type='text' placeholder='"+This:C1470.t("Web_SearchPlaceholder")+"' aria-label='"+This:C1470.t("Web_Search")+"'></form>"
+	$h+="<span class='env'><span class='d'></span><span class='t'>"+This:C1470.t("Web_Production")+"</span></span><div class='op' title='"+This:C1470.t("Web_Operator")+"'>OTP</div></div>"
 	$h+="</div></header>"
 	$h+="<main>"+$main+"</main>"
 	$h+="<script>"
 	$h+="function goSearch(e){e.preventDefault();var v=document.getElementById('q').value.trim();window.location.href='/reports'+(v?('?q='+encodeURIComponent(v)):'');return false;}"
 	$h+="(function(){var p=new URLSearchParams(location.search).get('q');if(p){var q=document.getElementById('q');if(q)q.value=p;}})();"
-	$h+="(function(){var b=document.getElementById('copy'),t=document.getElementById('ctext');if(!b)return;var lk=document.getElementById('link');var link=lk?lk.textContent.trim():'';b.addEventListener('click',async function(){var ok=false;try{await navigator."+"clipboa"+"rd.writeText(link);ok=true;}catch(e){try{var ta=document.createElement('textarea');ta.value=link;ta.style.cssText='position:fixed;top:-200px;left:-200px;opacity:0';document.body.appendChild(ta);ta.focus();ta.select();ok=document.execCommand('copy');do"+"cument.body.removeChild(ta);}catch(e2){}}b.classList.add('copied');t.textContent=ok?'Copied!':'Copied';setTimeout(function(){b.classList.remove('copied');t.textContent='Copy';},2000);});})();"
+	$h+="(function(){var b=document.getElementById('copy'),t=document.getElementById('ctext');if(!b)return;var lk=document.getElementById('link');var link=lk?lk.textContent.trim():'';b.addEventListener('click',async function(){var ok=false;try{await navigator."+"clipboa"+"rd.writeText(link);ok=true;}catch(e){try{var ta=document.createElement('textarea');ta.value=link;ta.style.cssText='position:fixed;top:-200px;left:-200px;opacity:0';document.body.appendChild(ta);ta.focus();ta.select();ok=document.execCommand('copy');do"+"cument.body.removeChild(ta);}catch(e2){}}b.classList.add('copied');t.textContent=ok?"+This:C1470.js("Web_JsCopied")+":"+This:C1470.js("Web_JsCopied")+";setTimeout(function(){b.classList.remove('copied');t.textContent="+This:C1470.js("Web_Copy")+";},2000);});})();"
 	$h+="(function(){var el=document.getElementById('cd');if(!el)return;var t=300;setInterval(function(){if(t<=0)return;t--;el.textContent=String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60).padStart(2,'0');},1000);})();"
 	$h+="var S='"+$status+"';async function poll(){try{var r=await fetch('/status',{cache:'no-store'});var d=await r.json();if(String(d.status)!==S){location.reload();}}catch(e){}}setInterval(poll,2500);"
 	$h+="</script></body></html>"
 	return $h
 	
 Function verifyChip($status : Text) : Text
-	var $label : Text:=$status
-	Case of 
-		: ($status="pending")
-			$label:="Pending"
-		: ($status="verified")
-			$label:="Verified"
-		: ($status="under_review")
-			$label:="Under review"
-		: ($status="approved")
-			$label:="Approved"
-		: ($status="rejected")
-			$label:="Rejected"
-		: ($status="info_requested")
-			$label:="Info requested"
-	End case 
+	var $label : Text:=Localized string("Status_"+$status)
+	If ($label="")
+		$label:=$status
+	End if 
 	return "<span class='chip "+$status+"'><span class='d'></span> "+$label+"</span>"
 	
 Function timeOnly($ts : Text) : Text
@@ -1314,22 +1354,22 @@ Function verifySteps($status : Text) : Text
 	var $verified : Boolean:=($status#"pending")
 	var $check : Text:="<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round'><path d='m5 12 4.5 4.5L19 7'/></svg>"
 	var $h : Text:="<div class='steps'>"
-	$h+="<div class='step done'><div class='rail'></div><div class='mk'>"+$check+"</div><div><div class='t'>Case opened</div><div class='m'>"+$t1+" UTC</div></div></div>"
+	$h+="<div class='step done'><div class='rail'></div><div class='mk'>"+$check+"</div><div><div class='t'>"+This:C1470.t("Web_CaseOpened")+"</div><div class='m'>"+$t1+" UTC</div></div></div>"
 	If ($verified)
-		$h+="<div class='step done'><div class='rail'></div><div class='mk'>"+$check+"</div><div><div class='t'>Identity verification</div><div class='m'>Verified by subject</div></div></div>"
+		$h+="<div class='step done'><div class='rail'></div><div class='mk'>"+$check+"</div><div><div class='t'>"+This:C1470.t("Web_IdentityVerification")+"</div><div class='m'>"+This:C1470.t("Web_VerifiedBySubject")+"</div></div></div>"
 	Else 
-		$h+="<div class='step active'><div class='rail'></div><div class='mk'>2</div><div><div class='t'>Identity verification</div><div class='m'>Waiting for device pairing</div></div></div>"
+		$h+="<div class='step active'><div class='rail'></div><div class='mk'>2</div><div><div class='t'>"+This:C1470.t("Web_IdentityVerification")+"</div><div class='m'>"+This:C1470.t("Web_WaitingPairing")+"</div></div></div>"
 	End if 
-	$h+="<div class='step upcoming'><div class='rail'></div><div class='mk'>3</div><div><div class='t'>Evidence submission</div><div class='m'>Unlocks after verification</div></div></div>"
+	$h+="<div class='step upcoming'><div class='rail'></div><div class='mk'>3</div><div><div class='t'>"+This:C1470.t("Web_EvidenceSubmission")+"</div><div class='m'>"+This:C1470.t("Web_UnlocksAfter")+"</div></div></div>"
 	$h+="</div>"
 	return $h
 	
 Function verifyDetails() : Text
 	var $d : Object:=Session:C1714.storage.data
-	var $h : Text:="<div class='drow'><span class='k'>Reference</span><span class='v mono'>"+String:C10($d.ref)+"</span></div>"
-	$h+="<div class='drow'><span class='k'>Channel</span><span class='v'>QR · Mobile</span></div>"
-	$h+="<div class='drow'><span class='k'>Created</span><span class='v mono'>"+This:C1470.fmtTime(String:C10($d.createdAt))+"</span></div>"
-	$h+="<div class='drow'><span class='k'>Session</span><span class='v mono'>"+Substring:C12(Session:C1714.id; 1; 12)+"…</span></div>"
+	var $h : Text:="<div class='drow'><span class='k'>"+This:C1470.t("Web_Reference")+"</span><span class='v mono'>"+String:C10($d.ref)+"</span></div>"
+	$h+="<div class='drow'><span class='k'>"+This:C1470.t("Web_Channel")+"</span><span class='v'>"+This:C1470.t("Web_ChannelQRMobile")+"</span></div>"
+	$h+="<div class='drow'><span class='k'>"+This:C1470.t("Web_Created")+"</span><span class='v mono'>"+This:C1470.fmtTime(String:C10($d.createdAt))+"</span></div>"
+	$h+="<div class='drow'><span class='k'>"+This:C1470.t("Web_Session")+"</span><span class='v mono'>"+Substring:C12(Session:C1714.id; 1; 12)+"…</span></div>"
 	return $h
 	
 Function stripTags($t : Text) : Text
@@ -1355,10 +1395,10 @@ Function verifyActivityFrom($log : Collection) : Text
 		var $i : Integer
 		For ($i; 0; $log.length-1)
 			var $t : Text:=This:C1470.timeOnly(String:C10($log[$i].t))
-			$h+="<div class='ev'><div class='er'></div><div class='ed'><i></i></div><div><div class='x'>"+This:C1470.htmlEscape(This:C1470.stripTags(String:C10($log[$i].m)))+"</div><div class='ti mono'>"+$t+" UTC</div></div></div>"
+			$h+="<div class='ev'><div class='er'></div><div class='ed'><i></i></div><div><div class='x'>"+This:C1470.htmlEscape(This:C1470.stripTags(This:C1470.logText($log[$i])))+"</div><div class='ti mono'>"+$t+" UTC</div></div></div>"
 		End for 
 	Else 
-		$h:="<div class='muted'>No activity yet.</div>"
+		$h:="<div class='muted'>"+This:C1470.t("Web_NoActivity")+"</div>"
 	End if 
 	return $h
 	
