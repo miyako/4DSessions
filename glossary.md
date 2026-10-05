@@ -59,9 +59,9 @@ Full-width `（）` and `：` in prose. First occurrence of a technical term: �
 | challenge-response | チャレンジレスポンス | first use チャレンジレスポンス（challenge-response） |
 | pairing | ペアリング | |
 | compliance officer | コンプライアンス担当者 | |
-| subject (person being verified) | 対象者 | |
+| subject (person being verified) | 当事者 | 本人 avoided: clashes with 本人確認 |
 | operator | オペレーター | |
-| case | ケース | |
+| case | 事例 | incl. 確認事例 |
 | verification | 確認 / 本人確認 | |
 | identity document | 本人確認書類 | |
 | approved / rejected / more info requested | 承認 / 却下 / 追加情報の要求 | statuses in prose; UI labels stay in English |
