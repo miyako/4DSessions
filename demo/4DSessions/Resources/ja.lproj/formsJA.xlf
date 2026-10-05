@@ -16,7 +16,7 @@
 			</trans-unit>
 			<trans-unit id="Start_Feature1" resname="Start_Feature1">
 				<source>QR session pairing</source>
-				<target>QRコードでセッションをペアリング</target>
+				<target>QRコードでセッション共有</target>
 			</trans-unit>
 			<trans-unit id="Start_Feature2" resname="Start_Feature2">
 				<source>OTP &amp; privileges</source>
