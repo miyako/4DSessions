@@ -72,7 +72,7 @@
 			</trans-unit>
 			<trans-unit id="Start_Tagline" resname="Start_Tagline">
 				<source>Same session across devices  ·  verified and privilege-gated.</source>
-				<target>デバイスをまたいで同じセッション  ·  本人確認とアクセス権で保護</target>
+				<target>デバイス間で同じセッション · 本人確認で保護</target>
 			</trans-unit>
 			<trans-unit id="Start_LaunchButton" resname="Start_LaunchButton">
 				<source>Launch Demo  →</source>
