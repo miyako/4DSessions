@@ -20,7 +20,7 @@
 			</trans-unit>
 			<trans-unit id="Start_Feature2" resname="Start_Feature2">
 				<source>OTP &amp; privileges</source>
-				<target>OTPとアクセス権</target>
+				<target>OTPと権限</target>
 			</trans-unit>
 			<trans-unit id="Start_Feature3" resname="Start_Feature3">
 				<source>Gated file upload</source>
@@ -40,7 +40,7 @@
 			</trans-unit>
 			<trans-unit id="Start_Description" resname="Start_Description">
 				<source>This 4D application demonstrates a  cross-device session sharing. After sharing the session, a web page displays a challenge number and a QR code; scanning it on a phone restores the SAME 4D session through a one-time token ($4DSID). Tapping the matching number grants the "verified_user" privilege, which then unlocks a privilege-gated photo upload.</source>
-				<target>この4Dアプリケーションは、デバイスをまたいだセッション共有のデモです。セッションを共有すると、Webページにチャレンジの数字とQRコードが表示されます。スマートフォンでQRコードを読み取ると、ワンタイムトークン（$4DSID）によって同じ4Dセッションが復元されます。一致する数字をタップすると "verified_user" アクセス権が付与され、アクセス権で保護された写真のアップロードが可能になります。</target>
+				<target>この4Dアプリケーションは、デバイスをまたいだセッション共有のデモです。セッションを共有すると、Webページにチャレンジの数字とQRコードが表示されます。スマートフォンでQRコードを読み取ると、ワンタイムトークン（$4DSID）によって同じ4Dセッションが復元されます。一致する数字をタップすると "verified_user" 権限が付与され、権限で保護された写真のアップロードが可能になります。</target>
 			</trans-unit>
 			<trans-unit id="Start_Card1Label" resname="Start_Card1Label">
 				<source>VERSION</source>

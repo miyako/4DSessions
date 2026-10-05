@@ -2,7 +2,7 @@
 
 4D Sessions: From Desktop to Web in a Single Shared Session (Technical Note 26-06): Japanese edition.
 
-このテクニカルノートでは、4Dのデスクトップアプリケーションで開いたセッションを、OTP（ワンタイムパスワード）付きのURLを使ってWebブラウザーやスマートフォンと共有する方法を説明します。**Session.info**によるセッション情報の取得、**Session.createOTP()**によるトークンの発行、**Session.storage**によるデバイス間の状態共有、アクセス権の付与と解除を、本人確認ワークフローのデモ「4D Secure OTP」を通して解説します。デモでは、デスクトップから共有したセッションにQRコードでスマートフォンを接続し、チャレンジの数字に答えて本人確認を行い、アクセス権で保護された写真のアップロードとオペレーターによる判定までを体験できます。
+このテクニカルノートでは、4Dのデスクトップアプリケーションで開いたセッションを、OTP（ワンタイムパスワード）付きのURLを使ってWebブラウザーやスマートフォンと共有する方法を説明します。**Session.info**によるセッション情報の取得、**Session.createOTP()**によるトークンの発行、**Session.storage**によるデバイス間の状態共有、権限の付与と解除を、本人確認ワークフローのデモ「4D Secure OTP」を通して解説します。デモでは、デスクトップから共有したセッションにQRコードでスマートフォンを接続し、チャレンジの数字に答えて本人確認を行い、権限で保護された写真のアップロードとオペレーターによる判定までを体験できます。
 
 This is the Japanese edition of 4D Technical Note 26-06 and its companion demo. It shows how to share a 4D desktop session with a browser and a phone through OTP-linked URLs. It covers Session.info, Session.createOTP(), Session.storage and privileges, illustrated by an identity-verification demo.
 
