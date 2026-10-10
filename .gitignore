@@ -11,3 +11,10 @@ demo/*/Project/DerivedData/
 demo/*/Project/data.journal
 demo/*/backupHistory.json
 demo/*/Files/
+
+# Tools provisioned by the 4D skills (see the 4dtools skill)
+/tools/4dcatalog/
+/tools/4dform/
+/tools/4dlsp/
+/tools/4dlang/
+/tools/4dcli/
